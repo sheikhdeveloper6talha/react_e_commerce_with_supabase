@@ -1,0 +1,164 @@
+/* --- FOOTER MAIN STYLES --- */
+.main-footer {
+  background-color: #111111; /* Luxury Premium Dark Theme */
+  color: #ffffff;
+  padding: 80px 0 0 0;
+  font-family: 'Montserrat', sans-serif;
+  border-top: 3px solid #bfa365; /* Top matching Gold Line */
+
+}
+
+.footer-container {
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 0 30px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 40px;
+  padding-bottom: 50px;
+justify-content: space-around;
+}
+
+
+
+/* Brand/Logo Section Modification */
+.footer-logo {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.2rem;
+  font-weight: 500;
+  color: #bfa365;
+  margin: 0 0 20px 0;
+  letter-spacing: -0.5px;
+}
+
+.footer-logo span {
+  font-style: italic;
+  font-weight: 400;
+}
+
+.footer-about-text {
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: #cccccc;
+  margin-bottom: 25px;
+}
+
+/* Links lists styling */
+.footer-links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer-links li {
+  margin-bottom: 12px;
+}
+
+.footer-links a {
+  text-decoration: none;
+  color: #cccccc;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+  display: inline-block;
+}
+
+.footer-links a:hover {
+  color: #bfa365;
+  transform: translateX(5px); /* Chhota sa hover micro-interaction effect */
+}
+
+/* Contact Info Column styling */
+.contact-details p {
+  font-size: 0.9rem;
+  color: #cccccc;
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.contact-details i {
+  color: #bfa365; /* Icons will be gold colored */
+  width: 15px;
+}
+
+.contact-details .timings {
+  font-size: 0.85rem;
+  color: #999999;
+}
+
+/* Social Media Circles styling */
+.social-links {
+  display: flex;
+  gap: 12px;
+}
+
+.social-links a {
+  width: 38px;
+  height: 38px;
+  background-color: #222222;
+  border: 1px solid #333333;
+  color: #ffffff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  font-size: 0.9rem;
+}
+
+.social-links a:hover {
+  background-color: #bfa365;
+  color: #ffffff;
+  border-color: #bfa365;
+  transform: translateY(-3px);
+}
+
+/* --- BOTTOM STRIP COPYRIGHT BAR --- */
+.footer-bottom {
+  background-color: #0a0a0a;
+  padding: 25px 0;
+  border-top: 1px solid #222222;
+}
+
+.bottom-container {
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 0 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.footer-bottom p {
+  font-size: 0.85rem;
+  color: #888888;
+  margin: 0;
+}
+
+.payment-icons {
+  display: flex;
+  gap: 20px;
+  font-size: 0.85rem;
+  color: #aaaaaa;
+}
+
+/* --- RESPONSIVE ADJUSTMENTS --- */
+@media (max-width: 768px) {
+  .main-footer {
+    padding-top: 60px;
+  }
+  
+  .footer-container {
+    grid-template-columns: 1fr; /* Mobile screens pe block layout single column ho jayega */
+    gap: 35px;
+  }
+
+  .bottom-container {
+    flex-direction: column;
+    text-align: center;
+  }
+}

@@ -1,0 +1,106 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700;800&family=Playfair+Display:ital,wght@0,400;1,400&display=swap');
+
+.hero-section {
+  width: 100%;
+  min-height: 100vh;
+  background-size: cover;
+  background-position: center 25%;
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding-top: 130px; /* Clear space for top banner and fixed navigation bar */
+  box-sizing: border-box;
+}
+
+.hero-dark-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.3) 60%, transparent 100%);
+  z-index: 1;
+}
+
+.hero-main-content {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 0 30px;
+  color: #ffffff;
+}
+
+.hero-main-title {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 3.5rem;
+  font-weight: 800;
+  line-height: 1.15;
+  margin: 0 0 20px 0;
+  letter-spacing: 0.5px;
+}
+
+.hero-main-desc {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1.15rem;
+  font-weight: 400;
+  max-width: 520px;
+  line-height: 1.6;
+  color: #f3f4f6;
+  margin-bottom: 15px;
+}
+
+.hero-signature-text {
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-size: 1.3rem;
+  color: #e5e7eb;
+  margin-bottom: 35px;
+}
+
+.hero-buttons-wrapper {
+  display: flex;
+  gap: 20px;
+  /* justify-content: center; */
+  align-items: center;
+}
+
+.hero-btn-gold, .hero-btn-outline {
+  text-decoration: none;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  padding: 16px 34px;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+}
+
+.hero-btn-gold {
+  background-color: #bfa365;
+  color: #ffffff;
+  border: 1px solid #bfa365;
+}
+
+.hero-btn-gold:hover {
+  background-color: #aa9055;
+  transform: translateY(-2px);
+}
+
+.hero-btn-outline {
+  background-color: rgba(255, 255, 255, 0.95);
+  color: #111111;
+  border: 1px solid #ffffff;
+}
+
+.hero-btn-outline:hover {
+  background-color: #ffffff;
+  transform: translateY(-2px);
+}
+
+@media (max-width: 768px) {
+  .hero-main-title { font-size: 2.2rem; }
+  .hero-main-desc { font-size: 1rem; }
+  .hero-buttons-wrapper { flex-direction: column; gap: 15px; width: 100%; max-width: 300px; }
+}

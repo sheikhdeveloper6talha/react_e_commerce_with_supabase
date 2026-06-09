@@ -1,0 +1,244 @@
+/* Color Palette & Base Wrapper Layout */
+.sml-auth-wrapper {
+margin-top: 20px;
+    width: 100%;
+  min-height: 100vh;
+  background-color: #f3f4f6; /* Off-white web background */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+/* Card Container Box */
+.sml-auth-container {
+  width: 100%;
+  max-width: 960px;
+  min-height: 600px;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+  display: flex;
+  overflow: hidden;
+}
+
+/* Left Side Dark Panel */
+.sml-auth-banner {
+  flex: 1;
+  background-color: #1e2229; /* Dark slate/charcoal tone from image_8adb11.jpg */
+  background-image: radial-gradient(#2d323c 1px, transparent 1px); /* Subtle premium dot grid */
+  background-size: 16px 16px;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  padding: 60px;
+}
+
+.sml-banner-content h2 {
+  font-size: 2.5rem;
+  font-weight: 600;
+  line-height: 1.2;
+  margin-bottom: 20px;
+  letter-spacing: -0.5px;
+}
+
+.sml-banner-content p {
+  color: #9ca3af;
+  font-size: 1rem;
+  line-height: 1.5;
+  max-width: 300px;
+}
+
+/* Right Side Interaction Section */
+.sml-auth-form-section {
+  flex: 1.1;
+  padding: 50px 60px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Tab Underline Bar Group */
+.sml-auth-tabs {
+  display: flex;
+  gap: 25px;
+  border-bottom: 1px solid #e5e7eb;
+  margin-bottom: 35px;
+}
+
+.sml-tab-btn {
+  background: none;
+  border: none;
+  padding-bottom: 12px;
+  font-size: 1rem;
+  font-weight: 500;
+  color: #9ca3af;
+  cursor: pointer;
+  position: relative;
+}
+
+/* Register Tab Active Line Indicator */
+.sml-tab-btn.active {
+  color: #000000;
+  font-weight: 600;
+}
+
+.sml-tab-btn.active::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background-color: #000000; /* Dark line under active tab */
+}
+
+/* Typography Text Headers */
+.sml-form-header h3 {
+  font-size: 1.65rem;
+  font-weight: 600;
+  color: #111827;
+  margin-bottom: 6px;
+}
+
+.sml-form-header p {
+  font-size: 0.9rem;
+  color: #6b7280;
+  margin-bottom: 30px;
+}
+
+/* Actual Form Fields Wrapper */
+.sml-actual-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.sml-input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.sml-input-group label {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: #4b5563;
+}
+
+/* Light sky-blue color palette for pre-filled forms */
+.sml-input-group input[type="text"],
+.sml-input-group input[type="email"] {
+  width: 100%;
+  padding: 12px 16px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  color: #1f2937;
+  background-color: #e8f0fe; /* Light blue autofill box effect */
+  box-sizing: border-box;
+}
+
+.sml-input-group input[type="password"] {
+  width: 100%;
+  padding: 12px 16px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  color: #1f2937;
+  background-color: #ffffff; /* Clear input background for password */
+  box-sizing: border-box;
+}
+
+.sml-input-group input:focus {
+  outline: none;
+  border-color: #9ca3af;
+}
+
+/* Password Input and Eye Toggle styling */
+.sml-password-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.sml-toggle-password {
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: #4b5563;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+/* Checkbox alignment */
+.sml-checkbox-group {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin-top: 5px;
+}
+
+.sml-checkbox-group input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  accent-color: #000000;
+  cursor: pointer;
+  margin-top: 2px;
+}
+
+.sml-checkbox-group label {
+  font-size: 0.85rem;
+  color: #4b5563;
+  line-height: 1.4;
+}
+
+.sml-link-text {
+  font-weight: 600;
+  color: #111827;
+}
+
+/* Pure Black Action Button */
+.sml-submit-btn {
+  background-color: #050505;
+  color: #ffffff;
+  border: none;
+  padding: 14px;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+/* Bottom redirect helper styling */
+.sml-switch-mode-text {
+  text-align: center;
+  font-size: 0.85rem;
+  color: #6b7280;
+  margin-top: 15px;
+}
+
+.sml-redirect-link {
+  color: #000000;
+  font-weight: 600;
+  cursor: pointer;
+  margin-left: 3px;
+}
+
+/* Responsive UI break rules */
+@media (max-width: 768px) {
+  .sml-auth-container {
+    flex-direction: column;
+    max-width: 450px;
+  }
+  .sml-auth-banner {
+    padding: 40px;
+  }
+  .sml-auth-form-section {
+    padding: 40px 30px;
+  }
+}

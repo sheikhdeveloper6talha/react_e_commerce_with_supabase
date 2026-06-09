@@ -1,0 +1,212 @@
+.payment-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0,0,0,0.7);
+  backdrop-filter: blur(4px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 99999; /* z-index barha diya */
+  animation: fadeIn 0.3s ease;
+  padding: 20px;
+  box-sizing: border-box;
+  overflow-x: hidden;
+}
+
+.payment-ticket {
+  background: #fff;
+  width: 100%;
+  max-width: 420px;
+  max-height: 90vh;
+  border-radius: 16px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+  position: relative;
+  overflow-y: auto;
+  overflow-x: hidden;
+  animation: slideUp 0.4s ease;
+}
+
+.payment-header {
+  background: #2563eb;
+  color: white;
+  padding: 18px 45px 18px 18px;
+  text-align: center;
+  font-size: 20px;
+  font-weight: bold;
+  position: sticky;
+  top: 0;
+  z-index: 2;
+}
+
+.cut-line {
+  height: 2px;
+  background: repeating-linear-gradient(
+    90deg,
+    #ddd 0px,
+    #ddd 10px,
+    transparent 10px,
+    transparent 20px
+  );
+  margin: 0;
+  position: relative;
+}
+
+.cut-line::before,
+.cut-line::after {
+  content: "✂";
+  position: absolute;
+  top: -10px;
+  font-size: 16px;
+  color: #999;
+  background: white;
+  padding: 0 5px;
+}
+
+.cut-line::before { left: 25px; }
+.cut-line::after { right: 25px; }
+
+.payment-body {
+  padding: 25px;
+}
+
+.payment-body input,
+.payment-body textarea {
+  width: 100%;
+  padding: 12px 14px;
+  margin-bottom: 14px;
+  border: 1.5px solid #e5e7eb;
+  border-radius: 8px;
+  font-size: 15px;
+  box-sizing: border-box;
+  font-family: inherit;
+  transition: 0.2s;
+  resize: none;
+}
+
+.payment-body input:focus,
+.payment-body textarea:focus {
+  outline: none;
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+.qr-section {
+  text-align: center;
+  margin: 20px 0;
+}
+
+.qr-section img {
+  width: 130px;
+  height: 130px;
+  border: 2px dashed #d1d5db;
+  padding: 10px;
+  border-radius: 12px;
+  background: white;
+}
+
+/* File input ko custom style diya */
+.file-wrapper {
+  position: relative;
+  margin-bottom: 14px;
+}
+
+.file-input {
+  opacity: 0;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+  z-index: 2;
+}
+
+.file-label {
+  display: block;
+  padding: 12px;
+  border: 2px dashed #2563eb;
+  border-radius: 8px;
+  background: #f8faff;
+  text-align: center;
+  color: #2563eb;
+  font-size: 14px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.file-label:hover {
+  background: #eff6ff;
+  border-color: #1d4ed8;
+}
+
+.order-btn {
+  width: 100%;
+  padding: 14px;
+  background: #16a34a;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 17px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.2s;
+  margin-top: 10px;
+}
+
+.order-btn:hover {
+  background: #15803d;
+  transform: translateY(-2px);
+}
+
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  background: rgba(255,255,255,0.2);
+  border: none;
+  color: white;
+  font-size: 26px;
+  cursor: pointer;
+  line-height: 1;
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  transition: 0.2s;
+}
+
+.close-btn:hover {
+  background: rgba(255,255,255,0.3);
+}
+
+.total-box {
+  text-align: center;
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 15px;
+  color: #2563eb;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { transform: translateY(30px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+/* Mobile responsive */
+@media (max-width: 480px) {
+  .payment-overlay {
+    padding: 10px;
+  }
+ .payment-ticket {
+    max-height: 95vh;
+    border-radius: 12px;
+  }
+ .payment-body {
+    padding: 18px;
+  }
+}

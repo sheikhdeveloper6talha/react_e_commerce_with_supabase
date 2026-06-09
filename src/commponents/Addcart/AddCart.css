@@ -1,0 +1,200 @@
+.cart-drawer {
+  width: 400px;
+  height: 100vh;
+  background: #fff;
+  position: fixed;
+  top: 0;
+  right: 0;
+  box-shadow: -5px 0 20px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  overflow-y: auto;
+  z-index: 9999;
+}
+
+.cart-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.cart-header h2 {
+  font-size: 32px;
+  font-weight: 700;
+  margin: 0;
+}
+
+.cart-header span {
+  background: #e5e5e5;
+  width: 28px;
+  height: 28px;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  font-size: 14px;
+}
+
+.close-btn {
+  border: none;
+  background: transparent;
+  font-size: 28px;
+  cursor: pointer;
+}
+
+.cart-item {
+  display: flex;
+  gap: 15px;
+  margin-top: 30px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #ddd;
+}
+
+.cart-item img {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+}
+
+.cart-item-info {
+  flex: 1;
+}
+
+.cart-item-info h3 {
+  margin: 0;
+  font-size: 18px;
+}
+
+.cart-item-info p {
+  margin: 5px 0;
+}
+
+.discount {
+  color: #555;
+}
+
+.price-box {
+  display: flex;
+  gap: 10px;
+  margin: 10px 0;
+}
+
+.current-price {
+  font-weight: bold;
+}
+
+.old-price {
+  text-decoration: line-through;
+  color: #999;
+}
+
+.quantity-box {
+  display: flex;
+  align-items: center;
+  width: fit-content;
+  border: 1px solid #ddd;
+}
+
+.quantity-box button {
+  width: 40px;
+  height: 40px;
+  border: none;
+  background: white;
+  cursor: pointer;
+  font-size: 18px;
+}
+
+.quantity-box span {
+  width: 40px;
+  text-align: center;
+}
+
+.item-right {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.item-right p {
+  font-weight: 600;
+}
+
+.delete-btn {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-size: 20px;
+}
+
+.cart-summary {
+  margin-top: 30px;
+}
+
+.summary-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 15px;
+}
+
+.total {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.tax-note {
+  color: #666;
+  font-size: 14px;
+  margin: 20px 0;
+}
+
+.checkout-btn {
+  width: 100%;
+  padding: 16px;
+  background: #8f1d1d;
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 600;
+}
+.set{
+  display: flex;
+  flex-direction: column;
+}
+/* Mobile View Fixes */
+/* Mobile View Fix - Pure Layout No Disturb */
+@media (max-width: 768px) {
+  .cart-drawer {
+    width: 100%;
+    height: 100vh;          /* 200vh ko badal kar 100vh kiya takay screen se baahir na jaye */
+    max-height: 100vh;      /* Screen size ke andar rakhne ke liye */
+    background: #fff;
+    position: fixed;
+    top: 0;
+    right: 0;
+    box-shadow: -5px 0 20px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    /* padding-bottom: 300px;   Neechay extra jagah di takay checkout button last me poora nazar aaye aur dabay nahi */
+    overflow-y: auto;       /* Poora cart drawer halke se scroll hoga bina layout kharab kiye */
+    z-index: 9999;
+  }
+
+  .cart-item {
+    flex-direction: column;
+  }
+
+  .item-right {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between; /* Items mobile par aamnay saamnay sahi lagain */
+    margin-top: 10px;
+  }
+
+  .cart-header h2 {
+    font-size: 26px;
+  }
+  
+  .checkout-btn {
+    margin-top: 20px;
+    margin-bottom: 30px;    /* Button ke neechay mobile screen ka margin */
+  }
+}

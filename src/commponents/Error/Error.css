@@ -1,0 +1,128 @@
+/* Right side fixed container positioning */
+.sml-toast-wrapper {
+  position: fixed;
+  top: 24px;
+  right: 24px;
+  min-width: 320px;
+  max-width: 400px;
+  background-color: #ffffff;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  border-radius: 8px;
+  overflow: hidden;
+  z-index: 10000; /* Taaki har layer ke upar dikhe */
+  
+  /* Right side se smooth slide-in animation */
+  animation: slideFromRight 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Toast ka inner structure */
+.sml-toast-content {
+  display: flex;
+  align-items: center;
+  padding: 16px;
+  gap: 14px;
+}
+
+/* Circular Icon Box */
+.sml-toast-icon {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 0.75rem;
+  font-weight: bold;
+  flex-shrink: 0;
+}
+
+/* Text alignment */
+.sml-toast-message {
+  flex-grow: 1;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.sml-toast-title {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #111827;
+  margin: 0 0 2px 0;
+}
+
+.sml-toast-text {
+  font-size: 0.82rem;
+  color: #6b7280;
+  margin: 0;
+  line-height: 1.4;
+}
+
+/* Manual Cross/Close Button */
+.sml-toast-close-btn {
+  background: none;
+  border: none;
+  font-size: 1.25rem;
+  color: #9ca3af;
+  cursor: pointer;
+  padding: 0 4px;
+  line-height: 1;
+  transition: color 0.2s ease;
+}
+
+.sml-toast-close-btn:hover {
+  color: #111827;
+}
+
+/* --- DYNAMIC STATES (Error vs Success Theme) --- */
+
+/* 1. Error state settings */
+.sml-toast-wrapper.error {
+  border-left: 4px solid #ef4444; /* Premium red streak */
+}
+.sml-toast-wrapper.error .sml-toast-icon {
+  background-color: #fee2e2;
+  color: #ef4444;
+}
+.sml-toast-wrapper.error .sml-toast-progress {
+  background-color: #ef4444;
+}
+
+/* 2. Success state settings */
+.sml-toast-wrapper.success {
+  border-left: 4px solid #10b981; /* Premium emerald green streak */
+}
+.sml-toast-wrapper.success .sml-toast-icon {
+  background-color: #d1fae5;
+  color: #10b981;
+}
+.sml-toast-wrapper.success .sml-toast-progress {
+  background-color: #10b981;
+}
+
+/* --- ANIMATIONS (Slide-in and Progress bar reduction) --- */
+
+/* Progress timeline indicator at bottom */
+.sml-toast-progress {
+  height: 3px;
+  width: 100%;
+  animation: shrinkWidth 4s linear forwards;
+}
+
+@keyframes slideFromRight {
+  from {
+    transform: translateX(120%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes shrinkWidth {
+  from {
+    width: 100%;
+  }
+  to {
+    width: 0%;
+  }
+}

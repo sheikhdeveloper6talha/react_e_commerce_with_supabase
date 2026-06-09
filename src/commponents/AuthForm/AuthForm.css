@@ -1,0 +1,324 @@
+/* ==========================================================================
+   1. Box Reset & Layout Scaffolding
+   ========================================================================== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.auth-wrapper {
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f4f5f6;
+  padding: 20px;
+  font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+}
+
+.auth-container {
+  background-color: #ffffff;
+  width: 100%;
+  max-width: 900px;
+  min-height: 550px;
+  display: flex;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+}
+
+/* ==========================================================================
+   2. Left Side Dynamic Banner (Hidden on Smaller Viewports)
+   ========================================================================== */
+.auth-banner {
+  flex: 1;
+  background: linear-gradient(135deg, #1e2022 0%, #3a3f44 100%);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  padding: 40px;
+  position: relative;
+  
+}
+
+/* Fine structural pattern accent inside the banner */
+.auth-banner::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  opacity: 0.1;
+  background-image: radial-gradient(#ffffff 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+.banner-content {
+  position: relative;
+  z-index: 1;
+  max-width: 320px;
+}
+
+.banner-content h2 {
+  font-size: 2.2rem;
+  font-weight: 600;
+  line-height: 1.2;
+  margin-bottom: 16px;
+}
+
+.banner-content p {
+  font-size: 1rem;
+  color: #ccc;
+  line-height: 1.5;
+}
+
+/* ==========================================================================
+   3. Right Side Interactive Form Component Area
+   ========================================================================== */
+.auth-form-section {
+  flex: 1.1;
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  /* align-items: center; */
+}
+
+/* Sliding/Switching Top Tab Selection System */
+.auth-toggle-tabs {
+  display: flex;
+  border-bottom: 2px solid #eaeaea;
+  margin-bottom: 30px;
+}
+
+.auth-tab {
+  background: none;
+  border: none;
+  padding: 10px 20px;
+  font-size: 15px;
+  font-weight: 600;
+  color: #888;
+  cursor: pointer;
+  position: relative;
+  transition: color 0.2s ease;
+}
+
+.auth-tab.active {
+  color: #111;
+}
+
+/* Active Highlight Underline Accent */
+.auth-tab.active::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background-color: #111;
+}
+
+/* ==========================================================================
+   4. Form Typography & Element Design 
+   ========================================================================== */
+.auth-form h3 {
+  font-size: 24px;
+  font-weight: 600;
+  color: #111;
+  margin-bottom: 6px;
+}
+
+.auth-subtitle {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 25px;
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.input-group label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #444;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 12px 14px;
+  font-size: 14px;
+  border: 1px solid #dcdcdc;
+  border-radius: 6px;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.input-group input:focus {
+  border-color: #111;
+  box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.04);
+}
+
+/* Password Layout Options Integration */
+.password-label-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.forgot-link {
+  font-size: 12px;
+  color: #666;
+  text-decoration: none;
+}
+
+.forgot-link:hover {
+  text-decoration: underline;
+  color: #111;
+}
+
+.password-input-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.password-toggle {
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  font-size: 12px;
+  font-weight: 600;
+  color: #666;
+  cursor: pointer;
+}
+
+.password-toggle:hover {
+  color: #111;
+}
+
+/* Checkbox alignment for registering account */
+.checkbox-group {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin-bottom: 25px;
+}
+
+.checkbox-group input[type="checkbox"] {
+  margin-top: 3px;
+  cursor: pointer;
+}
+
+.checkbox-group label {
+  font-size: 13px;
+  color: #555;
+  line-height: 1.4;
+}
+
+.checkbox-group label a {
+  color: #111;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.checkbox-group label a:hover {
+  text-decoration: underline;
+}
+
+/* Action Trigger Submission Block */
+.auth-submit-btn {
+  width: 100%;
+  padding: 14px;
+  background-color: #111;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.auth-submit-btn:hover {
+  background-color: #2a2a2a;
+}
+
+.auth-switch-text {
+  text-align: center;
+  font-size: 13px;
+  color: #666;
+  margin-top: 20px;
+}
+
+.auth-switch-text span {
+  color: #111;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.auth-switch-text span:hover {
+  text-decoration: underline;
+}
+
+/* ==========================================================================
+   5. Media Query Adjustments (Mobile Optimization Breakpoints)
+   ========================================================================== */
+@media (max-width: 768px) {
+  .auth-banner {
+    display: none; /* Banner hides on mobile to conserve screen space */
+  }
+
+  .auth-container {
+    max-width: 480px;
+    min-height: auto;
+  }
+
+  .auth-form-section {
+    padding: 30px 20px;
+  }
+}
+
+.auth-wrapper{
+  position: relative;
+overflow: hidden;
+}
+.auth-wrapper .error{
+  top: 60px;
+  right: 0;
+  width: 40%;
+  height: 50px;
+  position: absolute;
+  background: rgb(214, 110, 110);
+  display: flex;
+justify-content: center;
+align-items: center;
+border-radius: 10px;
+color: #fff;
+font-weight: 600;
+transition: all  0.9s;
+opacity: 0;
+transform: translateX(500%);
+}
+ .setError{
+  top: 60px;
+  right: 0;
+  width: 40%;
+  height: 50px;
+  position: absolute;
+  background: rgb(214, 110, 110);
+  display: flex;
+justify-content: center;
+align-items: center;
+border-radius: 10px;
+color: #fff;
+font-weight: 600;
+transition: all  0.9s;
+opacity: 1;
+transform: translateX(0%);
+}
