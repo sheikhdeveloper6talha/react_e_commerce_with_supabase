@@ -36,8 +36,8 @@ const Footer = () => {
         <div className="footer-col contact-details">
           <h3>GET IN TOUCH</h3>
           <p><i className="fas fa-map-marker-alt"></i> Karachi, Sindh, Pakistan</p>
-          <p><i className="fas fa-phone-alt"></i> +92 300 1234567</p>
-          <p><i className="fas fa-envelope"></i> info@smlibas.com</p>
+          <p><i className="fas fa-phone-alt"></i> +923162573865</p>
+          <p><i className="fas fa-envelope"></i> sheikhdeveloper6@gmail.com</p>
           <p className="timings"><i className="fas fa-clock"></i> Mon - Sat: 10:00 AM - 08:00 PM</p>
         </div>
 

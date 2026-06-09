@@ -26,7 +26,7 @@ const Navbar = () => {
       behavior: 'smooth'
     });
 
-    setDobaraChala(!DobaraChala);
+    
     setIsOpen(false);
   };
 
@@ -44,7 +44,7 @@ const Navbar = () => {
 
   useEffect(() => {
     getCurrentUser();
-  }, [DobaraChala]);
+  }, []);
 
   const handleLogout = async () => {
     const { error } = await connectSupabase.auth.signOut();

@@ -4,7 +4,7 @@ import { userContext } from '../contextApi/Context';
 import Loader from '../loader/Loader';
 
 const ShalwarKameezCatalog = () => {
-  let {DobaraChala , setDobaraChala , getIndexData} = useContext(userContext)
+  let {getIndexData} = useContext(userContext)
   // Traditional Ethnic Dataset
   let [loader , setLoader] = useState(true)
     setTimeout(() => {
