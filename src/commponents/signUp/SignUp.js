@@ -9,10 +9,9 @@ const SingUp = () => {
 
     
     
-  const [isErrorHai, setisErrorHai] = useState(false);
+ 
   const [isErrorText, setisErrorText] = useState('');
   const [showPassword, setShowPassword] = useState(false);
-  const [checkError, setcheckError] = useState(false);
   const [checkLoader, setcheckLoader] = useState(false);
   const [formData, setFormData] = useState({
     name: '',

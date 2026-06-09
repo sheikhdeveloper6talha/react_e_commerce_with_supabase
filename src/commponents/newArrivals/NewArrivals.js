@@ -3,7 +3,7 @@ import './NewArrivals.css';
 import { userContext } from '../contextApi/Context';
 import Loader from '../loader/Loader';
 const NewArrivals = () => {
-  let {DobaraChala , setDobaraChala , getIndexData} = useContext(userContext)
+  let { getIndexData} = useContext(userContext)
   
   let [loader , setLoader] = useState(true)
   setTimeout(() => {
@@ -28,7 +28,7 @@ useEffect(()=>{
 
 },[])
   const [searchQuery, setSearchQuery] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState('All');
+
 
   // Filter pipeline: Checks search query AND category tabs
   const filteredProducts = initialProducts.filter((product) => {
