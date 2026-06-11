@@ -107,7 +107,7 @@ if (!loader) {
 
                 <div className="product-price">
                   <span className="price-label">Total</span>
-                  <span className="price-value">₨{items.price}</span>
+                  <span className="price-value">{items.price}</span>
                 </div>
               </div>
 
@@ -118,17 +118,15 @@ if (!loader) {
           );
         })}
 <div className='Grand-totle'>
-    <h1>All Items Totle Price</h1>
+    <h1> Items Totle Price</h1>
     
-<h3> PKR : 
-   {
-    OrderDetails.reduce(
+<h2> PKR :{OrderDetails.reduce(
       (prev, current) =>
         prev + Number(current.price.slice(4).replace(/,/g, "")),
       0
     )
   }
-</h3></div>
+</h2></div>
 
       </div>
     );

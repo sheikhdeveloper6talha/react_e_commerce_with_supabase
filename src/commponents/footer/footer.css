@@ -15,7 +15,7 @@
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
   gap: 40px;
-  padding-bottom: 50px;
+  padding: 50px;
 justify-content: space-around;
 }
 
@@ -46,7 +46,7 @@ justify-content: space-around;
 /* Links lists styling */
 .footer-links {
   list-style: none;
-  padding: 0;
+  padding: 20px;
   margin: 0;
 }
 
@@ -68,13 +68,15 @@ justify-content: space-around;
 }
 
 /* Contact Info Column styling */
+
 .contact-details p {
   font-size: 0.9rem;
   color: #cccccc;
-  margin-bottom: 14px;
+  margin-top: 14px;
   display: flex;
   align-items: center;
   gap: 12px;
+
 }
 
 .contact-details i {

@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import './hero.css';
 import heroImage from '../Images/heroSection.png'; // Aapki matching image design file
+import { userContext } from '../contextApi/Context';
 
 const HeroSection = () => {
+  let {setCheckClick} = useContext(userContext)
   return (
     <section className="hero-section" style={{ backgroundImage: `url(${heroImage})` }}>
       <div className="hero-dark-overlay"></div>
@@ -24,8 +26,8 @@ const HeroSection = () => {
         </p>
 
         <div className="hero-buttons-wrapper">
-          <a href="#shop" className="hero-btn-gold">SHOP THE COLLECTION</a>
-          <a href="#new-arrivals" className="hero-btn-outline">EXPLORE ARRIVALS</a>
+          <a href="#shop" className="hero-btn-gold" onClick={()=>setCheckClick('PremiumKurtis')}>SHOP THE COLLECTION</a>
+          <a href="#new-arrivals" className="hero-btn-outline" onClick={()=>setCheckClick('NewArrivals')}>EXPLORE ARRIVALS</a>
         </div>
       </div>
     </section>

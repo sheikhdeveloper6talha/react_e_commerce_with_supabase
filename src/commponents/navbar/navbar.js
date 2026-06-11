@@ -40,11 +40,12 @@ const Navbar = () => {
     } catch (error) {
       console.log(error);
     }
+        setDobaraChala(!DobaraChala);
   };
 
   useEffect(() => {
     getCurrentUser();
-  }, []);
+  },[DobaraChala]);
 
   const handleLogout = async () => {
     const { error } = await connectSupabase.auth.signOut();
@@ -113,20 +114,20 @@ const Navbar = () => {
           {/* Mobile Section */}
           <div className="mobile-user-section">
             
-            {CurruentUsers && (
               <>
+            {CurruentUsers && (
                 <p className="account-btn email-text">
                   {CurruentUsers.email}
                 </p>
-
+)}
+{CurruentUsers && (
                 <button
-                  onClick={handleLogout}
+                  onClick={()=> handleLogout()}
                   className="Logout-btn"
                 >
                   Logout
-                </button>
+                </button>)}
               </>
-            )}
           </div>
         </ul>
 

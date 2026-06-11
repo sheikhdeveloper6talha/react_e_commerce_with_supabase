@@ -60,7 +60,7 @@ SendProduct
 }}>
 <Navbar/>
 </userContext.Provider>
-{!checkClick && <HeroSection/>}
+{!checkClick &&  <userContext.Provider value={{setCheckClick}}> <HeroSection/></userContext.Provider>}
 {!checkClick && <userContext.Provider value={{
   setCheckClick,
   DobaraChala,
