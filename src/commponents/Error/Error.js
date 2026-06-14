@@ -4,7 +4,7 @@ import { userContext } from '../contextApi/Context';
 
 const ErrorToast = () => {
   // Context se error text aur setter function uthaya
-  const { isErrorText, setisErrorText } = useContext(userContext);
+  const { isErrorText, setisErrorText , CheckSize } = useContext(userContext);
   const toastType = 'error'; // Fixed state as per your requiremnt
 
   useEffect(() => {

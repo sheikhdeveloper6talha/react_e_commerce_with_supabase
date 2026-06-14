@@ -108,7 +108,8 @@ checks.map((checkValue)=>{
       type: item.type,
       price: item.price,
       image: item.image,
-      qty: item.qty
+      qty: item.qty,
+      size : item.size
     }))
 
     const { data ,  error: itemsError } = await connectSupabase

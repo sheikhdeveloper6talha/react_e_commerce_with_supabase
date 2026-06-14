@@ -63,8 +63,12 @@ margin-top: 20px;
   gap: 25px;
   border-bottom: 1px solid #e5e7eb;
   margin-bottom: 35px;
+  justify-content: space-between;
 }
-
+.btnTab{
+  display: flex;
+  gap: 25px;
+}
 .sml-tab-btn {
   background: none;
   border: none;

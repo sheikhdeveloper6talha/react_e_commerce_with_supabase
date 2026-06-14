@@ -1,0 +1,158 @@
+/* popup model */
+.container{
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  box-sizing: border-box;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+gap: 10px;
+}
+
+.container .close{
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+  padding: 10px;
+  
+}
+
+.close{
+  cursor: pointer;
+  font-size: 24px;
+}
+
+.container .items{
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.container .items img{
+  width: 100%;
+ object-fit: contain;
+ 
+}
+
+.container .items h4{
+  width: 100%;
+  text-align: center;
+}
+
+.categorey{
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 350px;
+  padding: 10px;
+  gap: 10px;
+  box-sizing: border-box;
+}
+
+.Size{
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  justify-content: center;
+  padding: 10px;
+  gap: 10px;
+}
+
+.Size p{
+  padding: 10px 15px;
+  border: 1px solid #111;
+  border-radius: 10px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  margin: 0;
+  text-align: center;
+  min-width: 50px;
+}
+
+.Size p:hover{
+  background: #666;
+  color: #fafafa;
+}
+.categorey > p{
+  padding: 20px;
+  background: #111;
+  color: #fafafa;
+  border-radius: 10px;
+}
+.categorey button{
+  padding: 10px;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: #fafafa;
+  border-radius: 10px;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.4s ease;
+  border: 1px solid rgb(184, 134, 41);
+  font-weight: 600;
+  font-size: 16px;
+  cursor: pointer;
+  z-index: 1;
+}
+
+.categorey button::after{
+  content: '';
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgb(184, 134, 41);
+  position: absolute;
+  z-index: -1;
+  transition: all 0.4s ease;
+}
+
+.categorey button:hover::after{
+  width: 0%;
+}
+
+.categorey button:hover{
+  color: rgb(184, 134, 41);
+}
+
+/* Tablet view */
+@media (min-width: 768px){
+  .container .items img{
+    height: 450px;
+    max-width: 450px;
+  }
+
+  .categorey{
+    max-width: 450px;
+  }
+
+  .Size{
+    justify-content: space-around;
+  }
+
+  .Size p{
+    padding: 15px 20px;
+  }
+}
+
+/* Desktop view */
+@media (min-width: 1024px){
+  .container .items img{
+    height: 600px;
+    max-width: 500px;
+  }
+
+  .categorey{
+    max-width: 500px;
+  }
+
+  .container .close{
+    padding: 15px 20px;
+  }
+}

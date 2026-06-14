@@ -5,7 +5,7 @@ import ErrorToast from '../Error/Error';
 import { userContext } from '../contextApi/Context';
 import Loader from '../loader/Loader';
 const LoginForm = () => {
-   let {setToogle ,  setRerender , Rerender , DobaraChala, setDobaraChala,} = useContext(userContext)    
+   let {setToogle ,  setRerender , Rerender , DobaraChala, setDobaraChala, GoToLogin} = useContext(userContext)    
     
 let [isErrorText , setisErrorText] = useState('')
 let [checkLoader , setcheckLoader] = useState(false)
@@ -37,12 +37,14 @@ setisErrorText(error.message)
    setRerender(!Rerender)
    setcheckLoader(false) 
 setDobaraChala(!DobaraChala)
-  };
+GoToLogin()  
+};
 if(!checkLoader){
 
 
   return (
     <div className="sml-login-wrapper">
+      
       <userContext.Provider value={{ isErrorText, setisErrorText}}>
   {/* Jab jab isErrorText mein kuch likha hoga, yeh component automatic reset hokar chalega */}
   {isErrorText && <ErrorToast />}
@@ -62,12 +64,18 @@ if(!checkLoader){
           
  {/* Tabs Navigation (Sirf UI ke liye, Register Active hai) */}
           <div className="sml-auth-tabs">
+            <div className='btnTab'>
+
             <button type="button" className="sml-tab-btn  active">
               Sign In
             </button>
             <button type="button" className="sml-tab-btn " onClick={()=> setToogle(false)}>
               Register
             </button>
+            </div>
+            <div className='close'>
+            <h3 onClick={()=> GoToLogin()}>✕</h3>
+            </div>
           </div>
 
 

@@ -73,6 +73,18 @@ if(OrderDetails.length === 1){
 };
 
 }
+
+const formatDate = (timestamp) => {
+  const date = new Date(timestamp)
+  return date.toLocaleString('en-US', {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
+    hour12: true
+  })
+}
 if (!loader) {
   if (OrderDetails.length > 0) {
     return (
@@ -100,8 +112,9 @@ if (!loader) {
                 <div className="product-info">
                   <h3 className="product-name">{items.name}</h3>
                   <p className="product-qty">Quantity: {items.qty}</p>
+                  <p className="product-qty">Size: {items.size}</p>
                   <p className="product-date">
-                    Ordered on: {items.created_at}
+                    Ordered on: {formatDate(items.created_at) }
                   </p>
                 </div>
 
@@ -123,7 +136,7 @@ if (!loader) {
 <h2> PKR :{OrderDetails.reduce(
       (prev, current) =>
         prev + Number(current.price.slice(4).replace(/,/g, "")),
-      0
+      300
     )
   }
 </h2></div>

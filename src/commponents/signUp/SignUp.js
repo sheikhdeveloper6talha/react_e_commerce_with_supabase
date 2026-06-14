@@ -12,7 +12,6 @@ const SingUp = () => {
  
   const [isErrorText, setisErrorText] = useState('');
   const [showPassword, setShowPassword] = useState(false);
-  const [checkLoader, setcheckLoader] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -30,12 +29,12 @@ const SingUp = () => {
 
   const handleSubmit = async (e) => {
   e.preventDefault();
-setcheckLoader(true)
+
   const { name, email, password, agreeTerms } = formData;
 
   // 1. Fields validation fix
   if (name.trim() === '' || email.trim() === '' || password.trim() === '' || !agreeTerms) {
-    setcheckLoader(false)
+
     setisErrorText('Please Fill All Inputs Fields & Agree to Terms.');
     return;
   } 
@@ -43,14 +42,14 @@ setcheckLoader(true)
   // 2. Name Length validation
   if (name.length < 3) {
     setisErrorText('Please Name Must be 3 Characters.');
-    setcheckLoader(false)
+
     return;
   }
 
   // 3. Password length validation
   if (password.length < 8) {
     setisErrorText('Please Password Must be 8 Characters.');
-    setcheckLoader(false)
+
     return;
   }
 
@@ -72,7 +71,7 @@ setcheckLoader(true)
 
     // AGAR SUPABASE AUTH MEIN ERROR AYE (Most Important Fix)
     if (authError) {
-        setcheckLoader(false)
+
       setisErrorText(authError.message); // Yeh aapke ErrorToast ko trigger karega
       return;
     }
@@ -92,7 +91,7 @@ setcheckLoader(true)
         ]);
 
       if (dbError) {
-          setcheckLoader(false)
+
         setisErrorText(dbError.message);
         return;
       }
@@ -105,16 +104,16 @@ setcheckLoader(true)
 
   } catch (err) {
     console.error("Unexpected Error:", err);
-      setcheckLoader(false)
+
     setisErrorText("Something went wrong. Please try again.");
   }
   setRerender(!Rerender)
   setDobaraChala(!DobaraChala)
-  setcheckLoader(false)
+
 };
 
 
-if(!checkLoader){
+
 
 
 
@@ -238,12 +237,6 @@ if(!checkLoader){
       </div>
     </div>
   )
- } else{
-    return(
-        <Loader/>
-    )
- } 
- 
  
 };
 

@@ -5,7 +5,7 @@ import {connectSupabase} from '../supabase/supabase'
 import Loader from "../loader/Loader";
 import PaymentCard from "../Payment/PaymentCard";
 const CartDrawer = () => {
-    let {OpendCart , DobaraChala , setDobaraChala , SendProduct , setSendProduct , order} = useContext(userContext)
+    let {OpendCart , DobaraChala , setDobaraChala , SendProduct , setSendProduct , order , GoToLogin} = useContext(userContext)
     let [Loaders , setLoaders]  = useState(true)
     let [OrderCompo , setOrderCompo]  = useState(false)
     let [CurruentUsers , setCurruentUsers]  = useState(null)
@@ -19,9 +19,10 @@ const CartDrawer = () => {
     let [RenderCart , setRenderCart]  = useState(AddQty)
     
     
-    setTimeout(()=>{
-setLoaders(false)
-    },2000)
+useEffect(() => {
+  const timer = setTimeout(() => setLoaders(false), 2000)
+  return () => clearTimeout(timer)
+}, [])
     const getCurrentUser = async () => {
        try {
          const {
@@ -90,6 +91,7 @@ return(
         <div className="cart-item-info">
           <h3>{valueProduct.name}</h3>
           <p>{valueProduct.type}</p>
+          <p>Size : {valueProduct.size}</p>
           <p className="discount">20% off</p>
 
           <div className="price-box">
@@ -157,9 +159,7 @@ return(
   return(
     <div className="cart-drawer">
       <div className="cart-header">
-        <h2>
-          
-        </h2>
+       
         <button className="close-btn" style={{color: 'black'}} onClick={()=> OpendCart()}>✕</button>
       </div>
 
@@ -171,7 +171,7 @@ Your cart is empty
 Have an account? Log in to check out faster.
         </p>
 
-        <button className="checkout-btn" onClick={()=> OpendCart()}>
+        <button className="checkout-btn" onClick={()=> GoToLogin()}>
           Login 
         </button>
       </div>

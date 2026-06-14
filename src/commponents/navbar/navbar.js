@@ -13,7 +13,8 @@ const Navbar = () => {
     DobaraChala,
     setDobaraChala,
     OpendCart,
-    SendProduct
+    SendProduct,
+    GoToLogin
   } = useContext(userContext);
 
   const [CurruentUsers, setCurruentUsers] = useState('');
@@ -28,6 +29,7 @@ const Navbar = () => {
 
     
     setIsOpen(false);
+  
   };
 
   const getCurrentUser = async () => {
@@ -40,7 +42,7 @@ const Navbar = () => {
     } catch (error) {
       console.log(error);
     }
-        setDobaraChala(!DobaraChala);
+
   };
 
   useEffect(() => {
@@ -86,19 +88,19 @@ const Navbar = () => {
             <a href="#home">Home</a>
           </li>
 
-          <li onClick={() => handlar('PremiumKurtis')}>
+          <li onClick={() => handlar('Premium Kurtis')}>
             <a href="#kurti">Kurti</a>
           </li>
 
-          <li onClick={() => handlar('ShalwarKameez')}>
+          <li onClick={() => handlar('Shalwar Kameez')}>
             <a href="#shalwar-kameez">Shalwar Kameez</a>
           </li>
 
-          <li onClick={() => handlar('NewArrivals')}>
+          <li onClick={() => handlar('New Arrivals')}>
             <a href="#new-arrivals">New Arrivals</a>
           </li>
 
-          <li onClick={() => handlar('ExclusiveSale')}>
+          <li onClick={() => handlar('Exclusive Sale')}>
             <a href="#sale" className="sale-tab">
               Sale
             </a>
