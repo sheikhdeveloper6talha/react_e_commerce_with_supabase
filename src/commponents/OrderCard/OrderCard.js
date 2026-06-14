@@ -32,7 +32,7 @@ if(data){
   console.log(data);
   setOrderDetails(data)
 }
-setloader(false)  
+ 
 
   
 }
@@ -41,7 +41,7 @@ setloader(false)
     } catch (error) {
       console.log(error);
     }
-
+setloader(false) 
 console.log('chala hai');
 };
 

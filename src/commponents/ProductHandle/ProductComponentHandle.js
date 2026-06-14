@@ -22,6 +22,7 @@ console.log(GoLog);
   
   let checkCondition = checkClick.split(' ').join('')
 
+  if(checkCondition === 'Order') return <OrderCard/>
   if (Loading) {
 if(!GoLog){
 
