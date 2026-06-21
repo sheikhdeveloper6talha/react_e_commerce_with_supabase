@@ -8,6 +8,7 @@ const PaymentCard = () => {
     const [loader , setLoader] = useState(true)
     const [checks , setChecks] = useState('')
 
+ console.log(RenderCart);
  
   const [form, setForm] = useState({
     name: "",
@@ -107,7 +108,7 @@ checks.map((checkValue)=>{
       name: item.name,
       users: form.name,
       type: item.type,
-      price: (+item.price)+300,
+      price:  (Number(item.price) * item.qty) + 300,
       image: item.image_url,
       qty: item.qty,
       size : item.sizes
@@ -168,8 +169,7 @@ if(!loader){
         <div className="cut-line"></div>
 
         <form className="payment-body" onSubmit={handleSubmit}>
-          <div className="total-box">Total: Rs. {RenderCart.reduce((totle , current) =>
-             totle + Number(current.price.slice(4).replace(/,/g, '')),300)}</div>
+          <div className="total-box">Total: Rs. {RenderCart.reduce((sum, item) => sum + Number(item.price) * item.qty, 300)}</div>
 
           <input
             type="text"

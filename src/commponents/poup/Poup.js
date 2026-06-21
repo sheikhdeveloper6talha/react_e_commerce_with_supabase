@@ -44,7 +44,7 @@ const addCartItems = ()=>{
           )
         })} 
       </div>
-        <button  onClick={()=> addCartItems()}>Add to cart</button>
+{  (+sendProducts.stock) >= 1 ?  <button  onClick={()=> addCartItems()}>Add to cart</button>     : <button >Not Available</button> }
       </div>
     </div>
   </div>

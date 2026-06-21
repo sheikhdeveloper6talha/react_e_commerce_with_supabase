@@ -120,7 +120,7 @@ if (!loader) {
 
                 <div className="product-price">
                   <span className="price-label">Total</span>
-                  <span className="price-value">{items.price * items.qty}</span>
+                  <span className="price-value">{items.price}</span>
                 </div>
               </div>
 
@@ -134,8 +134,7 @@ if (!loader) {
     <h1> Items Totle Price</h1>
     
 <h2> PKR :{OrderDetails.reduce(
-      (prev, current) => 
-        prev + Number(current.price),0)
+      (prev, current) => prev + Number(current.price),0)
   }
 </h2></div>
 
