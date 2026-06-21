@@ -3,34 +3,48 @@ import './Poup.css'
 import { userContext } from '../contextApi/Context'
 function Popup (){
     let {setOpen , sendProducts , getIndexData} = useContext(userContext)
-  let [SendDataCheckOut , setSendDataCheckOut] = useState('')
+  const [SendDataCheckOut , setSendDataCheckOut] = useState(null)
+console.log(SendDataCheckOut);
+const sizeArray = ["XXL" , 'XL' , 'L' , 'M' , 'S']
 const sizeGet = (reciveSize)=>{
-console.log(reciveSize);
-const newSizing = {...sendProducts , size : reciveSize }
-setSendDataCheckOut(newSizing)
-}    
-    
+ if (!sendProducts) return alert('Nnhee hai')
 
+ setSendDataCheckOut({
+   ...sendProducts,
+   sizes: reciveSize
+ })
+}    
+
+useEffect(() => {
+ setSendDataCheckOut(sendProducts)
+}, [])    
+
+const addCartItems = ()=>{
+  console.log(SendDataCheckOut.sizes);
+  if(!SendDataCheckOut ) return alert('plese size')
+    getIndexData(SendDataCheckOut , setSendDataCheckOut)
+  
+}
     return(
   <div className='container'>
     <div className='close'>
       <p onClick={()=> setOpen(false)}>&#10006;</p>
     </div>
     <div className='items'>
-      <img src={sendProducts.image}/>
+      <img src={sendProducts.image_url}/>
       <h2>{sendProducts.name}</h2>
-      <h4>{sendProducts.description}/</h4>
-      <h3>{sendProducts.price}</h3>
+      <h4>{sendProducts.description}</h4>
+      <h3>Price {sendProducts.price}</h3>
       <div className='categorey'>
         <p>{sendProducts.type}</p>
       <div className='Size'>
-        {sendProducts.size.map((itemsSize)=>{
+        {sizeArray.map((itemsSize)=>{
           return(
-            <p onClick={()=> sizeGet(itemsSize)}>{itemsSize}</p>
+            <p key={itemsSize} onClick={()=> sizeGet(itemsSize)}>{itemsSize}</p>
           )
         })} 
       </div>
-        <button onClick={()=> getIndexData(SendDataCheckOut , setSendDataCheckOut)}>Add to cart</button>
+        <button  onClick={()=> addCartItems()}>Add to cart</button>
       </div>
     </div>
   </div>

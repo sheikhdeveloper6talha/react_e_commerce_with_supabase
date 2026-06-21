@@ -27,17 +27,26 @@ let [checkLoader , setcheckLoader] = useState(false)
   const handleSubmit = async (e) => {
     e.preventDefault();
     setcheckLoader(true)
-    const { data, error } = await connectSupabase.auth.signInWithPassword({
+    const { data : UsersIbfo , error } = await connectSupabase.auth.signInWithPassword({
     email: formData.email,
     password: formData.password,
   })
    if(error){
 setisErrorText(error.message)
-   }
+   }else{
+    console.log(UsersIbfo.user.id);
+    
+   const { error } = await connectSupabase
+  .from('UsersIfo')
+  .update({ agreeTerms: true })
+  .eq('id', UsersIbfo.user.id)
+    
+    
    setRerender(!Rerender)
+   setDobaraChala(!DobaraChala)
+   GoToLogin()
    setcheckLoader(false) 
-setDobaraChala(!DobaraChala)
-GoToLogin()  
+}  
 };
 if(!checkLoader){
 

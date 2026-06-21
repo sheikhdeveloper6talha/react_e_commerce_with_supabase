@@ -4,7 +4,7 @@ import { userContext } from "../contextApi/Context";
 import { connectSupabase } from "../supabase/supabase";
 import Loader from "../loader/Loader";
 const PaymentCard = () => {
-    let {setOrderCompo , RenderCart , setSendProduct , setRenderCart} = useContext(userContext)
+    let {setOrderCompo , RenderCart , setSendProduct , setRenderCart , OpendCart} = useContext(userContext)
     const [loader , setLoader] = useState(true)
     const [checks , setChecks] = useState('')
 
@@ -94,38 +94,52 @@ checks.map((checkValue)=>{
         phoneNumber: form.phone, // snake_case use karo
         Adress: form.address, // spelling theek
         status: false,
-        total_amount: RenderCart.reduce((sum, item) => sum + Number(item.price.slice(4).replace(/,/g , '')) * item.qty, 300),
+        total_amount: RenderCart.reduce((sum, item) => sum + Number(item.price) * item.qty, 300),
     
       })
       .select()
-      console.log(orderData);
+
       
     // Step 2: Ab cart ke items alag table me save karo
     const orderItems = RenderCart.map((item , index) => ({
       id :  Math.round(Math.random() * 10000000),
       uuid: form.id, // order ka id link kar diya
       name: item.name,
+      users: form.name,
       type: item.type,
-      price: item.price,
-      image: item.image,
+      price: (+item.price)+300,
+      image: item.image_url,
       qty: item.qty,
-      size : item.size
-    }))
+      size : item.sizes
+    } ) )
 
     const { data ,  error: itemsError } = await connectSupabase
       .from('orderItems') // alag table
       .insert(orderItems)
 .select()
 
+if(data) {
+  await Promise.all  (  RenderCart.map(async (items)=>{
+  console.log(items);
+  
+   const { error: stocks} = await connectSupabase
+  .from('ProductitemsAdd')
+  .update({'stock' : Number(items.stock) - items.qty })
+  .eq('id' , items.id)
+  if(stocks)  alert('Stock not Updates')
+})
+)
+}
     if (orderError) throw orderError
 
 
-console.log(data);
+
 
     if (itemsError) throw itemsError
 
     console.log('Order save ho gaya:', orderData.id)
     alert('Order placed successfully!')
+
 
   } catch (error) {
     console.log(error.message)
@@ -134,6 +148,7 @@ console.log(data);
   setRenderCart([])
   setSendProduct([])
 setOrderCompo(false)
+OpendCart()
 }
 
 

@@ -41,19 +41,29 @@ setCurruentUsers(user)
 const DeleteCart = (id)=>{
 console.log(id);
 let Dete = RenderCart.filter((e)=>e.id !== id)
-setRenderCart(Dete)
-setSendProduct(Dete)
+setRenderCart( Dete)
+setSendProduct( Dete)
 }
 
 const Increases = (id) => {
-  let updatedCart = RenderCart.map(val => 
-    val.id === id 
-      ? { ...val, qty: (val.qty || 0) + 1 } // qty 1 barhao
-      : val // baqi items same
-  )
+  let updatedCart = RenderCart.map(val => {
+  if (val.id === id) {
+    
+    if (val.qty >= val.stock) {
+      alert("Stock khatam ho gaya");
+    } 
+
+    return {
+      ...val,
+      qty: val.qty < val.stock ? (val.qty || 0) + 1 : val.stock
+    };
+  }
+
+  return val;
+});
   
   
-  setRenderCart(updatedCart)
+  setRenderCart( updatedCart)
 }
 const Decrease = (id , qty) => {
   let updatedCart = RenderCart.map(val => 
@@ -84,14 +94,14 @@ const Decrease = (id , qty) => {
 return(
      <div className="cart-item">
         <img
-          src={valueProduct.image}
+          src={valueProduct.image_url}
           alt="product"
         />
 
         <div className="cart-item-info">
           <h3>{valueProduct.name}</h3>
           <p>{valueProduct.type}</p>
-          <p>Size : {valueProduct.size}</p>
+          <p>Size : {valueProduct.sizes}</p>
           <p className="discount">20% off</p>
 
           <div className="price-box">
@@ -112,7 +122,7 @@ return(
         </div>
 
         <div className="item-right">
-          <p>{valueProduct.price.slice(4).replace(/,/g, '') * valueProduct.qty}</p>
+          <p>{(valueProduct.price* valueProduct.qty).toLocaleString()}</p>
           <button className="delete-btn" onClick={()=> DeleteCart(valueProduct.id)}>🗑</button>
         </div>
       </div>
@@ -128,7 +138,9 @@ return(
 {SendProduct.length > 0 &&
         <div className="summary-row total">
           <span>Estimated total</span>
-<span>{RenderCart.reduce((p, item) => p + Number(item.price.slice(4).replace(/,/g, '')), 0)}</span>    
+<span>{RenderCart.reduce((totleEsti, item) => {
+  return totleEsti + Number(item.price) * item.qty
+},0).toLocaleString()}</span>    
       </div>}
 
         <p className="tax-note">
@@ -139,16 +151,16 @@ return(
         <div className="summary-row total">
           <span>Grand total</span>
 <span>{RenderCart.reduce((total, item) => {
-  return total + Number(item.price.slice(4).replace(/,/g, '')) * item.qty
+  return total + Number(item.price) * item.qty
 }, 300).toLocaleString()}</span>    
       </div>}
 
-{SendProduct.length > 0  ?   <button className="checkout-btn" onClick={()=> {order(RenderCart) ; setOrderCompo(true)} }>CHECKOUT
+{SendProduct.length > 0  ?   <button className="checkout-btn" onClick={()=> {order(RenderCart) ; setOrderCompo(true) } }>CHECKOUT
         </button>  :  <button className="checkout-btn" onClick={()=> OpendCart()}>
           Continue Shop
         </button>}
 
-      {OrderCompo &&    <userContext.Provider value={{setOrderCompo , RenderCart , setRenderCart , setSendProduct}}> <PaymentCard/></userContext.Provider>}
+      {OrderCompo &&    <userContext.Provider value={{setOrderCompo , RenderCart , setRenderCart , setSendProduct , OpendCart}}> <PaymentCard/></userContext.Provider>}
       </div>
     </div>
 
@@ -171,7 +183,7 @@ Your cart is empty
 Have an account? Log in to check out faster.
         </p>
 
-        <button className="checkout-btn" onClick={()=> GoToLogin()}>
+        <button className="checkout-btn" onClick={()=> {GoToLogin() ; OpendCart()}}>
           Login 
         </button>
       </div>

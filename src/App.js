@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 import ProductHandle from "./commponents/ProductHandle/ProductComponentHandle";
 import Loader from "./commponents/loader/Loader";
 import CartDrawer from "./commponents/Addcart/AddCart";
+import AuthForm from "./commponents/AuthForm/AuthForm";
 
 
 
@@ -35,7 +36,10 @@ console.log(Order);
 const GoToLogin = ()=>{
   setGoLog(!GoLog)
 console.log('asas');
-
+window.scrollBy({
+  top : 550,
+  behavior : 'smooth'
+})
 }
 // y wala function Open cart menu ke liye hai
 
@@ -52,8 +56,10 @@ useEffect(() => {
 
  const  getIndexData = (reciveProduct , setSendDataCheckOut)=>{
   console.log(reciveProduct);
-  if(reciveProduct === "") return alert('Please select Size')
-  setSendProduct((pre)=> [...pre , reciveProduct])
+
+  if(!reciveProduct ) return alert('Please select Size')
+ 
+    setSendProduct((pre)=> [...pre , reciveProduct])
  setSendDataCheckOut('')
 }
  
@@ -77,8 +83,9 @@ SendProduct,
   setCheckClick,
   DobaraChala,
   setDobaraChala,
+  GoToLogin,
 }}>
-  <Categories/>
+ {GoLog ? <AuthForm/> :  <Categories/>}
 </userContext.Provider>}
 <br/>
 <br/>

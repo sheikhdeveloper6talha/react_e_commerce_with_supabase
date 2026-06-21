@@ -3,7 +3,7 @@ import './ShalwarKameez.css';
 import { userContext } from '../contextApi/Context';
 import Loader from '../loader/Loader';
 import Popup from '../poup/Poup';
-import initialProducts from '../ProductsItems/ProductsItems';
+import getData from '../ProductsItems/ProductsItems';
 import OrderCard from '../OrderCard/OrderCard';
 const ShalwarKameezCatalog = () => {
   let {getIndexData , checkCondition} = useContext(userContext)
@@ -12,14 +12,18 @@ const ShalwarKameezCatalog = () => {
   let [loader , setLoader] = useState(true)
   let [Open , setOpen] = useState(false)
   let [sendProducts , setsendProducts] = useState('')
+  let [initialProducts , setInitialProducts] = useState([])
 
    
   
 
 useEffect(()=>{
-  setTimeout(() => {
-      setLoader(false)
-    }, 2000);
+  const fetchData = async () => {
+    let data = await getData()
+    setInitialProducts(data || [])
+    setLoader(false)
+  }
+  fetchData()
 },[])
   const [searchQuery, setSearchQuery] = useState('');
 
@@ -35,7 +39,6 @@ useEffect(()=>{
   });
 
 const opendModleHandlar = (reciveProducts)=>{
-  console.log(reciveProducts);
   
   setsendProducts(reciveProducts)
   setOpen(true)
@@ -82,14 +85,16 @@ if(checkCondition === 'Order') return <OrderCard/>
           {filteredProducts.map((product) => (
             <div key={product.id} className="item-card" onClick={()=>  opendModleHandlar(product)}>
               <div className="image-frame">
-                <img src={product.image} alt={product.name} className="item-img" />
+                <img src={product.image_url} alt={product.name} className="item-img" />
                 <span className="type-badge">{product.type}</span>
+                <br/>
+                <span className="type-badge1">{`${product.stock < 1 ? `SOLD OUT` : `Stock ${product.stock}`}`}</span>
               </div>
               <div className="item-details">
                 <span className="item-tag">{product.category}’s Collection</span>
                 <h3 className="item-title">{product.name}</h3>
                 <div className="price-row">
-                  <p className="item-price">{product.price}</p>
+                  <p className="item-price">PKR : {product.price}</p>
                 </div>
               </div>
             </div>

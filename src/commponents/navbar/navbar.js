@@ -56,6 +56,11 @@ const Navbar = () => {
       console.log(error.message);
     } else {
       console.log('User Logged Out Successfully');
+         const { error } = await connectSupabase
+        .from('UsersIfo')
+        .update({ agreeTerms: false })
+        .eq('id', CurruentUsers.id)
+      
     }
 
     setDobaraChala(!DobaraChala);
