@@ -33,6 +33,8 @@ let [checkLoader , setcheckLoader] = useState(false)
   })
    if(error){
 setisErrorText(error.message)
+    setcheckLoader(false)
+
    }else{
     console.log(UsersIbfo.user.id);
     
