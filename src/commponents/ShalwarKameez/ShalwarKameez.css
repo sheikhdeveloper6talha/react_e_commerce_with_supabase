@@ -160,8 +160,8 @@ align-items: center;
 /* Unstitched / Ready to wear Badge */
 .type-badge {
   position: absolute;
-  top: 15px;
-  left: 15px;
+  top: 25px;
+  left: -20px;
   background-color: rgba(255, 255, 255, 0.95);
   padding: 4px 10px;
   font-family: 'Segoe UI', sans-serif;
@@ -170,6 +170,9 @@ align-items: center;
   text-transform: uppercase;
   letter-spacing: 1px;
   border: 1px solid #111;
+transform: rotate(-45deg);
+background: #2b2b2b;
+color: #f5f5f5;
 }
 /* Stock / Ready to wear Badge */
 .type-badge1 {
@@ -184,6 +187,9 @@ align-items: center;
   text-transform: uppercase;
   letter-spacing: 1px;
   border: 1px solid #111;
+transform: rotate(-45deg);
+background: #2b2b2b;
+color: #f5f5f5;
 }
 
 /* Product Content Details */
