@@ -99,6 +99,7 @@ SendProduct,
   getIndexData,
   GoLog,
   GoToLogin,
+  SendProduct,
 }}>
 {checkClick &&   <ProductHandle/>}
 </userContext.Provider>

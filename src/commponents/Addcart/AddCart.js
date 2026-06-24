@@ -38,19 +38,26 @@ setCurruentUsers(user)
        getCurrentUser();
      }, [RenderCart]);
    
-const DeleteCart = (id)=>{
-console.log(id);
-let Dete = RenderCart.filter((e)=>e.id !== id)
+const DeleteCart = (index)=>{
+console.log(index);
+let Dete = RenderCart.filter((_ , i)=>i !== index)
 setRenderCart( Dete)
 setSendProduct( Dete)
 }
 
-const Increases = (id) => {
-  let updatedCart = RenderCart.map(val => {
-  if (val.id === id) {
-    
-    if (val.qty >= val.stock) {
+const Increases = (index , id) => {
+  console.log(id);
+  
+  
+
+
+  
+  let updatedCart = RenderCart.map((val , i) => {
+    if (i === index) {
+  const checkAllQTY = RenderCart.filter(v=> v.id === val.id).reduce((totle , vl)=> totle + vl.qty ,0)  
+    if (checkAllQTY >= val.stock) {
       alert("Stock khatam ho gaya");
+return val
     } 
 
     return {
@@ -65,9 +72,9 @@ const Increases = (id) => {
   
   setRenderCart( updatedCart)
 }
-const Decrease = (id , qty) => {
-  let updatedCart = RenderCart.map(val => 
-    val.id === id 
+const Decrease = (index , qty) => {
+  let updatedCart = RenderCart.map((val , i) => 
+    i === index 
       ? { ...val, qty: Math.max((val.qty || 0)-1 , 1)} // qty 1 barhao
       : val // baqi items same
   )
@@ -89,7 +96,7 @@ const Decrease = (id , qty) => {
         </h2>
         <button className="close-btn" style={{color: 'black'}} onClick={()=> OpendCart()}>✕</button>
       </div>
-{RenderCart.map((valueProduct)=>{
+{RenderCart.map((valueProduct  , index)=>{
   
 return(
      <div className="cart-item">
@@ -115,15 +122,15 @@ return(
           </div>
 
           <div className="quantity-box">
-            <button onClick={()=> Decrease(valueProduct.id , valueProduct.qty)}>-</button>
+            <button onClick={()=> Decrease(index , valueProduct.id)}>-</button>
             <span>{valueProduct.qty}</span>
-            <button onClick={()=> Increases(valueProduct.id , valueProduct.qty)}>+</button>
+            <button onClick={()=> Increases(index , valueProduct.id)}>+</button>
           </div>
         </div>
 
         <div className="item-right">
           <p>{(valueProduct.price* valueProduct.qty).toLocaleString()}</p>
-          <button className="delete-btn" onClick={()=> DeleteCart(valueProduct.id)}>🗑</button>
+          <button className="delete-btn" onClick={()=> DeleteCart(index)}>🗑</button>
         </div>
       </div>
 )

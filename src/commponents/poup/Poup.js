@@ -1,10 +1,10 @@
-import { useContext, useEffect, useState } from 'react'
+import { useContext, useEffect, useRef, useState } from 'react'
 import './Poup.css'
 import { userContext } from '../contextApi/Context'
 function Popup (){
-    let {setOpen , sendProducts , getIndexData} = useContext(userContext)
+    let {setOpen , sendProducts , getIndexData , SendProduct} = useContext(userContext)
   const [SendDataCheckOut , setSendDataCheckOut] = useState(null)
-console.log(SendDataCheckOut);
+const length = useRef(0)
 const sizeArray = ["XXL" , 'XL' , 'L' , 'M' , 'S']
 const sizeGet = (reciveSize)=>{
  if (!sendProducts) return alert('Nnhee hai')
@@ -20,11 +20,23 @@ useEffect(() => {
 }, [])    
 
 const addCartItems = ()=>{
-  console.log(SendDataCheckOut.sizes);
+
+
   if(!SendDataCheckOut ) return alert('plese size')
-    getIndexData(SendDataCheckOut , setSendDataCheckOut)
+ 
+  
+   
+
+      getIndexData(SendDataCheckOut , setSendDataCheckOut)
+   
+
+let a = SendProduct.filter((e)=> e?.id === sendProducts?.id)
+  console.log(a.length);
+  length.current = a.length
   
 }
+console.log(length.current);
+
     return(
   <div className='container'>
     <div className='close'>
@@ -44,7 +56,7 @@ const addCartItems = ()=>{
           )
         })} 
       </div>
-{  (+sendProducts.stock) >= 1 ?  <button  onClick={()=> addCartItems()}>Add to cart</button>     : <button >Not Available</button> }
+{  (length.current+1) <  (+sendProducts.stock) ?   <button  onClick={()=> addCartItems()}>Add to cart</button>    :   <button >Not Available</button>}
       </div>
     </div>
   </div>

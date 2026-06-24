@@ -6,7 +6,7 @@ import Popup from '../poup/Poup';
 import getData from '../ProductsItems/ProductsItems';
 import OrderCard from '../OrderCard/OrderCard';
 const ShalwarKameezCatalog = () => {
-  let {getIndexData , checkCondition} = useContext(userContext)
+  let {getIndexData , checkCondition , SendProduct} = useContext(userContext)
 
   // Traditional Ethnic Dataset
   let [loader , setLoader] = useState(true)
@@ -15,14 +15,16 @@ const ShalwarKameezCatalog = () => {
   let [initialProducts , setInitialProducts] = useState([])
 
    
-  
-
-useEffect(()=>{
   const fetchData = async () => {
     let data = await getData()
     setInitialProducts(data || [])
     setLoader(false)
-  }
+    console.log('i am run');
+    
+  }  
+
+useEffect(()=>{
+
   fetchData()
 },[])
   const [searchQuery, setSearchQuery] = useState('');
@@ -53,7 +55,7 @@ if(checkCondition === 'Order') return <OrderCard/>
   return (
     <div className="catalog-container">
    {Open &&
-      <userContext.Provider value={{sendProducts  , setOpen , getIndexData}}>
+      <userContext.Provider value={{sendProducts  , setOpen , getIndexData , SendProduct}}>
        <Popup/>
        </userContext.Provider>
    }
