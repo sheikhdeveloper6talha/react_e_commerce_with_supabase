@@ -67,6 +67,7 @@ if(SendDataCheckOut.sizes === 'M' ||
           )
         })} 
       </div>
+      
 {  (length.current) <  (+sendProducts.stock) ?   <button  onClick={()=> addCartItems()}>Add to cart</button>    :   <button >Not Available</button>}
       </div>
     </div>
