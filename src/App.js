@@ -4,7 +4,7 @@ import HeroSection from "./commponents/hero/hero";
 import Navbar from "./commponents/navbar/navbar";
 import TopTicker from "./commponents/text/text";
 import { userContext } from "./commponents/contextApi/Context";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import ProductHandle from "./commponents/ProductHandle/ProductComponentHandle";
 import Loader from "./commponents/loader/Loader";
 import CartDrawer from "./commponents/Addcart/AddCart";
@@ -24,31 +24,39 @@ function App() {
 
 // ReFreshProducts 
 
-const ReFreshProductsRender = ()=>{
+
+const ReFreshProductsRender = useCallback (()=>{
   setReFreshProducts(prev => prev + 1)
-}
+  console.log('I am A ReFreshProductsRender');
+  
+},[ReFreshProducts])
 
 // order comfrim
 
-const order = (reviveOrder)=>{
+const order = useCallback ((reviveOrder)=>{
 setOrder(reviveOrder)
+  console.log('I am A order');
 
-}
+},[Order])
 
 // login me jane ke liye hai
 
-const GoToLogin = ()=>{
+const GoToLogin = useCallback( ()=>{
   setGoLog(!GoLog)
 window.scrollBy({
   top : 550,
   behavior : 'smooth'
 })
-}
+  console.log('I am A GoToLogin');
+
+},[GoLog])
 // y wala function Open cart menu ke liye hai
 
-const OpendCart = ()=>{
+const OpendCart = useCallback( ()=>{
   setCartData(!CartData)  
-}
+  console.log('I am A OpendCart');
+
+},[CartData])
 // y loader ke liye hai
 useEffect(() => {
     const timer = setTimeout(() => {
@@ -57,14 +65,16 @@ useEffect(() => {
     return () => clearTimeout(timer)
   }, [])
 
- const  getIndexData = (reciveProduct , setSendDataCheckOut)=>{
+ const  getIndexData = useCallback( (reciveProduct , setSendDataCheckOut)=>{
   
 
   if(!reciveProduct ) return alert('Please select Size')
  
     setSendProduct((pre)=> [...pre , reciveProduct])
  setSendDataCheckOut('')
-}
+ console.log('I am a getIndexData');
+ 
+},[SendProduct])
  
   if(!First){
   return (

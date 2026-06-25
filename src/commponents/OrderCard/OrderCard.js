@@ -3,6 +3,7 @@ import { useEffect } from 'react';
 import './OrderCard.css';
 import { connectSupabase } from '../supabase/supabase';
 import Loader from '../loader/Loader';
+import getData from '../ProductsItems/ProductsItems';
 const OrderCard = () => {
 
 const [CurrentOrderUsers , setCurrentOrderUsers] = useState([])
@@ -55,12 +56,12 @@ setloader(false)
 
 //   OrderCancelled function
 
-const OrderCancelled =  async(id , uuid)=>{
+const OrderCancelled =  async(id , uuid , qty , itemID)=>{
     const response = await connectSupabase
   .from('orderItems')
   .delete()
   .eq('id', id)
-
+.select()
   getCurrentUser()
 if(OrderDetails.length === 1){
  const response = await connectSupabase
@@ -69,7 +70,18 @@ if(OrderDetails.length === 1){
   .eq('id', uuid)
 
 };
+let ReStockAdd = await getData(itemID)
 
+let ReturnStock = (+ReStockAdd[0].stock) + (+qty)
+if(ReturnStock){
+
+
+
+const {error} = await connectSupabase
+.from('ProductitemsAdd')
+.update({'stock'  : ReturnStock})
+.eq('id' , itemID)
+}
 }
 
 const formatDate = (timestamp) => {
@@ -123,7 +135,7 @@ if (!loader) {
               </div>
 
               <div className="order-footer">
-                <button className="btn-track" onClick={()=> OrderCancelled(items.id , items.uuid)}>Order cancelled</button>
+                <button className="btn-track" onClick={()=> OrderCancelled(items.id , items.uuid , items.qty , items.itemID)}>Order cancelled</button>
               </div>
             </div>
           );
