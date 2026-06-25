@@ -56,7 +56,7 @@ let a = SendProduct.filter((e)=> e?.id === sendProducts?.id)
           )
         })} 
       </div>
-{  (length.current+1) <  (+sendProducts.stock) ?   <button  onClick={()=> addCartItems()}>Add to cart</button>    :   <button >Not Available</button>}
+{  (length.current) <  (+sendProducts.stock) ?   <button  onClick={()=> addCartItems()}>Add to cart</button>    :   <button >Not Available</button>}
       </div>
     </div>
   </div>
