@@ -25,7 +25,11 @@ useEffect(() => {
  setSendDataCheckOut(sendProducts)
    
 }, [ReFreshProducts ])    
-
+useEffect(()=>{
+let a = SendProduct.filter((e)=> e?.id === sendProducts?.id)
+  length.current = a.length
+  getData()
+},[SendProduct])
 const addCartItems = ()=>{
 
 if(SendDataCheckOut.sizes === 'M' ||
@@ -39,14 +43,8 @@ if(SendDataCheckOut.sizes === 'M' ||
 }else{
   return alert('Please Select Size')
 }
-
-
-
    
 
-let a = SendProduct.filter((e)=> e?.id === sendProducts?.id)
-  length.current = a.length
-  getData()
 }
 
 
