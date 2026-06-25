@@ -131,10 +131,23 @@
 
 .summary-row {
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
   margin-bottom: 15px;
+gap: 10px;
 }
-
+.summary-row > button{
+  padding: 10px;
+  font-weight: 700;
+  background:darkgoldenrod;
+  border: none;
+  outline: none;
+  border-radius: 10px;
+  color: #fff;
+}
+.summary-row > div{
+  display: flex;
+  justify-content: space-between;
+}
 .total {
   font-size: 20px;
   font-weight: bold;

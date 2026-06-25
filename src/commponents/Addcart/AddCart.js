@@ -5,7 +5,11 @@ import {connectSupabase} from '../supabase/supabase'
 import Loader from "../loader/Loader";
 import PaymentCard from "../Payment/PaymentCard";
 const CartDrawer = () => {
-    let {OpendCart , DobaraChala , setDobaraChala , SendProduct , setSendProduct , order , GoToLogin} = useContext(userContext)
+    let {OpendCart , DobaraChala ,
+       setDobaraChala , SendProduct , 
+       setSendProduct , order , 
+       GoToLogin , ReFreshProductsRender} =
+        useContext(userContext)
     let [Loaders , setLoaders]  = useState(true)
     let [OrderCompo , setOrderCompo]  = useState(false)
     let [CurruentUsers , setCurruentUsers]  = useState(null)
@@ -39,18 +43,12 @@ setCurruentUsers(user)
      }, [RenderCart]);
    
 const DeleteCart = (index)=>{
-console.log(index);
 let Dete = RenderCart.filter((_ , i)=>i !== index)
 setRenderCart( Dete)
 setSendProduct( Dete)
 }
 
-const Increases = (index , id) => {
-  console.log(id);
-  
-  
-
-
+const Increases = (index , id) => {  
   
   let updatedCart = RenderCart.map((val , i) => {
     if (i === index) {
@@ -139,8 +137,11 @@ return(
 
       <div className="cart-summary">
         {SendProduct.length > 0 && <div className="summary-row">
+          <button onClick={()=> OpendCart()}>More Buy</button>
+          <div >  
           <span>Delivery Charges</span>
           <span>Rs300.00</span>
+          </div>
         </div>}
 {SendProduct.length > 0 &&
         <div className="summary-row total">
@@ -167,7 +168,9 @@ return(
           Continue Shop
         </button>}
 
-      {OrderCompo &&    <userContext.Provider value={{setOrderCompo , RenderCart , setRenderCart , setSendProduct , OpendCart}}> <PaymentCard/></userContext.Provider>}
+      {OrderCompo &&    <userContext.Provider 
+      value={{setOrderCompo , RenderCart , setRenderCart , setSendProduct , OpendCart, ReFreshProductsRender}}> 
+      <PaymentCard/></userContext.Provider>}
       </div>
     </div>
 

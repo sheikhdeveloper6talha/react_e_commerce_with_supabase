@@ -22,14 +22,13 @@ if(user){
   .from('Order')
   .select()
   .match({ id: user.id})
-  console.log(data);
+
   setCurrentOrderUsers(data)
 if(data){
     const { data, error } = await connectSupabase
   .from('orderItems')
   .select()
   .match({ uuid: user.id})
-  console.log(data);
   setOrderDetails(data)
 }
  
@@ -42,7 +41,7 @@ if(data){
       console.log(error);
     }
 setloader(false) 
-console.log('chala hai');
+
 };
 
   useEffect(() => {
@@ -57,7 +56,6 @@ console.log('chala hai');
 //   OrderCancelled function
 
 const OrderCancelled =  async(id , uuid)=>{
-    console.log(id);
     const response = await connectSupabase
   .from('orderItems')
   .delete()

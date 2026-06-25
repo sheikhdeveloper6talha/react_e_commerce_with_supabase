@@ -20,14 +20,18 @@ function App() {
   let [SendProduct , setSendProduct] = useState([])
   let [Order , setOrder] = useState('')
   let [GoLog , setGoLog] = useState(false)
+  let [ReFreshProducts , setReFreshProducts] = useState(0)
 
+// ReFreshProducts 
 
+const ReFreshProductsRender = ()=>{
+  setReFreshProducts(prev => prev + 1)
+}
 
 // order comfrim
 
 const order = (reviveOrder)=>{
 setOrder(reviveOrder)
-console.log(Order);
 
 }
 
@@ -35,7 +39,6 @@ console.log(Order);
 
 const GoToLogin = ()=>{
   setGoLog(!GoLog)
-console.log('asas');
 window.scrollBy({
   top : 550,
   behavior : 'smooth'
@@ -55,7 +58,7 @@ useEffect(() => {
   }, [])
 
  const  getIndexData = (reciveProduct , setSendDataCheckOut)=>{
-  console.log(reciveProduct);
+  
 
   if(!reciveProduct ) return alert('Please select Size')
  
@@ -100,12 +103,13 @@ SendProduct,
   GoLog,
   GoToLogin,
   SendProduct,
+  ReFreshProducts
 }}>
 {checkClick &&   <ProductHandle/>}
 </userContext.Provider>
 
 {CartData && <userContext.Provider value={{OpendCart , DobaraChala 
-  ,setDobaraChala, SendProduct , setSendProduct , order , GoToLogin }}>
+  ,setDobaraChala, SendProduct , setSendProduct , order , GoToLogin , ReFreshProductsRender }}>
  <CartDrawer/> 
 </userContext.Provider> }
 <Footer/>

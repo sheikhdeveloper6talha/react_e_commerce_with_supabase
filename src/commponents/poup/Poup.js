@@ -1,6 +1,7 @@
 import { useContext, useEffect, useRef, useState } from 'react'
 import './Poup.css'
 import { userContext } from '../contextApi/Context'
+import getData from '../ProductsItems/ProductsItems'
 function Popup (){
     let {setOpen , sendProducts , getIndexData , SendProduct} = useContext(userContext)
   const [SendDataCheckOut , setSendDataCheckOut] = useState(null)
@@ -31,11 +32,10 @@ const addCartItems = ()=>{
    
 
 let a = SendProduct.filter((e)=> e?.id === sendProducts?.id)
-  console.log(a.length);
   length.current = a.length
-  
+  getData()
 }
-console.log(length.current);
+
 
     return(
   <div className='container'>

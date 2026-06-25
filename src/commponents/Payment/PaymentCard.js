@@ -3,13 +3,16 @@ import "./PaymentCard.css"; // CSS file import
 import { userContext } from "../contextApi/Context";
 import { connectSupabase } from "../supabase/supabase";
 import Loader from "../loader/Loader";
+import getData from "../ProductsItems/ProductsItems";
 const PaymentCard = () => {
-    let {setOrderCompo , RenderCart , setSendProduct , setRenderCart , OpendCart} = useContext(userContext)
+    let {setOrderCompo , RenderCart ,
+       setSendProduct , setRenderCart ,
+        OpendCart , fetchData , ReFreshProductsRender} =
+         useContext(userContext)
     const [loader , setLoader] = useState(true)
     const [checks , setChecks] = useState('')
 
- console.log(RenderCart);
- 
+
   const [form, setForm] = useState({
     name: "",
     email: "",
@@ -27,13 +30,11 @@ const PaymentCard = () => {
            data: { user }
          } = await connectSupabase.auth.getUser();
 if(user){
-    console.log(user.id);
-    
    const { data, error } = await connectSupabase
   .from('UsersIfo')
   .select()
   .match({ id: user.id})
-  console.log(data[0].name);
+
  setForm({name : data[0].name || '' , email : data[0].email || '' , id: user.id})
  setLoader(false)
 
@@ -43,7 +44,7 @@ const {data : check} = await connectSupabase
 .from('Order')
 .select()
 .match({id : user.id})
-console.log(check);
+
 setChecks(check)
 
 
@@ -69,7 +70,6 @@ setChecks(check)
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Form Data:", form);
     alert("Order placed! Fake payment done ✅");
      // cut ho ke band ho jayega
   };
@@ -83,7 +83,7 @@ const orderNowHandler = async () => {
 
 checks.map((checkValue)=>{
   if(checkValue.id === form.id){
-    console.log('data hai isme');
+
     
   }
 })    
@@ -111,7 +111,8 @@ checks.map((checkValue)=>{
       price:  (Number(item.price) * item.qty) + 300,
       image: item.image_url,
       qty: item.qty,
-      size : item.sizes
+      size : item.sizes,
+      itemID : item.id
     } ) )
 
     const { data ,  error: itemsError } = await connectSupabase
@@ -120,12 +121,19 @@ checks.map((checkValue)=>{
 .select()
 
 if(data) {
+  
+  let totalQty = RenderCart
+.filter((item , i) => item.id === data[i]?.itemID)
+.reduce((sum, item) => sum + item.qty, 0)
+
+
+
+  
   await Promise.all  (  RenderCart.map(async (items)=>{
-  console.log(items);
   
    const { error: stocks} = await connectSupabase
   .from('ProductitemsAdd')
-  .update({'stock' : Number(items.stock) - items.qty })
+  .update({'stock' : Number(items.stock) - totalQty })
   .eq('id' , items.id)
   if(stocks)  alert('Stock not Updates')
 })
@@ -138,17 +146,17 @@ if(data) {
 
     if (itemsError) throw itemsError
 
-    console.log('Order save ho gaya:', orderData.id)
+
     alert('Order placed successfully!')
 
 
   } catch (error) {
     console.log(error.message)
-    alert('Order failed: ' + error.message)
   }
   setRenderCart([])
   setSendProduct([])
 setOrderCompo(false)
+ReFreshProductsRender()
 OpendCart()
 }
 

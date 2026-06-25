@@ -11,7 +11,11 @@ import OrderCard from "../OrderCard/OrderCard"
 import useAuth from "../CurrentUsres/CurrentUsres"
 
 function ProductHandle(props) {
-  let { checkClick, DobaraChala, setDobaraChala, getIndexData, GoLog  , GoToLogin , SendProduct} = useContext(userContext)
+  let { checkClick, DobaraChala, 
+    setDobaraChala, getIndexData, 
+    GoLog  , GoToLogin ,
+     SendProduct , ReFreshProducts} =
+      useContext(userContext)
 
 
   const [Rerender, setRerender] = useState(false)
@@ -30,7 +34,7 @@ if(!GoLog){
     return (
       <>
           
-         <userContext.Provider value={{ checkCondition , Rerender, setRerender, DobaraChala, setDobaraChala, getIndexData, SendProduct }}>
+         <userContext.Provider value={{ ReFreshProducts, checkCondition , Rerender, setRerender, DobaraChala, setDobaraChala, getIndexData, SendProduct }}>
               <ShalwarKameezCatalog />
             </userContext.Provider>
        

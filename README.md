@@ -56,8 +56,4 @@ A full client-side E-Commerce web app built with React JS and Supabase as the ba
 
 ## 📝 Note
 Payment is currently manual via QR Code. This is a demo/fake payment system for testing purposes only.
-### *Kya kya cover kar diya:*
-1. Tu ne jo bataya wo sab point-wise likh diya
-2. English sahi kar di par teri facilities as it is rakhi hain
-3. GitHub wale isko parh ke 10 sec me samajh jayenge project kya karta hai
 

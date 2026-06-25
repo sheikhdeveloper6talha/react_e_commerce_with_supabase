@@ -35,9 +35,7 @@ let [checkLoader , setcheckLoader] = useState(false)
 setisErrorText(error.message)
     setcheckLoader(false)
 
-   }else{
-    console.log(UsersIbfo.user.id);
-    
+   }else{    
    const { error } = await connectSupabase
   .from('UsersIfo')
   .update({ agreeTerms: true })

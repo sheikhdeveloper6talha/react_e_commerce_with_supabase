@@ -103,7 +103,7 @@ const SingUp = () => {
     }
 
   } catch (err) {
-    console.error("Unexpected Error:", err);
+    console.log("Unexpected Error:", err);
 
     setisErrorText("Something went wrong. Please try again.");
   }
