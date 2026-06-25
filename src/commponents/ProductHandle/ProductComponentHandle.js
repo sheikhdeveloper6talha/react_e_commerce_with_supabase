@@ -14,7 +14,8 @@ function ProductHandle(props) {
   let { checkClick, DobaraChala, 
     setDobaraChala, getIndexData, 
     GoLog  , GoToLogin ,
-     SendProduct , ReFreshProducts} =
+     SendProduct , ReFreshProducts,
+    openPopup , ClosePopup , Open} =
       useContext(userContext)
 
 
@@ -34,7 +35,13 @@ if(!GoLog){
     return (
       <>
           
-         <userContext.Provider value={{ ReFreshProducts, checkCondition , Rerender, setRerender, DobaraChala, setDobaraChala, getIndexData, SendProduct }}>
+         <userContext.Provider value={{ ReFreshProducts, checkCondition , 
+          Rerender, setRerender, 
+          DobaraChala, setDobaraChala,
+           getIndexData, SendProduct,
+           openPopup , ClosePopup,
+           Open
+           }}>
               <ShalwarKameezCatalog />
             </userContext.Provider>
        

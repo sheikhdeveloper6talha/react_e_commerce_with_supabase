@@ -8,7 +8,8 @@ const CartDrawer = () => {
     let {OpendCart , DobaraChala ,
        setDobaraChala , SendProduct , 
        setSendProduct , order , 
-       GoToLogin , ReFreshProductsRender} =
+       GoToLogin , ReFreshProductsRender,
+      ClosePopup} =
         useContext(userContext)
     let [Loaders , setLoaders]  = useState(true)
     let [OrderCompo , setOrderCompo]  = useState(false)
@@ -97,7 +98,7 @@ const Decrease = (index , qty) => {
 {RenderCart.map((valueProduct  , index)=>{
   
 return(
-     <div className="cart-item">
+     <div key={index} className="cart-item">
         <img
           src={valueProduct.image_url}
           alt="product"
@@ -169,7 +170,10 @@ return(
         </button>}
 
       {OrderCompo &&    <userContext.Provider 
-      value={{setOrderCompo , RenderCart , setRenderCart , setSendProduct , OpendCart, ReFreshProductsRender}}> 
+      value={{setOrderCompo , RenderCart ,
+       setRenderCart , setSendProduct ,
+        OpendCart, ReFreshProductsRender,
+        ClosePopup}}> 
       <PaymentCard/></userContext.Provider>}
       </div>
     </div>

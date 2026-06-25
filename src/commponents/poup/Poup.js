@@ -3,32 +3,45 @@ import './Poup.css'
 import { userContext } from '../contextApi/Context'
 import getData from '../ProductsItems/ProductsItems'
 function Popup (){
-    let {setOpen , sendProducts , getIndexData , SendProduct} = useContext(userContext)
+    let {ClosePopup , sendProducts ,
+       getIndexData , SendProduct , 
+       ReFreshProducts } =
+        useContext(userContext)
   const [SendDataCheckOut , setSendDataCheckOut] = useState(null)
 const length = useRef(0)
 const sizeArray = ["XXL" , 'XL' , 'L' , 'M' , 'S']
 const sizeGet = (reciveSize)=>{
  if (!sendProducts) return alert('Nnhee hai')
 
- setSendDataCheckOut({
+ setSendDataCheckOut( {
    ...sendProducts,
    sizes: reciveSize
  })
+ 
+ 
 }    
 
 useEffect(() => {
  setSendDataCheckOut(sendProducts)
-}, [])    
+   
+}, [ReFreshProducts ])    
 
 const addCartItems = ()=>{
 
+if(SendDataCheckOut.sizes === 'M' ||
+  SendDataCheckOut.sizes === 'L' ||
+  SendDataCheckOut.sizes === 'S' ||
+  SendDataCheckOut.sizes === 'XL' ||
+  SendDataCheckOut.sizes === 'XXL' 
+){
 
-  if(!SendDataCheckOut ) return alert('plese size')
- 
-  
-   
+   getIndexData(SendDataCheckOut , setSendDataCheckOut)
+}else{
+  return alert('Please Select Size')
+}
 
-      getIndexData(SendDataCheckOut , setSendDataCheckOut)
+
+
    
 
 let a = SendProduct.filter((e)=> e?.id === sendProducts?.id)
@@ -40,15 +53,15 @@ let a = SendProduct.filter((e)=> e?.id === sendProducts?.id)
     return(
   <div className='container'>
     <div className='close'>
-      <p onClick={()=> setOpen(false)}>&#10006;</p>
+      <p onClick={()=> ClosePopup()}>&#10006;</p>
     </div>
     <div className='items'>
-      <img src={sendProducts.image_url}/>
-      <h2>{sendProducts.name}</h2>
-      <h4>{sendProducts.description}</h4>
-      <h3>Price {sendProducts.price}</h3>
+      <img src={sendProducts?.image_url}/>
+      <h2>{sendProducts?.name}</h2>
+      <h4>{sendProducts?.description}</h4>
+      <h3>Price {sendProducts?.price}</h3>
       <div className='categorey'>
-        <p>{sendProducts.type}</p>
+        <p>{sendProducts?.type}</p>
       <div className='Size'>
         {sizeArray.map((itemsSize)=>{
           return(

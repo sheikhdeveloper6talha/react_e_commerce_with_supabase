@@ -7,12 +7,14 @@ import getData from '../ProductsItems/ProductsItems';
 import OrderCard from '../OrderCard/OrderCard';
 const ShalwarKameezCatalog = () => {
   let {getIndexData , checkCondition , 
-    SendProduct , ReFreshProducts}  =
+    SendProduct , ReFreshProducts ,
+   openPopup , ClosePopup , Open}  =
      useContext(userContext)
+
 
   // Traditional Ethnic Dataset
   let [loader , setLoader] = useState(true)
-  let [Open , setOpen] = useState(false)
+ 
   let [sendProducts , setsendProducts] = useState('')
   let [initialProducts , setInitialProducts] = useState([])
 
@@ -24,9 +26,12 @@ const ShalwarKameezCatalog = () => {
   }  
 
 useEffect(()=>{
-
   fetchData()
+
 },[ReFreshProducts])
+useEffect(()=>{
+  return ClosePopup()
+},[])
   const [searchQuery, setSearchQuery] = useState('');
 
   // Filter pipeline: Checks search query AND category tabs
@@ -43,11 +48,12 @@ useEffect(()=>{
 const opendModleHandlar = (reciveProducts)=>{
   
   setsendProducts(reciveProducts)
-  setOpen(true)
+  
 window.scrollTo({
   top : 0,
   behavior : 'smooth'
-})  
+})
+openPopup()  
 }
 
 if(!loader){
@@ -55,7 +61,9 @@ if(checkCondition === 'Order') return <OrderCard/>
   return (
     <div className="catalog-container">
    {Open &&
-      <userContext.Provider value={{sendProducts  , setOpen , getIndexData , SendProduct , }}>
+      <userContext.Provider value={{sendProducts  , 
+       getIndexData , SendProduct,
+         ClosePopup , ReFreshProducts }}>
        <Popup/>
        </userContext.Provider>
    }

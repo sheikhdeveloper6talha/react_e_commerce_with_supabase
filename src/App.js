@@ -21,13 +21,26 @@ function App() {
   let [Order , setOrder] = useState('')
   let [GoLog , setGoLog] = useState(false)
   let [ReFreshProducts , setReFreshProducts] = useState(0)
+   let [Open , setOpen] = useState(false)
+   
 
-// ReFreshProducts 
+// Opend Popup functions
+const openPopup = useCallback(()=>{
+  setOpen(true)
+
+  
+},[])
+// Opend Popup functions
+const ClosePopup = useCallback(()=>{
+  setOpen(false)
+},[])
+
+   // ReFreshProducts 
 
 
 const ReFreshProductsRender = useCallback (()=>{
   setReFreshProducts(prev => prev + 1)
-  console.log('I am A ReFreshProductsRender');
+
   
 },[ReFreshProducts])
 
@@ -35,7 +48,7 @@ const ReFreshProductsRender = useCallback (()=>{
 
 const order = useCallback ((reviveOrder)=>{
 setOrder(reviveOrder)
-  console.log('I am A order');
+
 
 },[Order])
 
@@ -47,14 +60,14 @@ window.scrollBy({
   top : 550,
   behavior : 'smooth'
 })
-  console.log('I am A GoToLogin');
+
 
 },[GoLog])
 // y wala function Open cart menu ke liye hai
 
 const OpendCart = useCallback( ()=>{
   setCartData(!CartData)  
-  console.log('I am A OpendCart');
+
 
 },[CartData])
 // y loader ke liye hai
@@ -72,7 +85,7 @@ useEffect(() => {
  
     setSendProduct((pre)=> [...pre , reciveProduct])
  setSendDataCheckOut('')
- console.log('I am a getIndexData');
+
  
 },[SendProduct])
  
@@ -113,13 +126,19 @@ SendProduct,
   GoLog,
   GoToLogin,
   SendProduct,
-  ReFreshProducts
+  ReFreshProducts,
+  openPopup,
+  ClosePopup,
+  Open,
 }}>
 {checkClick &&   <ProductHandle/>}
 </userContext.Provider>
 
 {CartData && <userContext.Provider value={{OpendCart , DobaraChala 
-  ,setDobaraChala, SendProduct , setSendProduct , order , GoToLogin , ReFreshProductsRender }}>
+  ,setDobaraChala, SendProduct ,
+   setSendProduct , order ,
+    GoToLogin , ReFreshProductsRender,
+    ClosePopup }}>
  <CartDrawer/> 
 </userContext.Provider> }
 <Footer/>

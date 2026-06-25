@@ -7,7 +7,8 @@ import getData from "../ProductsItems/ProductsItems";
 const PaymentCard = () => {
     let {setOrderCompo , RenderCart ,
        setSendProduct , setRenderCart ,
-        OpendCart , fetchData , ReFreshProductsRender} =
+        OpendCart , fetchData , ReFreshProductsRender,
+      ClosePopup} =
          useContext(userContext)
     const [loader , setLoader] = useState(true)
     const [checks , setChecks] = useState('')
@@ -77,6 +78,7 @@ setChecks(check)
 
 //   {orderNow function create}
 const orderNowHandler = async () => {
+
   if (form.phone.length < 11) return alert('Please fill phone number')
 
   try {
@@ -157,7 +159,10 @@ if(data) {
   setSendProduct([])
 setOrderCompo(false)
 ReFreshProductsRender()
+ClosePopup()
 OpendCart()
+console.log('Order Done');
+
 }
 
 
