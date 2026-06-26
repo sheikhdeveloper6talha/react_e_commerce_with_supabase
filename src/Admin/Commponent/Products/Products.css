@@ -1,0 +1,239 @@
+:root {
+  --card-bg: #ffffff;
+  --text-dark: #1e293b;
+  --text-muted: #1e293b;
+  --primary-indigo: #4f46e5;
+  --price-color: #0f172a;
+  
+  /* Badge Colors */
+  --badge-sale: #ef4444;
+  --badge-new: #10b981;
+  --badge-hot: #f59e0b;
+}
+
+/* Container Framework */
+.products-container {
+  padding: 30px;
+  width: 100%;
+  box-sizing: border-box;
+  font-family: system-ui, -apple-system, sans-serif;
+}
+
+.products-title-bar {
+  margin-bottom: 24px;
+}
+
+.products-title-bar h2 {
+  margin: 0 0 4px 0;
+  font-size: 1.6rem;
+  color: var(--text-dark);
+  font-weight: 700;
+}
+
+.products-title-bar p {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 0.95rem;
+}
+
+/* CSS Responsive Grid Settings */
+.products-grid-layout {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 24px;
+}
+
+/* Individual Card Styling */
+.fake-product-card {
+  border-radius: 12px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.fake-product-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08);
+  
+}
+
+/* Dynamic Badge Styling */
+.product-badge {
+  position: absolute;
+  top: 12px;
+  left: 15px;
+  padding: 4px 10px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #ffffff;
+  border-radius: 6px;
+  z-index: 10;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+background: #0f172a;
+padding: 10px;
+color: #f8fafc;
+transform: rotate(-45deg);
+}
+.product-stock{
+background: #0f172a;
+padding: 10px;
+color: #f8fafc;
+top: 40px;
+left: 6px;
+position: absolute;
+}
+.product-badge.sale { background-color: var(--badge-sale); }
+.product-badge.new { background-color: var(--badge-new); }
+.product-badge.hot { background-color: var(--badge-hot); }
+
+/* Image Display Area */
+.product-image-frame {
+  background-color: #f8fafc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom: 1px solid #f1f5f9;
+  transition: background-color 0.3s;
+  width: 100%;
+  height: 400px;
+  overflow: hidden;
+  transition: all 0.9s;
+}
+
+
+
+
+.product-image-frame img{
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  transition: all 0.9s;
+
+}
+.fake-product-card:hover .product-image-frame img {
+  transform: scale(1.1);
+}
+
+/* Content Details Body */
+.product-body {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.product-cat {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--text-muted);
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.product-title {
+  margin: 0 0 8px 0;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-dark);
+  line-height: 1.4;
+  display: -webkit-box;
+  -webkit-line-clamp: 2; /* 2 lines max content truncate logic */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  height: 2.8rem; /* uniform structure height maintains straight grids */
+}
+
+.product-rating {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: #f59e0b;
+  margin-bottom: 12px;
+}
+
+/* Pricing Grid */
+.product-price-row {
+  margin-top: auto;
+  display: flex;
+  align-items: center;
+}
+
+.current-price {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--price-color);
+}
+
+.old-price {
+  font-size: 0.88rem;
+  text-decoration: line-through;
+  color: var(--text-light, #94a3b8);
+  margin-left: 8px;
+}
+
+/* Cart Button Actions */
+.product-footer {
+display: flex;
+gap: 10px;
+  padding: 0 16px 16px 16px;
+}
+
+.add-cart-btn {
+  width: 100%;
+  background-color: transparent;
+  border: 1px solid var(--primary-indigo);
+  color: var(--primary-indigo);
+  padding: 10px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: all 0.2s ease;
+}
+
+.add-cart-btn:hover {
+  background-color: var(--primary-indigo);
+  color: #ffffff;
+  box-shadow: 0 4px 12px rgba(79, 70, 229, 0.15);
+}
+
+/* ==========================================================================
+   MOBILE MEDIA TWEAKS
+   ========================================================================== */
+@media (max-width: 640px) {
+  .products-container {
+    padding: 16px;
+    padding-top: 75px; 
+    height: auto;
+    padding-bottom: 100px;
+  }
+
+  .products-grid-layout {
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); /* Choti screen par cards narrower honge aur 2 columns fit honge */
+    gap: 12px;
+  }
+
+  .product-image-frame {
+    height: 130px;
+  }
+
+  .product-emoji {
+    font-size: 2.5rem;
+  }
+
+  .product-title {
+    font-size: 0.9rem;
+    height: 2.5rem;
+  }
+
+  .current-price {
+    font-size: 1.05rem;
+  }
+}

@@ -5,7 +5,11 @@ import ErrorToast from '../Error/Error';
 import { userContext } from '../contextApi/Context';
 import Loader from '../loader/Loader';
 const LoginForm = () => {
-   let {setToogle ,  setRerender , Rerender , DobaraChala, setDobaraChala, GoToLogin} = useContext(userContext)    
+   let {setToogle ,  setRerender ,
+     Rerender , DobaraChala, 
+     setDobaraChala, GoToLogin,
+    IsCheckAdmin} = 
+     useContext(userContext)    
     
 let [isErrorText , setisErrorText] = useState('')
 let [checkLoader , setcheckLoader] = useState(false)
@@ -36,11 +40,21 @@ setisErrorText(error.message)
     setcheckLoader(false)
 
    }else{    
-   const { error } = await connectSupabase
+   const {  error } = await connectSupabase
   .from('UsersIfo')
   .update({ agreeTerms: true })
   .eq('id', UsersIbfo.user.id)
-    
+   
+   const { data : newData , error: newError } = await connectSupabase
+  .from('UsersIfo')
+  .select()
+  .eq('id', UsersIbfo.user.id)
+
+  if(newData[0].type === 'admin'){
+    IsCheckAdmin(newData[0].type)
+  }else{
+IsCheckAdmin(newData[0].type)
+  }
     
    setRerender(!Rerender)
    setDobaraChala(!DobaraChala)

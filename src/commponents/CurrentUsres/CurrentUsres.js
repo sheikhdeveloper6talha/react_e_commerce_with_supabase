@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react"
 import { connectSupabase } from "../supabase/supabase"
 
-const useAuth = (DobaraChala) => {
+ const UseAuth = (DobaraChala) => {
   const [currentUser, setCurrentUser] = useState(null)
-  const [Loading, setLoading] = useState(false)
+  const [Loading, setLoading] = useState(true)
 
   useEffect(() => {
     const getCurrentUser = async () => {
@@ -14,7 +14,7 @@ const useAuth = (DobaraChala) => {
       } catch (err) {
         console.log(err)
       } 
-      setLoading(true)
+      setLoading(false)
     }
 
     getCurrentUser()
@@ -23,4 +23,19 @@ const useAuth = (DobaraChala) => {
   return { currentUser, Loading }
 }
 
-export default useAuth
+export  const getCurrentUserData = async (id)=>{
+  
+  try{
+ const {data , error} = await connectSupabase
+ .from('UsersIfo')
+ .select()
+ .eq('id' , id)
+ .single()
+ return  data
+  }catch(errors){
+console.log(errors);
+
+  }
+}
+
+export default UseAuth

@@ -1,0 +1,200 @@
+/* Styling Tokens */
+:root {
+  --surface-card: #ffffff;
+  --text-dark: #0f172a;
+  --text-slate: #475569;
+  --text-light: #94a3b8;
+  --border-light: #f1f5f9;
+  --primary-indigo: #4f46e5;
+  
+  /* Status Colors */
+  --color-active: #10b981;
+  --color-away: #f59e0b;
+  --color-offline: #64748b;
+}
+
+/* Container Wrap */
+.users-section {
+  padding: 30px;
+  width: 100%;
+  box-sizing: border-box;
+  font-family: system-ui, -apple-system, sans-serif;
+}
+
+/* Header Elements */
+.users-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 28px;
+  gap: 16px;
+}
+
+.users-header h2 {
+  margin: 0;
+  font-size: 1.6rem;
+  color: var(--text-dark);
+  font-weight: 700;
+}
+
+.sub-text {
+  margin: 4px 0 0 0;
+  color: var(--text-slate);
+  font-size: 0.95rem;
+}
+
+.counter-badge {
+  background-color: #e0e7ff;
+  color: var(--primary-indigo);
+  padding: 6px 14px;
+  border-radius: 99px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+/* Core Responsive Grid */
+.users-grid {
+  display: grid;
+  /* Auto layout magic: Card size min 280px hoga, baki space auto divided */
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+/* Individual Card Styling */
+.user-profile-card {
+  background-color: var(--surface-card);
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+}
+
+.user-profile-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 20px -5px rgba(0, 0, 0, 0.08);
+  border-color: #cbd5e1;
+}
+
+/* Avatar Layouts */
+.avatar-container {
+  position: relative;
+  margin-bottom: 16px;
+}
+
+.avatar-circle {
+  width: 64px;
+  height: 64px;
+  background-color: #f8fafc;
+  border: 1px solid var(--border-light);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.8rem;
+}
+
+/* Absolute Status Ring Indicators */
+.status-dot {
+  position: absolute;
+  bottom: 2px;
+  right: 2px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 2.5px solid #ffffff;
+}
+
+.status-dot.active { background-color: var(--color-active); }
+.status-dot.away { background-color: var(--color-away); }
+.status-dot.offline { background-color: var(--color-offline); }
+
+/* Profile Typography */
+.profile-info {
+  flex: 1;
+  margin-bottom: 20px;
+}
+
+.profile-name {
+  margin: 0 0 6px 0;
+  font-size: 1.1rem;
+  color: var(--text-dark);
+  font-weight: 600;
+}
+
+.profile-role {
+  margin: 0 0 4px 0;
+  font-size: 0.88rem;
+  color: var(--primary-indigo);
+  font-weight: 500;
+}
+
+.profile-email {
+  margin: 0;
+  font-size: 0.82rem;
+  color: var(--text-light);
+}
+
+/* Action Trigger Trays */
+.profile-actions {
+  display: flex;
+  width: 100%;
+  gap: 8px;
+}
+
+.btn-view {
+  flex: 1;
+  background-color: #f8fafc;
+  border: 1px solid #e2e8f0;
+  color: var(--text-dark);
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-view:hover {
+  background-color: var(--primary-indigo);
+  color: white;
+  border-color: var(--primary-indigo);
+}
+
+.btn-settings {
+  background: none;
+  border: 1px solid #e2e8f0;
+  padding: 8px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-settings:hover {
+  background-color: #f1f5f9;
+}
+
+/* ==========================================================================
+   BREAKPOINTS (Responsive Tweaks)
+   ========================================================================== */
+@media (max-width: 640px) {
+  .users-section {
+    padding: 16px;
+    padding-top: 80px; /* Mobile hamburger button ke liye extra space upper boundary par */
+  }
+  
+  .users-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  
+  .user-profile-card {
+    padding: 16px; /* Choti screens par padding thodi kam */
+  }
+}

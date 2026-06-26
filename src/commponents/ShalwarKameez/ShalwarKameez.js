@@ -5,6 +5,7 @@ import Loader from '../loader/Loader';
 import Popup from '../poup/Poup';
 import getData from '../ProductsItems/ProductsItems';
 import OrderCard from '../OrderCard/OrderCard';
+import { connectSupabase } from '../supabase/supabase';
 const ShalwarKameezCatalog = () => {
   let {getIndexData , checkCondition , 
     SendProduct , ReFreshProducts ,
@@ -24,7 +25,34 @@ const ShalwarKameezCatalog = () => {
     setInitialProducts(data || [])
     setLoader(false)
   }  
+useEffect(()=>{
+fetchData()
+ const channel = connectSupabase
+    .channel('admin-orders-realtime')
+    .on(
+      'postgres_changes',
+      { 
+        event: '*',       
+        schema: 'public', 
+        table: 'ProductitemsAdd'  
+      },
+      (payload) => {
+        if (payload.eventType === 'INSERT') {
+          setInitialProducts(prev => [payload.new, ...prev])
+        }
+        if (payload.eventType === 'DELETE') {
+          setInitialProducts(prev => prev.filter(order => order.id !== payload.old.id))
+        }
+        if (payload.eventType === 'UPDATE') {
+          setInitialProducts(prev => prev.map(order => order.id === payload.new.id ? payload.new : order))
+        }
+      }
+    )
+    .subscribe()
 
+  return () => connectSupabase.removeChannel(channel)
+
+},[])
 useEffect(()=>{
   fetchData()
 
@@ -54,6 +82,8 @@ window.scrollTo({
   behavior : 'smooth'
 })
 openPopup()  
+
+
 }
 
 if(!loader){

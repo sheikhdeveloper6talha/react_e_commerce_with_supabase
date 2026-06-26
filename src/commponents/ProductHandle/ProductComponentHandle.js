@@ -8,27 +8,31 @@ import { connectSupabase } from "../supabase/supabase"
 import Loader from "../loader/Loader"
 import OrderCard from "../OrderCard/OrderCard"
 // ✅ Import karo upar
-import useAuth from "../CurrentUsres/CurrentUsres"
+import UseAuth from "../CurrentUsres/CurrentUsres"
 
 function ProductHandle(props) {
   let { checkClick, DobaraChala, 
     setDobaraChala, getIndexData, 
     GoLog  , GoToLogin ,
      SendProduct , ReFreshProducts,
-    openPopup , ClosePopup , Open} =
+    openPopup , ClosePopup , 
+    Open,ReFreshProductsRender,
+  IsCheckAdmin , Rerender,
+setRerender} =
       useContext(userContext)
 
 
-  const [Rerender, setRerender] = useState(false)
 
 
-  const { currentUser , Loading } = useAuth(DobaraChala)
+
+  const { currentUser , Loading } = UseAuth(DobaraChala)
+
 
   
   let checkCondition = checkClick.split(' ').join('')
 
-  if(checkCondition === 'Order') return <OrderCard/>
-  if (Loading) {
+  if(checkCondition === 'Order') return <userContext.Provider value={{ReFreshProductsRender}}> <OrderCard/></userContext.Provider>
+  if (!Loading) {
 if(!GoLog){
 
 
@@ -48,7 +52,9 @@ if(!GoLog){
       </>
     )} else{
       return (
-        <userContext.Provider value={{setRerender ,  Rerender , DobaraChala, setDobaraChala, GoToLogin}}>
+        <userContext.Provider value={{setRerender ,  Rerender ,
+         DobaraChala, setDobaraChala, 
+         GoToLogin, IsCheckAdmin}}>
          <AuthForm/>
          </userContext.Provider>
       )

@@ -1,0 +1,77 @@
+/* Base Layout */
+.admin-container { 
+  display: flex; 
+width: 100%;
+  min-height: 100vh; 
+  background: #f4f7f6; 
+  font-family: sans-serif;
+  /* overflow-y: auto; <-- Yahan se hata diya taake desktop par masla na kare */
+}
+
+
+/* Main Content */
+.main-content { 
+  flex: 1; 
+  padding: 30px; 
+  overflow-x: hidden; 
+}
+
+/* Stats Grid */
+.stats-grid { 
+  display: grid; 
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); 
+  gap: 20px; 
+  margin-bottom: 30px; 
+}
+.stat-card { background: white; padding: 20px; border-radius: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+
+/* Table Wrapper for Horizontal Scroll */
+.table-container {
+  width: 100%;
+  overflow-x: auto; 
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+table { width: 100%; border-collapse: collapse; min-width: 600px; }
+th, td { padding: 15px; text-align: left; border-bottom: 1px solid #ddd; }
+.status-shipped { color: green; font-weight: bold; }
+.status-pending { color: orange; font-weight: bold; }
+
+
+/* ==========================================================================
+   MEDIA QUERIES (Fixing the Mobile & Tablet Scroll)
+   ========================================================================== */
+
+/* 1. Tablet View (Width 768px ya us se kam) */
+@media (max-width: 768px) {
+  .admin-container {
+    display: flex; /* Flexbox hata kar normal block kiya taake natural scroll chale */
+    min-height: 100vh;
+    overflow-y: visible; /* Browser ka default scroll active ho jayega */
+padding-bottom: 500px;  
+}
+
+  .main-content {
+    margin-top: 40px;
+    padding: 20px;
+    overflow-y: visible; /* Scroll lock khatam */
+  }
+  .data-section{
+    overflow-x: auto;
+  }
+}
+
+/* 2. Mobile View (Width 480px ya us se kam) */
+@media (max-width: 480px) {
+
+
+  .main-content {
+    padding: 15px;
+  }
+
+  .stat-card {
+    padding: 15px;
+  }
+}

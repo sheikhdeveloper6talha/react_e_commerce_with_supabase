@@ -1,11 +1,12 @@
-import React, { useState }  from 'react';
+import React, { useContext, useState }  from 'react';
 import { useEffect } from 'react';
 import './OrderCard.css';
 import { connectSupabase } from '../supabase/supabase';
 import Loader from '../loader/Loader';
 import getData from '../ProductsItems/ProductsItems';
+import { userContext } from '../contextApi/Context';
 const OrderCard = () => {
-
+let {ReFreshProductsRender} = useContext(userContext)
 const [CurrentOrderUsers , setCurrentOrderUsers] = useState([])
 const [OrderDetails , setOrderDetails] = useState([])
 const [loader , setloader] = useState(true)
@@ -82,6 +83,7 @@ const {error} = await connectSupabase
 .update({'stock'  : ReturnStock})
 .eq('id' , itemID)
 }
+ReFreshProductsRender()
 }
 
 const formatDate = (timestamp) => {

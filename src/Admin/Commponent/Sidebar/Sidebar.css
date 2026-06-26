@@ -1,0 +1,251 @@
+/* Custom Smooth Design Tokens */
+:root {
+  --sidebar-bg: #111827;       /* Modern Dark Slate */
+  --sidebar-hover: #1f2937;    /* Slightly lighter for hover */
+  --sidebar-active: #4f46e5;   /* Indigo pop */
+  --text-main: #f9fafb;
+  --text-muted: #9ca3af;
+  --transition-speed: 0.25s;
+  
+  --width-open: 260px;
+  --width-collapsed: 80px;
+}
+
+/* Reset or Core layouts for safety */
+.sidebar, .sidebar * {
+  box-sizing: border-box;
+
+}
+
+/* Main Sidebar Container */
+.sidebar {
+  height: 100vh;
+  background-color: var(--sidebar-bg);
+  color: var(--text-main);
+  display: flex;
+  flex-direction: column;
+  position: sticky;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  transition: width var(--transition-speed) cubic-bezier(0.4, 0, 0.2, 1),
+              transform var(--transition-speed) cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 4px 0 25px rgba(0, 0, 0, 0.15);
+}
+
+/* Desktop States */
+.sidebar.open {
+  width: var(--width-open);
+}
+
+.sidebar.collapsed {
+  width: var(--width-collapsed);
+}
+
+/* Header Section */
+.sidebar-header {
+
+  height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.logo-container {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.logo-icon {
+  font-size: 1.5rem;
+}
+
+.logo-text {
+  font-weight: 700;
+  font-size: 1.15rem;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+}
+
+.toggle-btn {
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  font-size: 0.9rem;
+  padding: 6px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.toggle-btn:hover {
+  background-color: var(--sidebar-hover);
+  color: var(--text-main);
+}
+
+/* Navigation Menu */
+.sidebar-nav {
+  flex: 1;
+  padding: 16px 12px;
+  overflow-y: auto;
+}
+
+.sidebar-nav ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  padding: 12px 14px;
+  margin-bottom: 4px;
+  border-radius: 8px;
+  cursor: pointer;
+  color: var(--text-muted);
+  gap: 16px;
+  transition: all 0.2s ease;
+}
+
+.nav-icon {
+  font-size: 1.2rem;
+  min-width: 24px;
+  display: flex;
+  justify-content: center;
+}
+
+.nav-label {
+  white-space: nowrap;
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+/* Items Hover/Active States */
+.nav-item:hover {
+  background-color: var(--sidebar-hover);
+  color: var(--text-main);
+}
+
+.nav-item.active {
+  background-color: var(--sidebar-active);
+  color: var(--text-main);
+}
+
+/* User Footer Section */
+.sidebar-footer {
+  padding: 16px;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background-color: rgba(0, 0, 0, 0.15);
+}
+
+.user-avatar {
+  width: 38px;
+  height: 38px;
+  background-color: var(--sidebar-hover);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  flex-shrink: 0;
+}
+
+.user-info {
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.user-name {
+  margin: 0;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.user-role {
+  margin: 2px 0 0 0;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+/* Mobile Trigger Button (Default Hide on Desktop) */
+.mobile-trigger {
+  display: none;
+  position: fixed;
+  top: 16px;
+  left: 16px;
+  background-color: var(--sidebar-bg);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-size: 1.2rem;
+  cursor: pointer;
+  z-index: 90; 
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25);
+  transition: transform 0.2s;
+}
+
+.mobile-trigger:active {
+  transform: scale(0.95);
+}
+
+/* Dark Dim Background Blocker */
+.sidebar-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(4px);
+  z-index: 99;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--transition-speed) ease;
+}
+
+.sidebar-overlay.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* ==========================================================================
+   RESPONSIVE LOGIC (Mobile & Tablets)
+   ========================================================================== */
+@media (max-width: 768px) {
+  .mobile-trigger {
+    display: block; /* Mobile par trigger button aa jayega */
+  }
+
+  .sidebar {
+    position: fixed;
+    width: var(--width-open) !important; /* Mobile par collapse nahi hoga direct chhupega */
+    transform: translateX(-100%);
+    z-index: 100;
+  }
+
+  /* Kholne par zero position par slide in hoga */
+  .sidebar.open {
+    transform: translateX(0);
+  }
+
+  /* Band hone par wapas slide out */
+  .sidebar.collapsed {
+    transform: translateX(-100%);
+  }
+
+  /* Mobile par overlay responsive handling */
+  .sidebar-overlay.active {
+    display: block;
+  }
+}

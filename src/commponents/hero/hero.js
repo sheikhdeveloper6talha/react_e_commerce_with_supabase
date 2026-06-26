@@ -1,15 +1,38 @@
-import React, { useContext } from 'react';
+import React, { useContext , useRef , useEffect } from 'react';
 import './hero.css';
 import heroImage from '../Images/heroSection.png'; // Aapki matching image design file
 import { userContext } from '../contextApi/Context';
+import hereo  from '../Images/hereo.jpg'
 
 const HeroSection = () => {
   let {setCheckClick} = useContext(userContext)
+  
+   const containerRef = useRef(null)
+
+  useEffect(() => {
+    const elements = containerRef.current.children // sab child elements
+
+    window.gsap.fromTo(elements, 
+      { 
+        opacity: 0, 
+        y: 50 
+      },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 0.9,
+        stagger: 0.6, 
+        ease: "power2.out"
+      }
+    )
+  }, [])
+
+  
   return (
-    <section className="hero-section" style={{ backgroundImage: `url(${heroImage})` }}>
+    <section className="hero-section" style={{ backgroundImage: `url(${hereo})` }}>
       <div className="hero-dark-overlay"></div>
       
-      <div className="hero-main-content">
+      <div ref={containerRef} className="hero-main-content">
         <h1 className="hero-main-title">
           EXPERIENCE THE <br />
           ART OF MODERN <br />

@@ -5,6 +5,7 @@
   min-height: 100vh;
   background-size: cover;
   background-position: center 25%;
+  background-repeat: no-repeat;
   position: relative;
   display: flex;
   align-items: center;

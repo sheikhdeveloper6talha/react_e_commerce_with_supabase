@@ -4,6 +4,7 @@ import { userContext } from '../contextApi/Context';
 import Loader from '../loader/Loader';
 import ErrorToast from '../Error/Error';
 import { connectSupabase } from '../supabase/supabase';
+import { type } from '@testing-library/user-event/dist/type';
 const SingUp = () => {
     let {setToogle ,  setRerender , Rerender , DobaraChala, setDobaraChala,} = useContext(userContext)    
 
@@ -17,6 +18,7 @@ const SingUp = () => {
     email: '',
     password: '',
     agreeTerms: false,
+    
   });
 
   const handleInputChange = (e) => {
@@ -61,12 +63,7 @@ const SingUp = () => {
     const { data, error: authError } = await connectSupabase.auth.signUp({
       email,
       password,
-      options: {
-        // user_metadata mein name save karwane ka standard tarika
-        data: {
-          full_name: name,
-        }
-      },
+
     });
 
     // AGAR SUPABASE AUTH MEIN ERROR AYE (Most Important Fix)
@@ -87,6 +84,7 @@ const SingUp = () => {
             email: email,
             createAt: new Date().toTimeString().split(' ')[0],
             agreeTerms : agreeTerms,
+            type : "user"
           }
         ]);
 
