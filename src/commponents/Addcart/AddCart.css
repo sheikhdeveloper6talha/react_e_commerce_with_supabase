@@ -1,213 +1,522 @@
+/* ==========================================================================
+   1. Drawer Shell
+   ========================================================================== */
 .cart-drawer {
   width: 400px;
+  max-width: 100%;
   height: 100vh;
-  background: #fff;
+  max-height: 100vh;
+  background: #ffffff;
   position: fixed;
   top: 0;
   right: 0;
-  box-shadow: -5px 0 20px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  box-shadow: -8px 0 30px rgba(0, 0, 0, 0.14);
   padding: 20px;
+  /* JS inline style paddingBottom = window.innerHeight px de raha tha,
+     jo content ke neeche poori ek screen khali jagah bana deta tha.
+     Sticky header + sticky summary se wo zaroorat hi nahi. */
+  padding-bottom: 20px !important;
   overflow-y: auto;
+  overscroll-behavior: contain;
   z-index: 9999;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #2c2c2c;
+  animation: cartSlideIn 0.3s ease both;
 }
 
+@keyframes cartSlideIn {
+  from { transform: translateX(100%); }
+  to   { transform: translateX(0); }
+}
+
+/* ==========================================================================
+   2. Header
+   ========================================================================== */
 .cart-header {
+  position: sticky;
+  top: -20px;
+  z-index: 6;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 12px;
+  margin: -20px -20px 0;
+  padding: 16px 20px;
+  background: #ffffff;
+  border-bottom: 1px solid #f0ece2;
 }
 
 .cart-header h2 {
-  font-size: 32px;
-  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 10px;
   margin: 0;
+  font-size: 1.35rem;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  color: #2c2c2c;
 }
 
 .cart-header span {
-  background: #e5e5e5;
-  width: 28px;
-  height: 28px;
   display: inline-flex;
   justify-content: center;
   align-items: center;
-  border-radius: 50%;
-  font-size: 14px;
+  min-width: 28px;
+  height: 28px;
+  padding: 0 8px;
+  box-sizing: border-box;
+  background: #bfa365;
+  color: #ffffff;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0;
 }
 
 .close-btn {
-  border: none;
-  background: transparent;
-  font-size: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  flex-shrink: 0;
+  border: 1px solid #ece7dd;
+  border-radius: 50%;
+  background: #faf8f4;
+  font-size: 17px;
+  line-height: 1;
   cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease, border-color 0.2s ease;
 }
 
+.close-btn:hover {
+  background: #2c2c2c;
+  border-color: #2c2c2c;
+  color: #ffffff;
+  transform: rotate(90deg);
+}
+
+.close-btn:active {
+  transform: rotate(90deg) scale(0.92);
+}
+
+/* ==========================================================================
+   3. Cart Items
+   ========================================================================== */
 .cart-item {
   display: flex;
-  gap: 15px;
-  margin-top: 30px;
-  padding-bottom: 20px;
-  border-bottom: 1px solid #ddd;
+  gap: 14px;
+  margin-top: 16px;
+  padding: 14px;
+  background: #fdfcfa;
+  border: 1px solid #f0ece2;
+  border-radius: 14px;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.cart-item:hover {
+  border-color: #ddd5c4;
+  box-shadow: 0 4px 14px rgba(44, 44, 44, 0.06);
 }
 
 .cart-item img {
-  width: 80px;
-  height: 80px;
+  flex-shrink: 0;
+  width: 84px;
+  height: 84px;
   object-fit: cover;
+  border-radius: 10px;
+  border: 1px solid #ece7dd;
+  background: #fff;
 }
 
 .cart-item-info {
   flex: 1;
+  min-width: 0;
 }
 
 .cart-item-info h3 {
-  margin: 0;
-  font-size: 18px;
+  margin: 0 0 4px 0;
+  font-size: 0.98rem;
+  font-weight: 700;
+  line-height: 1.35;
+  color: #2c2c2c;
+  overflow-wrap: anywhere;
 }
 
 .cart-item-info p {
-  margin: 5px 0;
+  margin: 2px 0;
+  font-size: 0.8rem;
+  color: #6b6b6b;
+  overflow-wrap: anywhere;
 }
 
-.discount {
-  color: #555;
+.cart-item-info .discount {
+  display: inline-block;
+  margin: 6px 0 0 0;
+  padding: 3px 9px;
+  background: #e6f4ea;
+  border: 1px solid #b7e0c1;
+  border-radius: 999px;
+  color: #137333;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
 }
 
+/* Price Box */
 .price-box {
   display: flex;
-  gap: 10px;
-  margin: 10px 0;
+  align-items: baseline;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin: 10px 0 0 0;
 }
 
 .current-price {
-  font-weight: bold;
+  font-size: 1rem;
+  font-weight: 800;
+  color: #8c764b;
 }
 
 .old-price {
+  font-size: 0.78rem;
   text-decoration: line-through;
   color: #999;
 }
 
+/* Quantity Stepper */
 .quantity-box {
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  width: fit-content;
-  border: 1px solid #ddd;
+  margin-top: 12px;
+  border: 1px solid #ddd5c4;
+  border-radius: 10px;
+  overflow: hidden;
+  background: #ffffff;
 }
 
 .quantity-box button {
-  width: 40px;
-  height: 40px;
+  width: 36px;
+  height: 34px;
   border: none;
-  background: white;
+  background: #ffffff;
+  color: #2c2c2c;
+  font-size: 17px;
+  font-weight: 700;
+  line-height: 1;
   cursor: pointer;
-  font-size: 18px;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.quantity-box button:hover {
+  background: #bfa365;
+  color: #ffffff;
+}
+
+.quantity-box button:active {
+  background: #aa9055;
 }
 
 .quantity-box span {
-  width: 40px;
-  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 40px;
+  height: 34px;
+  padding: 0 6px;
+  border-left: 1px solid #ece7dd;
+  border-right: 1px solid #ece7dd;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #2c2c2c;
 }
 
+/* Line Total + Delete */
 .item-right {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  align-items: flex-end;
+  gap: 10px;
+  flex-shrink: 0;
+  min-width: 74px;
+  text-align: right;
 }
 
 .item-right p {
-  font-weight: 600;
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 800;
+  color: #2c2c2c;
+  overflow-wrap: anywhere;
 }
 
 .delete-btn {
-  border: none;
-  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border: 1px solid #f5c6c2;
+  border-radius: 50%;
+  background: #fdecec;
+  font-size: 15px;
+  line-height: 1;
   cursor: pointer;
-  font-size: 20px;
+  transition: background 0.2s ease, transform 0.2s ease, border-color 0.2s ease;
 }
 
+.delete-btn:hover {
+  background: #c5221f;
+  border-color: #c5221f;
+  transform: scale(1.08);
+}
+
+.delete-btn:active {
+  transform: scale(0.94);
+}
+
+/* ==========================================================================
+   4. Summary
+   ========================================================================== */
 .cart-summary {
-  margin-top: 30px;
+  margin-top: auto;
+  position: sticky;
+  bottom: -20px;
+  z-index: 5;
+  padding: 18px 0 0;
+  background: #ffffff;
+  border-top: 1px solid #f0ece2;
+  box-shadow: 0 -6px 18px rgba(44, 44, 44, 0.05);
 }
 
 .summary-row {
   display: flex;
   flex-direction: column;
-  margin-bottom: 15px;
-gap: 10px;
+  margin-bottom: 14px;
+  gap: 10px;
 }
-.summary-row > button{
-  padding: 10px;
-  font-weight: 700;
-  background:darkgoldenrod;
-  border: none;
-  outline: none;
-  border-radius: 10px;
-  color: #fff;
+
+.summary-row > button {
+  width: 100%;
+  padding: 11px 16px;
+  border: 1px solid #ddd5c4;
+  border-radius: 999px;
+  background: transparent;
+  color: #2c2c2c;
+  font-family: 'Segoe UI', sans-serif;
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
 }
-.summary-row > div{
+
+.summary-row > button:hover {
+  background: #bfa365;
+  border-color: #bfa365;
+  color: #ffffff;
+}
+
+.summary-row > div {
   display: flex;
   justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+  font-size: 0.88rem;
+  color: #6b6b6b;
 }
+
+.summary-row.total {
+  flex-direction: row;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 10px;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #2c2c2c;
+}
+
+.summary-row.total span:last-child {
+  font-weight: 800;
+  color: #2c2c2c;
+  overflow-wrap: anywhere;
+}
+
 .total {
-  font-size: 20px;
+  font-size: 1rem;
   font-weight: bold;
 }
 
 .tax-note {
-  color: #666;
-  font-size: 14px;
-  margin: 20px 0;
+  margin: 4px 0 14px;
+  color: #8a8a8a;
+  font-size: 0.76rem;
+  line-height: 1.6;
 }
 
+/* Checkout Button */
 .checkout-btn {
   width: 100%;
-  padding: 16px;
-  background: #8f1d1d;
-  color: white;
-  border: none;
+  padding: 15px 18px;
+  border: 1px solid #bfa365;
+  border-radius: 999px;
+  color: #ffffff;
   cursor: pointer;
-  font-size: 16px;
-  font-weight: 600;
+  font-family: 'Segoe UI', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 800;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  background: #bfa365;
+  transition: box-shadow 0.25s ease, transform 0.15s ease, filter 0.25s ease;
 }
-.set{
+
+.checkout-btn:hover {
+  filter: brightness(0.92);
+  box-shadow: 0 8px 20px rgba(139, 118, 75, 0.38);
+}
+
+.checkout-btn:active {
+  transform: scale(0.98);
+}
+
+/* ==========================================================================
+   5. Logged-out / Empty State
+   ========================================================================== */
+.set {
+  flex: 1;
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  text-align: center;
+  padding: 30px 10px;
+  margin-top: 20px;
+  background: #fdfcfa;
+  border: 2px dashed #e0d9c8;
+  border-radius: 16px;
 }
-/* Mobile View Fixes */
-/* Mobile View Fix - Pure Layout No Disturb */
+
+.set .tax-note {
+  margin: 0 0 18px;
+  color: #6b6b6b;
+  font-size: 0.92rem;
+  line-height: 1.7;
+}
+
+/* ==========================================================================
+   6. Accessibility
+   ========================================================================== */
+.close-btn:focus-visible,
+.quantity-box button:focus-visible,
+.delete-btn:focus-visible,
+.summary-row > button:focus-visible,
+.checkout-btn:focus-visible {
+  outline: 2px solid #bfa365;
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cart-drawer,
+  .close-btn,
+  .delete-btn,
+  .quantity-box button,
+  .summary-row > button,
+  .checkout-btn,
+  .cart-item {
+    animation: none;
+    transition: none;
+  }
+
+  .close-btn:hover,
+  .delete-btn:hover,
+  .checkout-btn:active {
+    transform: none;
+  }
+}
+
+/* ==========================================================================
+   7. Responsive
+   ========================================================================== */
 @media (max-width: 768px) {
   .cart-drawer {
     width: 100%;
-    height: 100vh;          /* 200vh ko badal kar 100vh kiya takay screen se baahir na jaye */
-    max-height: 100vh;      /* Screen size ke andar rakhne ke liye */
-    background: #fff;
+    height: 100vh;
+    max-height: 100vh;
+    background: #ffffff;
     position: fixed;
     top: 0;
     right: 0;
-    box-shadow: -5px 0 20px rgba(0, 0, 0, 0.1);
     padding: 20px;
-    /* padding-bottom: 300px;   Neechay extra jagah di takay checkout button last me poora nazar aaye aur dabay nahi */
-    overflow-y: auto;       /* Poora cart drawer halke se scroll hoga bina layout kharab kiye */
+    box-shadow: none;
+    overflow-y: auto;
     z-index: 9999;
   }
 
+  .cart-header {
+    top: -20px;
+  }
+
   .cart-item {
-    flex-direction: column;
+    padding: 12px;
+  }
+
+  .cart-item img {
+    width: 76px;
+    height: 76px;
   }
 
   .item-right {
     flex-direction: row;
     align-items: center;
-    justify-content: space-between; /* Items mobile par aamnay saamnay sahi lagain */
+    justify-content: space-between;
+    min-width: 0;
     margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid #f0ece2;
+    text-align: left;
+  }
+
+  /* Mobile par item ka hisaab poora width le */
+  .cart-item {
+    flex-wrap: wrap;
+  }
+
+  .cart-item-info {
+    flex: 1 1 auto;
+  }
+
+  .item-right {
+    flex: 1 1 100%;
   }
 
   .cart-header h2 {
-    font-size: 26px;
+    font-size: 1.2rem;
   }
-  
-  .checkout-btn {
-    margin-top: 20px;
-    margin-bottom: 30px;    /* Button ke neechay mobile screen ka margin */
+}
+
+@media (max-width: 380px) {
+  .cart-drawer {
+    padding: 14px;
+  }
+
+  .cart-header {
+    margin: -14px -14px 0;
+    padding: 14px;
+    top: -14px;
+  }
+
+  .cart-summary {
+    bottom: -14px;
+  }
+
+  .cart-item img {
+    width: 66px;
+    height: 66px;
   }
 }
