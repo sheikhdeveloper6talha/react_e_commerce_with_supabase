@@ -17,7 +17,7 @@ const CartDrawer = () => {
     
     // loader start 
     
-    let AddQty = SendProduct.map(e => ({
+    let AddQty =  SendProduct.map(e => ({
       ...e,
       qty : e.qty || 1
     }))
@@ -41,7 +41,7 @@ setCurruentUsers(user)
    
      useEffect(() => {
        getCurrentUser();
-     }, [RenderCart]);
+     }, [ ReFreshProductsRender]);
    
 const DeleteCart = (index)=>{
 let Dete = RenderCart.filter((_ , i)=>i !== index)
@@ -70,6 +70,7 @@ return val
   
   
   setRenderCart( updatedCart)
+  order(RenderCart)
 }
 const Decrease = (index , qty) => {
   let updatedCart = RenderCart.map((val , i) => 

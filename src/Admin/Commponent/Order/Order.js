@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import './Order.css';
-import { OrderHit } from '../ApiCaling/Users';
+import { OrderHit , Orderdetails, OrderPlace } from '../ApiCaling/Users';
 import Loader from '../loader/Loader';
 import { userContext } from '../../../commponents/contextApi/Context';
 import { connectSupabase } from '../../../commponents/supabase/supabase';
@@ -12,8 +12,28 @@ const OrdersClient = () => {
 
   const getOrderData = async ()=>{
   let OrderData = await OrderHit()
-if(!OrderData) return alert('Kuch Msala Hai developer kon call karo')
-  setOrders(OrderData)
+  let OrderD = await Orderdetails()
+if(!OrderData && !OrderD) return alert('Some thing went wrong')
+  
+let sortOrderData = OrderData.map((val) => {
+  let order = OrderD.find((e) => e.id === val.uuid);
+console.log(order);
+
+  if (order) {
+    return {
+      ...val,
+      phone: order.phoneNumber,
+      Adress: order.Adress,
+
+    };
+  }
+
+  return val;
+});
+  // setOrders(OrderData)
+  setOrders(sortOrderData)
+console.log(sortOrderData);
+
 setLoading(false)
 }
 
@@ -49,6 +69,13 @@ useEffect(()=>{
 getOrderData()
 },[ReFreshProducts])
 
+const orderPlaceHandlar = async (id)=>{
+  console.log(id);
+  
+  const result = await OrderPlace(id)
+  if(result) getOrderData()
+    
+}
 if(Loading) return <Loader/>
   return (
     <div className="orders-page">
@@ -60,9 +87,7 @@ if(Loading) return <Loader/>
           <select className="filter-select">
             <option value="all">All Status</option>
             <option value="pending">Pending</option>
-            <option value="shipped">Shipped</option>
             <option value="delivered">Delivered</option>
-            <option value="cancelled">Cancelled</option>
           </select>
         </div>
       </div>
@@ -75,7 +100,9 @@ if(Loading) return <Loader/>
               <th>Image</th>
               <th>Order ID</th>
               <th >Customer</th>
+              <th >Phone</th>
               <th>Size</th>
+              <th>Adress</th>
               <th>QTY</th>
               <th>Product</th>
               <th>Date</th>
@@ -86,23 +113,27 @@ if(Loading) return <Loader/>
           </thead>
           <tbody>
             {orders.map((order, index) => (
+              
+
               <tr key={index}>
                 <td className='images'><img src={order.image}/></td>
                 <td className="order-id">{order.id}</td>
                 <td className="name">{order.users}</td>
+                <td>{order.phone}</td>
+                <td>{order.Adress}</td>
                 <td>{order.size}</td>
                 <td>{order.qty}</td>
                 <td>{order.type}</td>
                 <td>{new Date( order.created_at).toLocaleString()}</td>
                 <td>
                   {/* Dynamic status classes */}
-                  <span style={{color : 'green'}} className={`status-badge ${order.status || 'Padding' }`}>
-                    {order.status || 'Padding'}
+                  <span  className={`status-badge ${order.status === "pending" ?  'pending'  : 'delivered'}`}>
+                    {order.status === "pending" ?   'Pending' : 'Order Placed'}
                   </span>
                 </td>
                 <td className="order-price">{order.price}</td>
                 <td>
-                  <button className="btn-view">View</button>
+                  <button className="btn-view" onClick={()=> orderPlaceHandlar(order.id)}>Order place</button>
                 </td>
               </tr>
             ))}

@@ -1,8 +1,9 @@
-import React, { useContext , useRef , useEffect } from 'react';
-import './hero.css';
-import heroImage from '../Images/heroSection.png'; // Aapki matching image design file
+import  sectionone from "../Images/sectionone.png"
 import { userContext } from '../contextApi/Context';
-import hereo  from '../Images/hereo.jpg'
+import './hero.css';
+import React, { useContext , useRef , useEffect } from 'react';
+; // Aapki matching image design file
+
 
 const HeroSection = () => {
   let {setCheckClick} = useContext(userContext)
@@ -29,7 +30,7 @@ const HeroSection = () => {
 
   
   return (
-    <section className="hero-section" style={{ backgroundImage: `url(${hereo})` }}>
+    <section className="hero-section" style={{ backgroundImage: `url(${sectionone})` }}>
       <div className="hero-dark-overlay"></div>
       
       <div ref={containerRef} className="hero-main-content">

@@ -110,7 +110,7 @@ if (!loader) {
                 </span>
 
                 <span className="order-status">
-                  {status ? "Padding" : "Develiderd"}
+                  {items.status  === "pending" ? "Padding" : "Order Place"}
                 </span>
               </div>
 

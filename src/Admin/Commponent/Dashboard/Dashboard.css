@@ -24,6 +24,10 @@ width: 100%;
   margin-bottom: 30px; 
 }
 .stat-card { background: white; padding: 20px; border-radius: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+.stat-card p { margin: 6px 0 0; font-size: 28px; font-weight: bold; }
+.stat-sub { color: #888; font-size: 12px; }
+
+.no-data { color: #888; padding: 15px 0; }
 
 /* Table Wrapper for Horizontal Scroll */
 .table-container {
