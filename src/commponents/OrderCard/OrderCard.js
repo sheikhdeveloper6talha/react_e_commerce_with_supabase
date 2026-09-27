@@ -48,6 +48,23 @@ setloader(false)
 
   useEffect(() => {
     getCurrentUser();
+
+    const channel = connectSupabase
+      .channel('user-ordercard-realtime')
+      .on(
+        'postgres_changes',
+        {
+          event: '*',        // 👈 INSERT, UPDATE, DELETE sab ek saath
+          schema: 'public',
+          table: 'orderItems'
+        },
+        () => {
+          getCurrentUser();
+        }
+      )
+      .subscribe();
+
+    return () => connectSupabase.removeChannel(channel);
   }, []);
 
   let status = CurrentOrderUsers.map((items)=>{
