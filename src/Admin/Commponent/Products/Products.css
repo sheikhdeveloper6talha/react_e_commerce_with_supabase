@@ -12,6 +12,11 @@
   width: 100%;
   box-sizing: border-box;
   font-family: 'Montserrat', 'Segoe UI', system-ui, sans-serif;
+  /* Safety net: grid kabhi viewport se bahar na nikle.
+     `clip` (not `hidden`) — `hidden` se `overflow-y: visible` ka used value
+     `auto` ho jata hai, wrapper scroll container ban jata hai aur sidebar
+     ka vertical sticky toot jata hai. `clip` scroll container nahi banata. */
+  overflow-x: clip;
 }
 
 .products-title-bar {
@@ -42,6 +47,7 @@
   grid-template-columns: repeat(auto-fill, minmax(min(260px, 100%), 1fr));
   gap: 20px;
   align-items: stretch;
+  min-width: 0;
 }
 
 /* ==========================================================================
@@ -190,16 +196,18 @@
   overflow-wrap: anywhere;
 }
 
-/* Naam (h2) 2 lines reserve karta hai, taaki grid seedhi rahe */
+/* Naam (h2) 2 lines ka space reserve karta hai taaki grid seedhi rahe.
+   `height` ki jagah `min-height`: fixed height chhote font par 2nd line ko
+   clip kar deta tha (0.9rem × 1.4 = 2.52rem, box sirf 2.5rem tha). */
 .product-body h2.product-title {
-  height: 2.75rem;
+  min-height: 2.75rem;
 }
 
 /* Description bhi `.product-title` class hi share karta hai (JSX me h3 hai) —
    is liye use alag se muted aur lighter banaya gaya hai, warna description
    bhi product name jaisa prominent dikhta. */
 .product-body h3.product-title {
-  height: 2.4rem;
+  min-height: 2.4rem;
   margin: 0 0 10px 0;
   font-size: 0.84rem;
   font-weight: 400;
@@ -218,18 +226,24 @@
 .price-tag {
   display: flex;
   align-items: baseline;
-  gap: 8px;
+  flex-wrap: wrap; /* chhoti card par price/strike-price alag line par aa jayein */
+  gap: 4px 8px;
   min-width: 0;
 }
 
-.current-price {
+/* `.price-tag` sirf admin Products card me hai (cart apna `.price-box`
+   use karta hai). Ye scope zaroori hai: `.current-price` global likhte to
+   cart ke price bhi Playfair + 1.2rem ho jate, aur `var(--adm-ink)` wahan
+   undefined hota (wo token sirf `.main-Container` par defined hai) jis se
+   color poora inherit kar leta. */
+.price-tag .current-price {
   font-family: 'Playfair Display', serif;
   font-size: 1.2rem;
   font-weight: 600;
   color: var(--adm-ink);
 }
 
-.old-price {
+.price-tag .old-price {
   font-size: 0.85rem;
   text-decoration: line-through;
   color: var(--adm-ink-3);
@@ -262,6 +276,10 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  text-align: center;
+  /* Chhoti cards par "Delete Items" 2 lines me toot kar button ko lamba
+     kar deta tha, jis se do buttons ki heights mismatch ho jaati thi. */
+  white-space: nowrap;
   transition: background-color var(--adm-speed) ease, color var(--adm-speed) ease,
               border-color var(--adm-speed) ease;
 }
@@ -304,7 +322,7 @@
 
 @media (max-width: 768px) {
   .products-container {
-    padding: 20px;
+    padding: 25px;
   }
 }
 
@@ -313,6 +331,12 @@
     padding: 16px;
   }
 
+  /* BUG FIX: yahan `minmax(250px, 1fr)` tha. 2 columns × 250px minimum +
+     12px gap = 512px chahiye, lekin phone par content area sirf ~330-360px
+     hota hai. Track viewport se bahar nikal jati thi -> horizontal overflow,
+     aadha card kat kar reh jata tha, aur page scroll/pan dono toot jate the.
+     `minmax(0, 1fr)` tracks ko shrink karne deti hai, is liye 2 columns
+     har width par fit ho jate hain. */
   .products-grid-layout {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 12px;
@@ -331,16 +355,16 @@
   }
 
   .product-body h2.product-title {
-    height: 2.5rem;
+    min-height: 2.55rem;
     font-size: 0.9rem;
   }
 
   .product-body h3.product-title {
-    height: 2.2rem;
+    min-height: 2.2rem;
     font-size: 0.78rem;
   }
 
-  .current-price {
+  .price-tag .current-price {
     font-size: 1.05rem;
   }
 
@@ -359,5 +383,27 @@
     left: 8px;
     padding: 5px 8px;
     font-size: 0.6rem;
+  }
+}
+
+/* Choti screens (360-400px): 2 columns se card itna narrow ho jata hai ki
+   button labels squeeze ho jate hain — 1 column par sab kuch saaf rehta hai. */
+@media (max-width: 400px) {
+  .products-container {
+    padding: 14px;
+  }
+
+  .products-grid-layout {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .product-image-frame {
+    aspect-ratio: 4 / 3;
+  }
+
+  .add-cart-btn {
+    font-size: 0.78rem;
+    padding: 10px 8px;
   }
 }

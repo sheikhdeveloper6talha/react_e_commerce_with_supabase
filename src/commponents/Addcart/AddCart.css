@@ -75,7 +75,12 @@
   letter-spacing: 0;
 }
 
-.close-btn {
+/* Cart drawer ka ✕. PaymentCard.css me bhi `.close-btn` hai aur woh file
+   baad me load hoti hai, to pehle ye rule uske `position:absolute` wale
+   version se haar jaa raha tha — button flex flow se nikal kar header ke
+   upar invisible white circle ban jata tha. `.cart-header` se scope karne
+   se dono bilkul alag ho gaye. */
+.cart-header .close-btn {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -91,14 +96,14 @@
   transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease, border-color 0.2s ease;
 }
 
-.close-btn:hover {
+.cart-header .close-btn:hover {
   background: #2c2c2c;
   border-color: #2c2c2c;
   color: #ffffff;
   transform: rotate(90deg);
 }
 
-.close-btn:active {
+.cart-header .close-btn:active {
   transform: rotate(90deg) scale(0.92);
 }
 
@@ -412,7 +417,7 @@
 /* ==========================================================================
    6. Accessibility
    ========================================================================== */
-.close-btn:focus-visible,
+.cart-header .close-btn:focus-visible,
 .quantity-box button:focus-visible,
 .delete-btn:focus-visible,
 .summary-row > button:focus-visible,
@@ -423,7 +428,7 @@
 
 @media (prefers-reduced-motion: reduce) {
   .cart-drawer,
-  .close-btn,
+  .cart-header .close-btn,
   .delete-btn,
   .quantity-box button,
   .summary-row > button,
@@ -433,7 +438,7 @@
     transition: none;
   }
 
-  .close-btn:hover,
+  .cart-header .close-btn:hover,
   .delete-btn:hover,
   .checkout-btn:active {
     transform: none;

@@ -192,8 +192,8 @@
 
 /* Status — pehle plain coloured bold text the, jo Orders page ke pills se
    match nahi karte the. Ab dono jagah ek hi pill treatment. */
-.status-shipped,
-.status-pending {
+.main-Container .status-shipped,
+.main-Container .status-pending {
   display: inline-block;
   padding: 4px 11px;
   border-radius: var(--adm-radius-pill);
@@ -204,12 +204,12 @@
   white-space: nowrap;
 }
 
-.status-shipped {
+.main-Container .status-shipped {
   background: var(--adm-success-soft);
   color: var(--adm-success);
 }
 
-.status-pending {
+.main-Container .status-pending {
   background: var(--adm-warn-soft);
   color: var(--adm-warn);
 }
