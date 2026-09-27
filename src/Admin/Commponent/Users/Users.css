@@ -1,200 +1,273 @@
-/* Styling Tokens */
-:root {
-  --surface-card: #ffffff;
-  --text-dark: #0f172a;
-  --text-slate: #475569;
-  --text-light: #94a3b8;
-  --border-light: #f1f5f9;
-  --primary-indigo: #4f46e5;
-  
-  /* Status Colors */
-  --color-active: #10b981;
-  --color-away: #f59e0b;
-  --color-offline: #64748b;
-}
+/* ==========================================================================
+   ADMIN — USERS PAGE
+   Tokens `.main-Container` par scoped hain (Admin.css me).
+   ========================================================================== */
 
 /* Container Wrap */
 .users-section {
   padding: 30px;
   width: 100%;
   box-sizing: border-box;
-  font-family: system-ui, -apple-system, sans-serif;
+  font-family: 'Montserrat', 'Segoe UI', system-ui, sans-serif;
 }
 
-/* Header Elements */
+/* ==========================================================================
+   HEADER
+   ========================================================================== */
 .users-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 28px;
-  gap: 16px;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-bottom: 26px;
 }
 
 .users-header h2 {
   margin: 0;
-  font-size: 1.6rem;
-  color: var(--text-dark);
-  font-weight: 700;
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.4rem, 1.15rem + 1vw, 1.7rem);
+  font-weight: 600;
+  letter-spacing: -0.2px;
+  color: var(--adm-ink);
 }
 
 .sub-text {
-  margin: 4px 0 0 0;
-  color: var(--text-slate);
-  font-size: 0.95rem;
+  margin: 5px 0 0 0;
+  color: var(--adm-ink-2);
+  font-size: 0.92rem;
 }
 
 .counter-badge {
-  background-color: #e0e7ff;
-  color: var(--primary-indigo);
-  padding: 6px 14px;
-  border-radius: 99px;
-  font-size: 0.85rem;
-  font-weight: 600;
+  display: inline-block;
+  flex-shrink: 0;
+  background: var(--adm-gold-soft);
+  color: var(--adm-gold-deep);
+  border: 1px solid rgba(191, 163, 101, 0.4);
+  padding: 7px 15px;
+  border-radius: var(--adm-radius-pill);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.3px;
   white-space: nowrap;
 }
 
-/* Core Responsive Grid */
+/* ==========================================================================
+   GRID
+   min() wrapper: available width 280px se kam ho jaye to overflow na ho
+   ========================================================================== */
 .users-grid {
   display: grid;
-  /* Auto layout magic: Card size min 280px hoga, baki space auto divided */
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(auto-fill, minmax(min(280px, 100%), 1fr));
+  gap: 18px;
 }
 
-/* Individual Card Styling */
+/* ==========================================================================
+   USER CARD
+   ========================================================================== */
 .user-profile-card {
-  background-color: var(--surface-card);
-  border: 1px solid #e2e8f0;
-  border-radius: 16px;
-  padding: 24px;
+  background: var(--adm-surface);
+  border: 1px solid var(--adm-line);
+  border-radius: var(--adm-radius);
+  padding: 22px;
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
-  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-  position: relative;
+  min-width: 0;
+  box-shadow: var(--adm-shadow-sm);
+  transition: transform var(--adm-speed) ease, box-shadow var(--adm-speed) ease,
+              border-color var(--adm-speed) ease;
 }
 
 .user-profile-card:hover {
   transform: translateY(-4px);
-  box-shadow: 0 12px 20px -5px rgba(0, 0, 0, 0.08);
-  border-color: #cbd5e1;
+  border-color: var(--adm-line-2);
+  box-shadow: var(--adm-shadow);
 }
 
-/* Avatar Layouts */
+/* ==========================================================================
+   AVATAR + STATUS DOT
+   ========================================================================== */
 .avatar-container {
   position: relative;
-  margin-bottom: 16px;
+  margin-bottom: 14px;
+  flex-shrink: 0;
 }
 
 .avatar-circle {
-  width: 64px;
-  height: 64px;
-  background-color: #f8fafc;
-  border: 1px solid var(--border-light);
+  width: 62px;
+  height: 62px;
+  background: var(--adm-surface-2);
+  border: 1px solid var(--adm-line-2);
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.8rem;
+  font-size: 1.6rem;
+  color: var(--adm-ink-3);
 }
 
-/* Absolute Status Ring Indicators */
+/* JSX me `{user.agreeTerms}` (boolean) render hota hai — React boolean ko
+   kuch nahi dikhata, is liye circle hamesha khaali rehta tha. */
+.avatar-circle:empty::before {
+  content: '\1F464'; /* 👤 */
+  font-size: 1.5rem;
+  opacity: 0.55;
+}
+
+/* Status Ring */
 .status-dot {
   position: absolute;
   bottom: 2px;
   right: 2px;
-  width: 14px;
-  height: 14px;
+  width: 15px;
+  height: 15px;
   border-radius: 50%;
-  border: 2.5px solid #ffffff;
+  border: 2.5px solid var(--adm-surface);
+  /* Default grey — pehle sirf .active/.away/.offline par colour tha, aur
+     inactive users par class khali rehne se dot poora invisible ho jata tha. */
+  background: #9a948c;
 }
 
-.status-dot.active { background-color: var(--color-active); }
-.status-dot.away { background-color: var(--color-away); }
-.status-dot.offline { background-color: var(--color-offline); }
+.status-dot.active { background: var(--adm-success); }
+.status-dot.away   { background: var(--adm-warn); }
+.status-dot.offline { background: #9a948c; }
 
-/* Profile Typography */
+/* ==========================================================================
+   PROFILE TEXT
+   ========================================================================== */
 .profile-info {
   flex: 1;
-  margin-bottom: 20px;
+  width: 100%;
+  min-width: 0;
+  margin-bottom: 18px;
 }
 
 .profile-name {
-  margin: 0 0 6px 0;
-  font-size: 1.1rem;
-  color: var(--text-dark);
+  margin: 0 0 5px 0;
+  font-size: 1.05rem;
   font-weight: 600;
+  color: var(--adm-ink);
+  overflow-wrap: anywhere;
 }
 
-.profile-role {
-  margin: 0 0 4px 0;
-  font-size: 0.88rem;
-  color: var(--primary-indigo);
-  font-weight: 500;
+/* Naam null hone par khaali <h3> space ghere rahe tha */
+.profile-name:empty {
+  display: none;
 }
 
 .profile-email {
-  margin: 0;
-  font-size: 0.82rem;
-  color: var(--text-light);
+  margin: 0 0 8px 0;
+  font-size: 0.8rem;
+  color: var(--adm-ink-3);
+  overflow-wrap: anywhere;
 }
 
-/* Action Trigger Trays */
+/* Class ka naam "role" hai lekin JSX me yahan `createAt` date render hoti hai
+   — is liye ise prominent indigo accent nahi, halka muted timestamp diya. */
+.profile-role {
+  display: inline-block;
+  margin: 0;
+  padding: 3px 9px;
+  border-radius: var(--adm-radius-pill);
+  background: var(--adm-surface-2);
+  border: 1px solid var(--adm-line);
+  font-size: 0.68rem;
+  font-weight: 500;
+  color: var(--adm-ink-3);
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ==========================================================================
+   ACTIONS
+   ========================================================================== */
 .profile-actions {
   display: flex;
   width: 100%;
   gap: 8px;
 }
 
-.btn-view {
+/* SCOPED: `.btn-view` pehle Order.css me bhi define tha. Dono stylesheet
+   hamesha loaded rehti hain aur Users.css baad me aati thi, is liye Orders
+   page ka "Order place" button chupke se yahan ki styling pehn leta tha. */
+.user-profile-card .btn-view {
   flex: 1;
-  background-color: #f8fafc;
-  border: 1px solid #e2e8f0;
-  color: var(--text-dark);
-  padding: 8px 12px;
-  border-radius: 8px;
-  font-size: 0.85rem;
-  font-weight: 500;
+  min-width: 0;
+  background: var(--adm-surface-2);
+  border: 1px solid var(--adm-line-2);
+  color: var(--adm-ink);
+  padding: 9px 12px;
+  border-radius: var(--adm-radius-sm);
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.82rem;
+  font-weight: 600;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: background-color var(--adm-speed) ease, color var(--adm-speed) ease,
+              border-color var(--adm-speed) ease;
 }
 
-.btn-view:hover {
-  background-color: var(--primary-indigo);
-  color: white;
-  border-color: var(--primary-indigo);
+.user-profile-card .btn-view:hover {
+  background: var(--adm-gold);
+  border-color: var(--adm-gold);
+  color: #ffffff;
 }
 
 .btn-settings {
-  background: none;
-  border: 1px solid #e2e8f0;
-  padding: 8px 10px;
-  border-radius: 8px;
+  flex-shrink: 0;
+  width: 38px;
+  background: var(--adm-surface-2);
+  border: 1px solid var(--adm-line-2);
+  padding: 0;
+  border-radius: var(--adm-radius-sm);
+  font-size: 0.95rem;
+  line-height: 1;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: background-color var(--adm-speed) ease, border-color var(--adm-speed) ease;
 }
 
 .btn-settings:hover {
-  background-color: #f1f5f9;
+  background: var(--adm-gold-soft);
+  border-color: var(--adm-gold);
 }
 
 /* ==========================================================================
-   BREAKPOINTS (Responsive Tweaks)
+   RESPONSIVE
    ========================================================================== */
-@media (max-width: 640px) {
-  .users-section {
-    padding: 16px;
-    padding-top: 80px; /* Mobile hamburger button ke liye extra space upper boundary par */
-  }
-  
+@media (max-width: 768px) {
+  /* ☰ button ke liye top offset Admin.css handle karta hai */
   .users-header {
     flex-direction: column;
     align-items: flex-start;
     gap: 10px;
   }
-  
+}
+
+@media (max-width: 560px) {
+  .users-section {
+    padding: 16px;
+  }
+
+  .users-grid {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
   .user-profile-card {
-    padding: 16px; /* Choti screens par padding thodi kam */
+    padding: 18px;
+  }
+}
+
+@media (max-width: 380px) {
+  .users-section {
+    padding: 14px;
+  }
+
+  .counter-badge {
+    padding: 6px 12px;
+    font-size: 0.75rem;
   }
 }

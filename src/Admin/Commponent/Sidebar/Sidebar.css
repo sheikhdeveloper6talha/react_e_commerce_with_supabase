@@ -1,99 +1,135 @@
-/* Custom Smooth Design Tokens */
-:root {
-  --sidebar-bg: #111827;       /* Modern Dark Slate */
-  --sidebar-hover: #1f2937;    /* Slightly lighter for hover */
-  --sidebar-active: #4f46e5;   /* Indigo pop */
-  --text-main: #f9fafb;
-  --text-muted: #9ca3af;
-  --transition-speed: 0.25s;
-  
-  --width-open: 260px;
-  --width-collapsed: 80px;
-}
+/* ==========================================================================
+   ADMIN SIDEBAR
+   --------------------------------------------------------------------------
+   Tokens `.main-Container` par scoped hain (Admin.css me) — is liye yahan
+   koi `:root` block nahi. Pehle yahan ka apna `:root` baaki 3 CSS files ke
+   `:root` se collide kar raha tha.
+   ========================================================================== */
 
-/* Reset or Core layouts for safety */
-.sidebar, .sidebar * {
+.sidebar,
+.sidebar * {
   box-sizing: border-box;
-
 }
 
-/* Main Sidebar Container */
+/* ==========================================================================
+   MAIN SIDEBAR CONTAINER
+   ========================================================================== */
 .sidebar {
   height: 100vh;
-  background-color: var(--sidebar-bg);
-  color: var(--text-main);
+  background-color: var(--adm-side);
+  color: var(--adm-side-ink);
   display: flex;
   flex-direction: column;
   position: sticky;
   top: 0;
   left: 0;
   z-index: 100;
-  transition: width var(--transition-speed) cubic-bezier(0.4, 0, 0.2, 1),
-              transform var(--transition-speed) cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 4px 0 25px rgba(0, 0, 0, 0.15);
+  border-right: 1px solid var(--adm-side-line);
+  transition: width var(--adm-speed) cubic-bezier(0.4, 0, 0.2, 1),
+              transform var(--adm-speed) cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 4px 0 24px rgba(21, 19, 15, 0.16);
 }
 
 /* Desktop States */
 .sidebar.open {
-  width: var(--width-open);
+  width: var(--adm-width-open);
 }
 
 .sidebar.collapsed {
-  width: var(--width-collapsed);
+  width: var(--adm-width-collapsed);
 }
 
-/* Header Section */
+/* ==========================================================================
+   HEADER SECTION
+   ========================================================================== */
 .sidebar-header {
-
   height: 70px;
+  flex-shrink: 0;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 20px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  gap: 10px;
+  padding: 0 18px;
+  border-bottom: 1px solid var(--adm-side-line);
 }
 
 .logo-container {
   display: flex;
   align-items: center;
   gap: 12px;
+  min-width: 0;
 }
 
 .logo-icon {
-  font-size: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  flex-shrink: 0;
+  border-radius: 9px;
+  background: linear-gradient(135deg, var(--adm-gold) 0%, var(--adm-gold-deep) 100%);
+  color: var(--adm-side);
+  font-size: 0.85rem;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  box-shadow: 0 3px 10px rgba(191, 163, 101, 0.28);
 }
 
 .logo-text {
-  font-weight: 700;
-  font-size: 1.15rem;
+  font-family: 'Playfair Display', serif;
+  font-size: 1.2rem;
+  font-weight: 600;
   letter-spacing: 0.5px;
+  color: var(--adm-gold);
   white-space: nowrap;
+  overflow: hidden;
 }
 
 .toggle-btn {
   background: none;
-  border: none;
-  color: var(--text-muted);
+  border: 1px solid transparent;
+  color: var(--adm-side-muted);
   cursor: pointer;
-  font-size: 0.9rem;
-  padding: 6px;
-  border-radius: 6px;
+  font-size: 0.75rem;
+  padding: 7px 9px;
+  border-radius: var(--adm-radius-sm);
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all 0.2s ease;
+  flex-shrink: 0;
+  transition: color var(--adm-speed) ease, background-color var(--adm-speed) ease,
+              border-color var(--adm-speed) ease;
 }
 
 .toggle-btn:hover {
-  background-color: var(--sidebar-hover);
-  color: var(--text-main);
+  background-color: var(--adm-side-2);
+  border-color: var(--adm-side-line);
+  color: var(--adm-gold);
 }
 
-/* Navigation Menu */
+.toggle-btn:focus-visible {
+  outline: 2px solid var(--adm-gold);
+  outline-offset: 2px;
+}
+
+/* ==========================================================================
+   NAVIGATION MENU
+   ========================================================================== */
 .sidebar-nav {
   flex: 1;
   padding: 16px 12px;
   overflow-y: auto;
+  scrollbar-width: thin;
+}
+
+.sidebar-nav::-webkit-scrollbar {
+  width: 6px;
+}
+
+.sidebar-nav::-webkit-scrollbar-thumb {
+  background: var(--adm-side-line);
+  border-radius: 4px;
 }
 
 .sidebar-nav ul {
@@ -103,64 +139,128 @@
 }
 
 .nav-item {
+  position: relative;
   display: flex;
   align-items: center;
-  padding: 12px 14px;
+  padding: 11px 12px;
   margin-bottom: 4px;
-  border-radius: 8px;
+  border-radius: var(--adm-radius-sm);
   cursor: pointer;
-  color: var(--text-muted);
-  gap: 16px;
-  transition: all 0.2s ease;
+  color: var(--adm-side-muted);
+  gap: 14px;
+  transition: background-color var(--adm-speed) ease, color var(--adm-speed) ease;
 }
 
 .nav-icon {
-  font-size: 1.2rem;
-  min-width: 24px;
   display: flex;
+  align-items: center;
   justify-content: center;
+  width: 26px;
+  height: 26px;
+  flex-shrink: 0;
+  border-radius: 7px;
+  background-color: rgba(191, 163, 101, 0.1);
+  color: var(--adm-gold);
+  font-size: 0.8rem;
+  font-weight: 800;
+  transition: background-color var(--adm-speed) ease, color var(--adm-speed) ease;
 }
 
 .nav-label {
   white-space: nowrap;
-  font-size: 0.95rem;
+  overflow: hidden;
+  font-size: 0.92rem;
   font-weight: 500;
 }
 
-/* Items Hover/Active States */
+/* Items Hover */
 .nav-item:hover {
-  background-color: var(--sidebar-hover);
-  color: var(--text-main);
+  background-color: var(--adm-side-2);
+  color: var(--adm-side-ink);
 }
 
+.nav-item:hover .nav-icon {
+  background-color: rgba(191, 163, 101, 0.2);
+}
+
+/* Active State — gold pill + left indicator */
 .nav-item.active {
-  background-color: var(--sidebar-active);
-  color: var(--text-main);
+  background-color: rgba(191, 163, 101, 0.14);
+  color: var(--adm-side-ink);
 }
 
-/* User Footer Section */
+.nav-item.active::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 3px;
+  height: 22px;
+  border-radius: 0 3px 3px 0;
+  background: var(--adm-gold);
+}
+
+.nav-item.active .nav-icon {
+  background: linear-gradient(135deg, var(--adm-gold) 0%, var(--adm-gold-deep) 100%);
+  color: var(--adm-side);
+}
+
+.nav-item.active .nav-label {
+  font-weight: 600;
+  color: var(--adm-gold);
+}
+
+/* Collapsed state: sirf icon, centered */
+.sidebar.collapsed .nav-item {
+  justify-content: center;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.sidebar.collapsed .sidebar-header {
+  padding: 0;
+  justify-content: center;
+}
+
+.sidebar.collapsed .toggle-btn {
+  display: none;
+}
+
+.sidebar.collapsed .sidebar-footer {
+  justify-content: center;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+/* ==========================================================================
+   USER FOOTER SECTION
+   ========================================================================== */
 .sidebar-footer {
+  flex-shrink: 0;
   padding: 16px;
-  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  border-top: 1px solid var(--adm-side-line);
   display: flex;
   align-items: center;
   gap: 12px;
-  background-color: rgba(0, 0, 0, 0.15);
+  background-color: rgba(0, 0, 0, 0.22);
 }
 
 .user-avatar {
   width: 38px;
   height: 38px;
-  background-color: var(--sidebar-hover);
+  flex-shrink: 0;
+  background-color: var(--adm-side-2);
+  border: 1px solid var(--adm-side-line);
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.1rem;
-  flex-shrink: 0;
+  font-size: 1rem;
 }
 
 .user-info {
+  min-width: 0;
   white-space: nowrap;
   overflow: hidden;
 }
@@ -169,49 +269,67 @@
   margin: 0;
   font-size: 0.85rem;
   font-weight: 600;
+  color: var(--adm-side-ink);
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .user-role {
   margin: 2px 0 0 0;
-  font-size: 0.75rem;
-  color: var(--text-muted);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--adm-gold);
 }
 
-/* Mobile Trigger Button (Default Hide on Desktop) */
+/* ==========================================================================
+   MOBILE TRIGGER BUTTON (desktop par hidden)
+   ========================================================================== */
 .mobile-trigger {
   display: none;
   position: fixed;
   top: 16px;
   left: 16px;
-  background-color: var(--sidebar-bg);
-  color: white;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  padding: 10px 14px;
-  border-radius: 8px;
-  font-size: 1.2rem;
+  width: 44px;
+  height: 44px;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--adm-side);
+  color: var(--adm-gold);
+  border: 1px solid var(--adm-side-line);
+  padding: 0;
+  border-radius: var(--adm-radius-sm);
+  font-size: 1.1rem;
   cursor: pointer;
-  z-index: 90; 
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25);
-  transition: transform 0.2s;
+  z-index: 90;
+  box-shadow: 0 6px 18px rgba(21, 19, 15, 0.3);
+  transition: background-color var(--adm-speed) ease, transform var(--adm-speed) ease;
+}
+
+.mobile-trigger:hover {
+  background-color: var(--adm-side-2);
 }
 
 .mobile-trigger:active {
-  transform: scale(0.95);
+  transform: scale(0.94);
 }
 
-/* Dark Dim Background Blocker */
+/* ==========================================================================
+   DIM OVERLAY
+   ========================================================================== */
 .sidebar-overlay {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background-color: rgba(0, 0, 0, 0.4);
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(21, 19, 15, 0.55);
   backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
   z-index: 99;
   opacity: 0;
   pointer-events: none;
-  transition: opacity var(--transition-speed) ease;
+  transition: opacity var(--adm-speed) ease;
 }
 
 .sidebar-overlay.active {
@@ -220,18 +338,21 @@
 }
 
 /* ==========================================================================
-   RESPONSIVE LOGIC (Mobile & Tablets)
+   RESPONSIVE (Mobile & Tablets)
    ========================================================================== */
 @media (max-width: 768px) {
   .mobile-trigger {
-    display: block; /* Mobile par trigger button aa jayega */
+    display: flex; /* Mobile par trigger button aa jayega */
   }
 
   .sidebar {
     position: fixed;
-    width: var(--width-open) !important; /* Mobile par collapse nahi hoga direct chhupega */
+    height: 100vh;
+    width: var(--adm-width-open) !important; /* Mobile par collapse nahi hoga, direct chhupega */
+    max-width: 85vw;
     transform: translateX(-100%);
     z-index: 100;
+    box-shadow: 8px 0 32px rgba(21, 19, 15, 0.4);
   }
 
   /* Kholne par zero position par slide in hoga */
@@ -244,8 +365,32 @@
     transform: translateX(-100%);
   }
 
-  /* Mobile par overlay responsive handling */
-  .sidebar-overlay.active {
-    display: block;
+  .sidebar.collapsed .nav-item,
+  .sidebar.collapsed .sidebar-header,
+  .sidebar.collapsed .sidebar-footer {
+    justify-content: flex-start;
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+
+  .sidebar.collapsed .sidebar-header {
+    padding-left: 18px;
+    padding-right: 18px;
+  }
+
+  .sidebar.collapsed .sidebar-footer {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  .sidebar.collapsed .toggle-btn {
+    display: flex;
+  }
+}
+
+/* Choti mobile: sidebar ko zyada width mat do, content ko saaf rakhne ke liye */
+@media (max-width: 380px) {
+  .sidebar {
+    width: min(var(--adm-width-open), 78vw) !important;
   }
 }

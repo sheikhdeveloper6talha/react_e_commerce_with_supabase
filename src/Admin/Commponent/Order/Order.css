@@ -1,198 +1,306 @@
+/* ==========================================================================
+   ADMIN — ORDERS PAGE
+   Tokens `.main-Container` par scoped hain (Admin.css me).
+   ========================================================================== */
+
 /* Orders Page Wrapper */
 .orders-page {
-  background: white;
-  padding: 25px;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  background: var(--adm-surface);
+  border: 1px solid var(--adm-line);
+  padding: 24px;
+  border-radius: var(--adm-radius);
+  box-shadow: var(--adm-shadow-sm);
   width: 100%;
   box-sizing: border-box;
-  overflow-y: auto;
-  height: 100vh;
 }
 
-/* Header & Controls Layout */
+/* ==========================================================================
+   HEADER + CONTROLS
+   NOTE: search input aur status filter ka koi onChange nahi hai (JSX me
+   sirf `placeholder`/`options` hain) — yeh UI abhi bhi kuch filter nahi
+   karte. Styling theek hai, logic chheda nahi gaya.
+   ========================================================================== */
 .orders-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
-  gap: 15px;
-  margin-bottom: 25px;
+  gap: 14px;
+  margin-bottom: 22px;
 }
 
 .orders-header h2 {
   margin: 0;
-  color: #2c3e50;
-  font-size: 22px;
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.3rem, 1.1rem + 0.9vw, 1.6rem);
+  font-weight: 600;
+  letter-spacing: -0.2px;
+  color: var(--adm-ink);
 }
 
 .orders-actions {
   display: flex;
-  gap: 12px;
+  gap: 10px;
   flex-wrap: wrap;
+  min-width: 0;
 }
 
-/* Search and Filter Inputs */
+/* Search + Filter Inputs */
 .search-input,
 .filter-select {
-  padding: 10px 15px;
-  border: 1px solid #ddd;
-  border-radius: 6px;
-  font-size: 14px;
+  padding: 10px 14px;
+  border: 1px solid var(--adm-line-2);
+  border-radius: var(--adm-radius-sm);
+  background: var(--adm-surface-2);
+  color: var(--adm-ink);
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.87rem;
   outline: none;
-  transition: 0.3s;
+  box-sizing: border-box;
+  transition: border-color var(--adm-speed) ease, background-color var(--adm-speed) ease,
+              box-shadow var(--adm-speed) ease;
 }
 
 .search-input:focus,
 .filter-select:focus {
-  border-color: #3498db;
+  border-color: var(--adm-gold);
+  background: var(--adm-surface);
+  box-shadow: var(--adm-focus);
+}
+
+.search-input::placeholder {
+  color: var(--adm-ink-3);
 }
 
 .search-input {
-  width: 220px;
+  width: 230px;
 }
 
-/* Table Styling */
+.filter-select {
+  cursor: pointer;
+}
+
+/* ==========================================================================
+   TABLE
+   12 columns hain — pehle `min-width: 560px` tha jiski wajah se ~1100px
+   tak ka viewport par columns ek doosre me ghus (crush) rahe the. Horizontal
+   scroll container mojood hai, is liye table ko asli width dena sahi hai.
+   ========================================================================== */
 .orders-table-container {
   width: 100%;
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
-  margin-bottom: 40px;
+  scrollbar-width: thin;
+  margin-bottom: 10px;
+  border: 1px solid var(--adm-line);
+  border-radius: var(--adm-radius-sm);
 }
 
 .orders-table {
   width: 100%;
   border-collapse: collapse;
-  min-width: 560px;
+  min-width: 1100px;
   text-align: left;
 }
 
 .orders-table th {
-  background-color: #f8f9fa;
-  color: #7f8c8d;
-  font-weight: 600;
-  padding: 14px 16px;
-  font-size: 14px;
-  border-bottom: 2px solid #edf2f7;
+  background: var(--adm-surface-2);
+  color: var(--adm-ink-3);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 1.1px;
+  text-transform: uppercase;
+  padding: 13px 14px;
+  border-bottom: 1px solid var(--adm-line-2);
   white-space: nowrap;
+  position: sticky;
+  top: 0;
+  z-index: 2;
 }
 
 .orders-table td {
-  padding: 14px 16px;
-  border-bottom: 1px solid #edf2f7;
-  color: #333;
-  font-size: 14px;
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--adm-line);
+  color: var(--adm-ink-2);
+  font-size: 0.86rem;
   vertical-align: middle;
 }
 
+.orders-table tbody tr {
+  transition: background-color var(--adm-speed) ease;
+}
+
+.orders-table tbody tr:hover {
+  background: var(--adm-gold-soft);
+}
+
+.orders-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
 .order-id {
-  font-weight: bold;
-  color: #2c3e50;
+  font-weight: 600;
+  color: var(--adm-ink);
+  white-space: nowrap;
 }
 
 .order-price {
-  font-weight: 600;
-  color: #2c3e50;
+  font-weight: 700;
+  color: var(--adm-ink);
+  white-space: nowrap;
 }
 
-/* Action Button */
-.btn-view {
-  background: #f0f4f8;
-  color: #3498db;
-  border: none;
-  padding: 6px 12px;
-  border-radius: 4px;
-  cursor: pointer;
+/* Column targeting — td me koi class nahi hai, is liye nth-child.
+   (Header/data ka Size/Adress mismatch JSX me hai, CSS me fix nahi ho sakta) */
+
+/* Phone — lambe number wrap na hon */
+.orders-table td:nth-child(4) {
+  white-space: nowrap;
+}
+
+/* Address — 2 lines me clamp, table lambi na ho */
+.orders-table td:nth-child(5) {
+  min-width: 150px;
+  max-width: 200px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+/* Size + QTY — chhote, center aligned */
+.orders-table td:nth-child(6),
+.orders-table td:nth-child(7) {
+  text-align: center;
   font-weight: 500;
-  transition: 0.2s;
+  color: var(--adm-ink);
+}
+
+/* Product */
+.orders-table td:nth-child(8) {
+  color: var(--adm-ink);
+  font-weight: 500;
+}
+
+/* Date — `toLocaleString()` lambi string hai, 2 lines me wrap */
+.orders-table td:nth-child(9) {
+  min-width: 120px;
+  font-size: 0.8rem;
+  color: var(--adm-ink-3);
+  white-space: normal;
+  line-height: 1.35;
+}
+
+/* Customer name */
+.orders-table td:nth-child(3) {
+  color: var(--adm-ink);
+  font-weight: 500;
   white-space: nowrap;
 }
 
-.btn-view:hover {
-  background: #3498db;
-  color: white;
-}
-
-/* Status Badges */
+/* ==========================================================================
+   STATUS BADGES
+   JSX sirf `pending` ya `delivered` class deta hai. Baaqi variants
+   styling ke liye rakhe gaye hain (future-proof).
+   ========================================================================== */
 .status-badge {
-  padding: 5px 10px;
-  border-radius: 50px;
-  font-size: 11px;
-  font-weight: 600;
-  text-transform: uppercase;
   display: inline-block;
+  padding: 5px 11px;
+  border-radius: var(--adm-radius-pill);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
   white-space: nowrap;
 }
 
-.status-badge.delivered { background: #e6f4ea; color: #137333; }
-.status-badge.pending   { background: #fef7e0; color: #b06000; }
-.status-badge.shipped   { background: #e8f0fe; color: #1a73e8; }
-.status-badge.cancelled { background: #fce8e6; color: #c5221f; }
+.status-badge.delivered { background: var(--adm-success-soft); color: var(--adm-success); }
+.status-badge.pending   { background: var(--adm-warn-soft); color: var(--adm-warn); }
+.status-badge.shipped   { background: #e8f0fe; color: #1a5fb4; }
+.status-badge.cancelled { background: var(--adm-danger-soft); color: var(--adm-danger); }
 
-/* Product Image */
+/* ==========================================================================
+   PRODUCT IMAGE
+   ========================================================================== */
 .images img {
-  width: 70px;
-  height: 70px;
+  width: 60px;
+  height: 60px;
   object-fit: contain;
-  border-radius: 6px;
-  border: 1px solid #edf2f7;
-  background: #f8f9fa;
+  border-radius: var(--adm-radius-sm);
+  border: 1px solid var(--adm-line);
+  background: var(--adm-surface-2);
   display: block;
 }
 
 /* ==========================================================================
-   RESPONSIVE QUERIES
+   ACTION BUTTON
+   SCOPED: `.btn-view` pehle Users.css me bhi define tha. Dono stylesheet
+   hamesha loaded rehti hain, is liye bina scope ke dono pages ek doosre ki
+   styling pehnti thi.
+   ========================================================================== */
+.orders-table .btn-view {
+  background: var(--adm-gold-soft);
+  border: 1px solid var(--adm-gold);
+  color: var(--adm-gold-deep);
+  padding: 7px 12px;
+  border-radius: var(--adm-radius-sm);
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.78rem;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background-color var(--adm-speed) ease, color var(--adm-speed) ease,
+              border-color var(--adm-speed) ease;
+}
+
+.orders-table .btn-view:hover {
+  background: var(--adm-gold);
+  border-color: var(--adm-gold);
+  color: #ffffff;
+}
+
+/* ==========================================================================
+   RESPONSIVE
    ========================================================================== */
 
 /* Tablet */
+@media (max-width: 1024px) {
+  .orders-page {
+    padding: 22px;
+  }
+}
+
+/* Mobile — ☰ offset Admin.css handle karta hai */
 @media (max-width: 768px) {
   .orders-page {
     padding: 18px;
-    height: auto;
-    min-height: 100vh;
-margin-top: 80px;
   }
 
   .orders-header h2 {
-    font-size: 18px;
+    font-size: 1.25rem;
   }
 
   .search-input {
-    width: 180px;
-  }
-
-  .orders-table th,
-  .orders-table td {
-    padding: 12px 12px;
-    font-size: 13px;
+    width: 200px;
   }
 
   .images img {
-    width: 55px;
-    height: 55px;
+    width: 52px;
+    height: 52px;
   }
-
 }
 
 /* Mobile */
-@media (max-width: 580px) {
+@media (max-width: 620px) {
   .orders-page {
-    padding: 12px;
-    border-radius: 8px;
-    height: auto;
-    min-height: 100vh;
+    padding: 14px;
   }
 
   .orders-header {
     flex-direction: column;
     align-items: flex-start;
-    margin-top: 8px;
-    margin-bottom: 16px;
-    gap: 10px;
-  }
-
-  .orders-header h2 {
-    font-size: 17px;
+    gap: 12px;
   }
 
   .orders-actions {
@@ -201,59 +309,62 @@ margin-top: 80px;
     gap: 8px;
   }
 
+  /* 16px: iOS par focus par page zoom na ho */
   .search-input,
   .filter-select {
     width: 100%;
-    font-size: 16px; /* iOS zoom rokta hai */
+    font-size: 16px;
     padding: 10px 12px;
   }
 
   .orders-table {
-    min-width: 500px;
+    min-width: 980px;
   }
 
   .orders-table th,
   .orders-table td {
-    padding: 10px 10px;
-    font-size: 12px;
+    padding: 10px 11px;
+    font-size: 0.8rem;
   }
 
   .status-badge {
-    font-size: 10px;
+    font-size: 0.62rem;
     padding: 4px 8px;
   }
 
-  .btn-view {
-    padding: 5px 10px;
-    font-size: 12px;
+  .images img {
+    width: 44px;
+    height: 44px;
   }
 
-  .images img {
-    width: 45px;
-    height: 45px;
-    border-radius: 4px;
+  .orders-table .btn-view {
+    padding: 6px 9px;
+    font-size: 0.72rem;
   }
 }
 
-/* Choti mobile (360px) */
-@media (max-width: 380px) {
- .orders-actions{
-  width: 80%;
- }
+/* Choti mobile (360-380px) */
+@media (max-width: 420px) {
   .orders-page {
-    padding: 10px;
+    padding: 12px;
   }
 
   .orders-table {
-    min-width: 460px;
+    min-width: 900px;
   }
 
   .orders-table th,
   .orders-table td {
-    padding: 16px 16px;
-    font-size: 11px;
-  vertical-align: middle;
-  white-space: nowrap;
+    padding: 9px 9px;
+    font-size: 0.75rem;
+  }
+
+  /* NOTE: Purani CSS yahan `padding: 16px 16px` set karti thi jo upar wale
+     10px ko override kar deti thi — sabse chhote screen par cells BADE ho
+     jate the chhote hone ke bajaye. Neeche flat padding rakhi hai. */
+  .status-badge {
+    font-size: 0.6rem;
+    padding: 4px 7px;
   }
 
   .images img {
@@ -261,12 +372,8 @@ margin-top: 80px;
     height: 38px;
   }
 
-  .btn-view {
-    padding: 4px 8px;
-    font-size: 11px;
+  .orders-table .btn-view {
+    padding: 5px 8px;
+    font-size: 0.68rem;
   }
-tbody tr .name{
-text-align: center;
-
-}
 }

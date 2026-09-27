@@ -1,30 +1,77 @@
 /* ==========================================================================
-   ADMIN SHELL LAYOUT
-   Yeh file pooray admin panel ka frame control karti hai:
-   Sidebar (sticky) + active page. Pages apni apni CSS rakhte hain;
-   yahan sirf woh rules hain jo shell-level layout ko theek karte hain.
+   ADMIN SHELL — design tokens + layout frame
+   --------------------------------------------------------------------------
+   Tokens `.main-Container` par scoped hain, `:root` par nahi.
+   Wajah: 4 CSS files apna `:root` block globally define kar rahi thi aur
+   sab ek saath load hoti hain — `--text-muted` jaise naam baar baar
+   redefine ho rahe the aur aakhir wali (Products.css) jeet jaati thi.
+   Scoped tokens ye cycle hamesha ke liye tod dete hain.
    ========================================================================== */
 
 .main-Container {
+  /* --- Brand palette (SMLibas gold + dark) --- */
+  --adm-canvas: #f7f5f1;
+  --adm-surface: #ffffff;
+  --adm-surface-2: #fbf9f6;
+  --adm-ink: #1f1c18;
+  --adm-ink-2: #6b6660;
+  --adm-ink-3: #9a948c;
+  --adm-line: #e7e1d6;
+  --adm-line-2: #d9d1c2;
+  --adm-gold: #bfa365;
+  --adm-gold-deep: #8c764b;
+  --adm-gold-soft: #f5efe3;
+
+  /* --- Sidebar --- */
+  --adm-side: #15130f;
+  --adm-side-2: #201d17;
+  --adm-side-line: rgba(191, 163, 101, 0.18);
+  --adm-side-ink: #f5f2ec;
+  --adm-side-muted: #9a938a;
+  --adm-width-open: 260px;
+  --adm-width-collapsed: 80px;
+
+  /* --- Status --- */
+  --adm-success: #2f7d5b;
+  --adm-success-soft: #e6f2ec;
+  --adm-warn: #a8620a;
+  --adm-warn-soft: #fbf0dd;
+  --adm-danger: #a3372c;
+  --adm-danger-soft: #fbeae7;
+
+  /* --- Shape + motion --- */
+  --adm-radius: 12px;
+  --adm-radius-sm: 8px;
+  --adm-radius-pill: 999px;
+  --adm-shadow-sm: 0 1px 2px rgba(31, 28, 24, 0.05);
+  --adm-shadow: 0 4px 16px rgba(31, 28, 24, 0.07);
+  --adm-shadow-lg: 0 14px 34px rgba(31, 28, 24, 0.12);
+  --adm-speed: 0.22s;
+  --adm-focus: 0 0 0 3px rgba(191, 163, 101, 0.35);
+
+  /* Fixed ☰ button (mobile) ke liye shared offset */
+  --adm-mobile-top: 78px;
+
   display: flex;
   align-items: flex-start;
   min-height: 100vh;
   width: 100%;
-  background-color: #f4f7f6; /* Dashboard ka canvas colour — yahan se poore panel ko ek jaisa milta hai */
+  background-color: var(--adm-canvas);
+  color: var(--adm-ink);
   font-family: 'Montserrat', 'Segoe UI', system-ui, sans-serif;
+  line-height: 1.5;
 }
 
 /* ==========================================================================
    SIDEBAR — flex shrink band
-   Pehle sidebar aur page dono ke basis 260px + 100% the, is liye flex
-   shrink dono ko squeeze kar raha tha aur sidebar apni 260px width se
-   chhoot jata tha. flex-shrink: 0 se width respect hoti hai.
+   Pehle sidebar aur page dono ke basis 260px + 100% the, is liye flex-shrink
+   dono ko squeeze kar raha tha aur sidebar apni 260px width se kat jata tha.
    ========================================================================== */
 .main-Container > .sidebar {
   flex-shrink: 0;
 }
 
-/* Mobile browser toolbars (100vh > visible viewport) se bachne ke liye */
+/* Mobile browser toolbar (100vh se bada hota hai) se bachne ke liye */
 @supports (height: 100dvh) {
   .main-Container > .sidebar {
     height: 100dvh;
@@ -33,9 +80,10 @@
 
 /* ==========================================================================
    ACTIVE PAGE WRAPPERS
-   Har page ka apna root class alag hai, yeh sab flex item ban kar
-   baaki width lete hain. min-width: 0 zaroori hai warna wide tables
-   (Orders/Dashboard) flex layout ko tod kar horizontal overflow de dete hain.
+   Har page ka root class alag hai — ye sab flex item ban kar baaki width
+   lete hain. min-width: 0 zaroori hai, warna wide tables flex layout tod kar
+   horizontal overflow de deti hain (dono table wrappers me overflow-x: auto
+   mojood hai, is liye ab wo safely scroll karengi).
    ========================================================================== */
 .main-Container > .admin-container,
 .main-Container > .users-section,
@@ -46,25 +94,26 @@
   min-width: 0;
   min-height: 100vh;
   width: auto; /* in pages ka apna width:100% flex basis ko tod raha tha */
+  background: transparent;
+  font-family: 'Montserrat', 'Segoe UI', system-ui, sans-serif;
+  box-sizing: border-box;
 }
 
 /* Dashboard ka padding .main-content ke andar hai, wrapper transparent */
 .main-Container > .admin-container {
-  background: transparent;
+  display: block;
 }
 
 /* Add Product ka form ek card hai — max-width + auto margins centre karte hain */
 .main-Container > .form-container {
-  background: transparent;
   margin-top: 30px;
 }
 
-/* Orders page ka apna internal scroll band karke page-level scroll par laata hai,
-   taake sidebar ka sticky behaviour har tab par same rahe. */
+/* Orders page ka apna internal scroll band kar ke page-level scroll par laata
+   hai, taake sidebar ka sticky behaviour har tab par same rahe. */
 .main-Container > .orders-page {
   height: auto;
   overflow-y: visible;
-  border-radius: 12px;
 }
 
 /* ==========================================================================
@@ -74,6 +123,17 @@
   min-width: 0;
   width: 100%;
   box-sizing: border-box;
+}
+
+/* ==========================================================================
+   SHARED PAGE CHROME
+   Har page ka apna heading markup alag hai, is liye class-based scoping.
+   ========================================================================== */
+.main-Container h1,
+.main-Container h2,
+.main-Container h3 {
+  color: var(--adm-ink);
+  overflow-wrap: anywhere;
 }
 
 /* ==========================================================================
@@ -100,9 +160,9 @@
 }
 
 /* Mobile: sidebar off-canvas ho chuka hai, is liye:
-   1) content ko full viewport width do
-   2) fixed ☰ button (top:16 left:16) ke neeche space chhoda jaye,
-      warna wo page heading ke upar chadh jata hai
+   1) content ko poora viewport width do
+   2) fixed ☰ button (top:16px) ke neeche space chhoda jaye — warna wo page
+      heading ke upar chadh jata hai
    3) form card ka margin adjust */
 @media (max-width: 768px) {
   .main-Container > .admin-container,
@@ -114,19 +174,19 @@
   .main-Container .main-content,
   .main-Container > .users-section,
   .main-Container > .products-container {
-    padding-top: 78px; /* ☰ button + breathing room */
+    padding-top: var(--adm-mobile-top);
   }
 
+  /* Orders + Add Product: padding nahi, margin-top offset (card/wrapper style) */
   .main-Container > .orders-page {
-    margin-top: 80px; /* Order.css ke existing mobile rule ke saath consistent */
+    margin-top: var(--adm-mobile-top);
     height: auto;
-    min-height: auto;
+    min-height: auto; /* 100vh + margin neeche bekaar scroll bana dete the */
   }
 
   .main-Container > .form-container {
-    margin-top: 78px;
+    margin-top: var(--adm-mobile-top);
     padding: 20px;
-    border-radius: 12px;
   }
 }
 
@@ -141,16 +201,25 @@
 
   .main-Container > .form-container {
     padding: 15px;
-    margin-top: 74px;
   }
 }
 
 /* ==========================================================================
-   ACCESSIBILITY / POLISH
+   ACCESSIBILITY
    ========================================================================== */
-.main-Container .mobile-trigger:focus-visible {
-  outline: 2px solid #4f46e5;
+.main-Container a:focus-visible,
+.main-Container button:focus-visible,
+.main-Container input:focus-visible,
+.main-Container select:focus-visible,
+.main-Container textarea:focus-visible,
+.main-Container [tabindex]:focus-visible {
+  outline: 2px solid var(--adm-gold-deep);
   outline-offset: 2px;
+}
+
+.main-Container .mobile-trigger:focus-visible {
+  outline: 2px solid var(--adm-gold);
+  outline-offset: 3px;
 }
 
 /* Slim scrollbar for the admin area */
@@ -160,21 +229,25 @@
 }
 
 .main-Container ::-webkit-scrollbar-track {
-  background: #eceeed;
+  background: #eceae4;
 }
 
 .main-Container ::-webkit-scrollbar-thumb {
-  background: #c3c9c7;
+  background: #c6c1b7;
   border-radius: 6px;
-  border: 2px solid #eceeed;
+  border: 2px solid #eceae4;
 }
 
 .main-Container ::-webkit-scrollbar-thumb:hover {
-  background: #a4aca9;
+  background: #a9a396;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .main-Container > .sidebar {
-    transition: none;
+  .main-Container *,
+  .main-Container *::before,
+  .main-Container *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
   }
 }

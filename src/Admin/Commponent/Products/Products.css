@@ -1,239 +1,363 @@
-:root {
-  --card-bg: #ffffff;
-  --text-dark: #1e293b;
-  --text-muted: #1e293b;
-  --primary-indigo: #4f46e5;
-  --price-color: #0f172a;
-  
-  /* Badge Colors */
-  --badge-sale: #ef4444;
-  --badge-new: #10b981;
-  --badge-hot: #f59e0b;
-}
+/* ==========================================================================
+   ADMIN — PRODUCTS PAGE
+   Tokens `.main-Container` par scoped hain (Admin.css me).
+   NOTE: Ye file pehle apna `:root` block sabse aakhir me load karti thi, to
+   `--text-muted`/`--text-dark` pooray admin panel me iski values se clobber
+   ho rahe the. Ab koi `:root` nahi hai.
+   ========================================================================== */
 
 /* Container Framework */
 .products-container {
   padding: 30px;
   width: 100%;
   box-sizing: border-box;
-  font-family: system-ui, -apple-system, sans-serif;
+  font-family: 'Montserrat', 'Segoe UI', system-ui, sans-serif;
 }
 
 .products-title-bar {
-  margin-bottom: 24px;
+  margin-bottom: 22px;
 }
 
 .products-title-bar h2 {
-  margin: 0 0 4px 0;
-  font-size: 1.6rem;
-  color: var(--text-dark);
-  font-weight: 700;
+  margin: 0 0 5px 0;
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.4rem, 1.15rem + 1vw, 1.7rem);
+  font-weight: 600;
+  letter-spacing: -0.2px;
+  color: var(--adm-ink);
 }
 
 .products-title-bar p {
   margin: 0;
-  color: var(--text-muted);
-  font-size: 0.95rem;
+  color: var(--adm-ink-2);
+  font-size: 0.92rem;
 }
 
-/* CSS Responsive Grid Settings */
+/* ==========================================================================
+   GRID
+   min() wrapper: viewport chhota ho to column overflow na kare
+   ========================================================================== */
 .products-grid-layout {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-  gap: 24px;
+  grid-template-columns: repeat(auto-fill, minmax(min(260px, 100%), 1fr));
+  gap: 20px;
+  align-items: stretch;
 }
 
-/* Individual Card Styling */
+/* ==========================================================================
+   PRODUCT CARD
+   Pehle card par koi background/border nahi tha — image aur text seedhe
+   canvas par "float" karte the, koi card boundary nahi dikhti thi.
+   ========================================================================== */
 .fake-product-card {
-  border-radius: 12px;
-  overflow: hidden;
+  position: relative;
   display: flex;
   flex-direction: column;
-  position: relative;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  min-width: 0;
+  background: var(--adm-surface);
+  border: 1px solid var(--adm-line);
+  border-radius: var(--adm-radius);
+  box-shadow: var(--adm-shadow-sm);
+  overflow: hidden;
+  transition: transform var(--adm-speed) ease, box-shadow var(--adm-speed) ease,
+              border-color var(--adm-speed) ease;
 }
 
 .fake-product-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08);
-  
+  transform: translateY(-4px);
+  border-color: var(--adm-line-2);
+  box-shadow: var(--adm-shadow);
 }
 
-/* Dynamic Badge Styling */
+/* ==========================================================================
+   BADGE
+   Pehle isme duplicate properties the (`padding`/`color` do baar) aur ek
+   stray `transform: rotate(-45deg)` — jiski wajah se badge AUR uske andar
+   ka stock text dono diagonal render ho rahe the.
+   ========================================================================== */
 .product-badge {
   position: absolute;
   top: 12px;
-  left: 15px;
-  padding: 4px 10px;
-  font-size: 0.75rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  color: #ffffff;
-  border-radius: 6px;
+  left: 12px;
   z-index: 10;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-background: #0f172a;
-padding: 10px;
-color: #f8fafc;
-transform: rotate(-45deg);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  padding: 6px 11px;
+  border-radius: var(--adm-radius-sm);
+  background: var(--adm-ink);
+  color: #ffffff;
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 1px;
+  line-height: 1.25;
+  text-transform: uppercase;
+  white-space: nowrap;
+  box-shadow: 0 4px 12px rgba(31, 28, 24, 0.22);
 }
-.product-stock{
-background: #0f172a;
-padding: 10px;
-color: #f8fafc;
-top: 40px;
-left: 6px;
-position: absolute;
-}
-.product-badge.sale { background-color: var(--badge-sale); }
-.product-badge.new { background-color: var(--badge-new); }
-.product-badge.hot { background-color: var(--badge-hot); }
 
-/* Image Display Area */
+/* Flex gap already line spacing handle kar raha hai */
+.product-badge br {
+  display: none;
+}
+
+.product-badge.sale { background: var(--adm-danger); }
+.product-badge.new  { background: var(--adm-success); }
+.product-badge.hot  { background: var(--adm-warn); }
+
+/* Stock line — pehle `position: absolute` + parent ke rotate inherit kar raha tha */
+.product-stock {
+  position: static;
+  padding: 0;
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.4px;
+  text-transform: none;
+  color: rgba(255, 255, 255, 0.78);
+}
+
+/* ==========================================================================
+   IMAGE FRAME
+   Fixed `height: 400px` har viewport par same tha. aspect-ratio se image
+   frame har column width ke saath naturally adjust hota hai.
+   ========================================================================== */
 .product-image-frame {
-  background-color: #f8fafc;
+  position: relative;
+  width: 100%;
+  aspect-ratio: 3 / 4;
   display: flex;
   align-items: center;
   justify-content: center;
-  border-bottom: 1px solid #f1f5f9;
-  transition: background-color 0.3s;
-  width: 100%;
-  height: 400px;
+  background: var(--adm-surface-2);
+  border-bottom: 1px solid var(--adm-line);
   overflow: hidden;
-  transition: all 0.9s;
 }
 
-
-
-
-.product-image-frame img{
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-  transition: all 0.9s;
-
+.product-image-frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  padding: 12px;
+  box-sizing: border-box;
+  transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
 }
+
 .fake-product-card:hover .product-image-frame img {
-  transform: scale(1.1);
+  transform: scale(1.06);
 }
 
-/* Content Details Body */
+/* ==========================================================================
+   CARD BODY
+   ========================================================================== */
 .product-body {
   padding: 16px;
   display: flex;
   flex-direction: column;
   flex: 1;
+  min-width: 0;
 }
 
 .product-cat {
-  font-size: 0.75rem;
+  display: inline-block;
+  align-self: flex-start;
+  margin-bottom: 7px;
+  padding: 3px 9px;
+  border-radius: var(--adm-radius-pill);
+  background: var(--adm-gold-soft);
+  color: var(--adm-gold-deep);
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  line-height: 1.4;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
-  color: var(--text-muted);
-  font-weight: 600;
-  margin-bottom: 4px;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .product-title {
-  margin: 0 0 8px 0;
-  font-size: 1rem;
+  margin: 0 0 6px 0;
+  font-size: 0.98rem;
   font-weight: 600;
-  color: var(--text-dark);
   line-height: 1.4;
+  color: var(--adm-ink);
   display: -webkit-box;
-  -webkit-line-clamp: 2; /* 2 lines max content truncate logic */
+  -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
-  height: 2.8rem; /* uniform structure height maintains straight grids */
+  overflow-wrap: anywhere;
 }
 
-.product-rating {
-  font-size: 0.85rem;
-  font-weight: 500;
-  color: #f59e0b;
-  margin-bottom: 12px;
+/* Naam (h2) 2 lines reserve karta hai, taaki grid seedhi rahe */
+.product-body h2.product-title {
+  height: 2.75rem;
 }
 
-/* Pricing Grid */
+/* Description bhi `.product-title` class hi share karta hai (JSX me h3 hai) —
+   is liye use alag se muted aur lighter banaya gaya hai, warna description
+   bhi product name jaisa prominent dikhta. */
+.product-body h3.product-title {
+  height: 2.4rem;
+  margin: 0 0 10px 0;
+  font-size: 0.84rem;
+  font-weight: 400;
+  color: var(--adm-ink-2);
+}
+
+/* ==========================================================================
+   PRICE
+   ========================================================================== */
 .product-price-row {
   margin-top: auto;
   display: flex;
   align-items: center;
 }
 
+.price-tag {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  min-width: 0;
+}
+
 .current-price {
+  font-family: 'Playfair Display', serif;
   font-size: 1.2rem;
-  font-weight: 700;
-  color: var(--price-color);
+  font-weight: 600;
+  color: var(--adm-ink);
 }
 
 .old-price {
-  font-size: 0.88rem;
+  font-size: 0.85rem;
   text-decoration: line-through;
-  color: var(--text-light, #94a3b8);
-  margin-left: 8px;
+  color: var(--adm-ink-3);
 }
 
-/* Cart Button Actions */
+/* ==========================================================================
+   FOOTER ACTIONS
+   Do buttons dono `.add-cart-btn` share karte hain — "Delete Items" (destructive)
+   aur "Add Stock" (safe). Pehle dono bilkul same indigo outline the. Ab CSS
+   position se hierarchy bana di hai (JSX me koi class add kiye bina).
+   ========================================================================== */
 .product-footer {
-display: flex;
-gap: 10px;
+  display: flex;
+  gap: 8px;
   padding: 0 16px 16px 16px;
 }
 
 .add-cart-btn {
-  width: 100%;
-  background-color: transparent;
-  border: 1px solid var(--primary-indigo);
-  color: var(--primary-indigo);
-  padding: 10px;
-  border-radius: 8px;
-  font-size: 0.9rem;
+  flex: 1;
+  min-width: 0;
+  background: transparent;
+  border: 1px solid var(--adm-gold);
+  color: var(--adm-gold-deep);
+  padding: 10px 8px;
+  border-radius: var(--adm-radius-sm);
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.82rem;
   font-weight: 600;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
-  transition: all 0.2s ease;
+  transition: background-color var(--adm-speed) ease, color var(--adm-speed) ease,
+              border-color var(--adm-speed) ease;
 }
 
-.add-cart-btn:hover {
-  background-color: var(--primary-indigo);
+/* Add Stock — primary action */
+.product-footer .add-cart-btn:last-child {
+  background: var(--adm-gold);
   color: #ffffff;
-  box-shadow: 0 4px 12px rgba(79, 70, 229, 0.15);
+}
+
+.product-footer .add-cart-btn:last-child:hover {
+  background: var(--adm-gold-deep);
+  border-color: var(--adm-gold-deep);
+}
+
+/* Delete Items — destructive */
+.product-footer .add-cart-btn:first-child {
+  border-color: var(--adm-danger);
+  color: var(--adm-danger);
+}
+
+.product-footer .add-cart-btn:first-child:hover {
+  background: var(--adm-danger);
+  color: #ffffff;
 }
 
 /* ==========================================================================
-   MOBILE MEDIA TWEAKS
+   RESPONSIVE
    ========================================================================== */
-@media (max-width: 640px) {
+@media (max-width: 1024px) {
   .products-container {
-    padding: 16px;
-    padding-top: 75px; 
-    height: auto;
-    padding-bottom: 100px;
+    padding: 24px;
   }
 
   .products-grid-layout {
-    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); /* Choti screen par cards narrower honge aur 2 columns fit honge */
+    grid-template-columns: repeat(auto-fill, minmax(min(220px, 100%), 1fr));
+    gap: 16px;
+  }
+}
+
+@media (max-width: 768px) {
+  .products-container {
+    padding: 20px;
+  }
+}
+
+@media (max-width: 560px) {
+  .products-container {
+    padding: 16px;
+  }
+
+  .products-grid-layout {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 12px;
   }
 
   .product-image-frame {
-    height: 130px;
+    aspect-ratio: 1 / 1;
   }
 
-  .product-emoji {
-    font-size: 2.5rem;
+  .product-image-frame img {
+    padding: 8px;
   }
 
-  .product-title {
-    font-size: 0.9rem;
+  .product-body {
+    padding: 12px;
+  }
+
+  .product-body h2.product-title {
     height: 2.5rem;
+    font-size: 0.9rem;
+  }
+
+  .product-body h3.product-title {
+    height: 2.2rem;
+    font-size: 0.78rem;
   }
 
   .current-price {
     font-size: 1.05rem;
+  }
+
+  .product-footer {
+    padding: 0 12px 12px 12px;
+    gap: 6px;
+  }
+
+  .add-cart-btn {
+    padding: 9px 4px;
+    font-size: 0.72rem;
+  }
+
+  .product-badge {
+    top: 8px;
+    left: 8px;
+    padding: 5px 8px;
+    font-size: 0.6rem;
   }
 }

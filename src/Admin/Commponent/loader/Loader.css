@@ -1,50 +1,71 @@
-/* Poore page ko cover karne ke liye background overlay */
-.loader-container {
+/* ==========================================================================
+   ADMIN LOADER
+   --------------------------------------------------------------------------
+   NOTE: `src/commponents/loader/Loader.css` (public site) me bilkul SAME
+   class names hain — `.loader-container`, `.spinner`, `.loader-text` — aur
+   dono stylesheet ek saath bundle me load hoti hain. Is liye yahan ke saare
+   selectors `.main-Container` ke andar scope kiye gaye hain, taake admin ka
+   styling public site ke loader par leak na ho. Saath hi `@keyframes` ka naam
+   bhi alag rakha hai (`adm-spin`), warna shared `@keyframes spin` bhi overwrite
+   hota.
+
+   Tokens `.main-Container` par scoped hain (Admin.css me).
+   ========================================================================== */
+
+.main-Container .loader-container {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background-color: rgba(255, 255, 255, 0.85); /* Halka white overlay */
+  inset: 0; /* 100vw/100vh scrollbar ki width/gheight count kar lete the
+                aur horizontal scrollbar paida kar dete the */
+  background: linear-gradient(180deg, #fdfcf9 0%, #f7f5f1 100%);
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  z-index: 9999; /* Taaki ye sabse upar dikhe */
-  backdrop-filter: blur(5px); /* Background ko premium blur dene ke liye */
-object-fit: contain;
-}
-.loader-container img{
-   width: 200px;
-  height: 200px;
-  border-radius: 50%;
-}
-/* Spinner ki main shape aur animation */
-.spinner {
-  width: 50px;
-  height: 50px;
-  border: 3px solid #e0e0e0; /* Halka gray circle */
-  border-top: 3px solid #0070f3; /* Aapke theme ka main blue rang (Aap ise badal bhi sakte hain) */
-  border-radius: 50%;
-  animation: spin 1s linear infinite; /* Gol ghumne ki animation */
+  gap: 22px;
+  z-index: 9999;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
 }
 
-/* Chota sa text loader ke niche */
-.loader-text {
-  margin-top: 15px;
-  font-family: 'Poppins', sans-serif;
-  font-size: 14px;
-  color: #333;
-  letter-spacing: 1px;
-  font-weight: 500;
-}
-
-/* Spinning Animation Keyframes */
-@keyframes spin {
-  0% {
-    transform: rotate(0deg);
+@supports (height: 100dvh) {
+  .main-Container .loader-container {
+    height: 100dvh;
   }
-  100% {
+}
+
+/* Logo — `width:200px; height:200px` par `object-fit` nahi tha, to wordmark
+   logo 200x200 square me stretch ho raha tha, aur `border-radius: 50%` us
+   stretched image ko circle me kat raha tha. Ab aspect ratio preserve hota hai. */
+.main-Container .loader-container img {
+  width: auto;
+  height: auto;
+  max-width: 170px;
+  max-height: 80px;
+  object-fit: contain;
+  border-radius: 0;
+  opacity: 0.9;
+}
+
+/* Spinner — pehle theme-blue (#0070f3) tha jo admin ke gold theme se match
+   nahi karta tha. */
+.main-Container .spinner {
+  width: 44px;
+  height: 44px;
+  border: 3px solid rgba(191, 163, 101, 0.22);
+  border-top-color: #bfa365;
+  border-radius: 50%;
+  animation: adm-spin 0.9s linear infinite;
+}
+
+@keyframes adm-spin {
+  to {
     transform: rotate(360deg);
+  }
+}
+
+/* Reduced motion: ghoomna band */
+@media (prefers-reduced-motion: reduce) {
+  .main-Container .spinner {
+    animation-duration: 2.4s;
   }
 }
