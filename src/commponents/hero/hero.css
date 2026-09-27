@@ -1,107 +1,264 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700;800&family=Playfair+Display:ital,wght@0,400;1,400&display=swap');
 
+/* NOTE: .hero-main-content ke 4 direct children (title, desc, signature,
+   buttons) GSAP se opacity + transform animate hote hain — un par CSS me
+   transition / transform / opacity nahi rakha gaya, warna animation se
+   ladega. Sirf unke andar ke elements (buttons) par transitions hain. */
+
+/* ==========================================================================
+   1. Section Shell
+   ========================================================================== */
 .hero-section {
-  width: 100%;
-  min-height: 100vh;
-  background-size: cover;
-  background-position: center 25%;
-  background-repeat: no-repeat;
   position: relative;
   display: flex;
   align-items: center;
-  padding-top: 130px; /* Clear space for top banner and fixed navigation bar */
+  width: 100%;
+  min-height: 100vh;
+  padding: 130px 0 60px; /* 130px = top ticker (50) + fixed navbar (80) */
   box-sizing: border-box;
+  background-size: cover;
+  background-position: center 25%;
+  background-repeat: no-repeat;
+  overflow-x: clip; /* Horizontal scroll-bar se bachao, vertical clip nahi */
 }
 
+/* ==========================================================================
+   2. Dark Overlay
+   ========================================================================== */
 .hero-dark-overlay {
   position: absolute;
-  top: 0;
-  left: 0;
+  inset: 0;
   width: 100%;
   height: 100%;
-  background: linear-gradient(90deg, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.3) 60%, transparent 100%);
   z-index: 1;
+  background:
+    linear-gradient(180deg, rgba(0, 0, 0, 0.45) 0%, transparent 28%, transparent 62%, rgba(0, 0, 0, 0.55) 100%),
+    linear-gradient(90deg, rgba(0, 0, 0, 0.72) 0%, rgba(0, 0, 0, 0.45) 45%, rgba(0, 0, 0, 0.12) 100%);
 }
 
+/* ==========================================================================
+   3. Content Column
+   ========================================================================== */
 .hero-main-content {
   position: relative;
   z-index: 2;
   width: 100%;
   max-width: 1300px;
   margin: 0 auto;
-  padding: 0 30px;
+  padding: 0 clamp(20px, 5vw, 40px);
   color: #ffffff;
 }
 
+/* ==========================================================================
+   4. Title / Description / Signature
+   ========================================================================== */
 .hero-main-title {
-  font-family: 'Montserrat', sans-serif;
-  font-size: 3.5rem;
-  font-weight: 800;
-  line-height: 1.15;
   margin: 0 0 20px 0;
-  letter-spacing: 0.5px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: clamp(1.9rem, 6.5vw, 3.6rem);
+  font-weight: 800;
+  line-height: 1.12;
+  letter-spacing: 0.01em;
+  text-shadow: 0 2px 20px rgba(0, 0, 0, 0.45);
 }
 
 .hero-main-desc {
-  font-family: 'Montserrat', sans-serif;
-  font-size: 1.15rem;
-  font-weight: 400;
   max-width: 520px;
-  line-height: 1.6;
-  color: #f3f4f6;
-  margin-bottom: 15px;
+  margin: 0 0 15px 0;
+  font-family: 'Montserrat', sans-serif;
+  font-size: clamp(0.95rem, 0.7rem + 0.9vw, 1.15rem);
+  font-weight: 400;
+  line-height: 1.65;
+  color: rgba(255, 255, 255, 0.92);
+  text-shadow: 0 1px 12px rgba(0, 0, 0, 0.4);
 }
 
 .hero-signature-text {
+  margin: 0 0 35px 0;
   font-family: 'Playfair Display', serif;
   font-style: italic;
-  font-size: 1.3rem;
-  color: #e5e7eb;
-  margin-bottom: 35px;
+  font-size: clamp(1.05rem, 0.9rem + 0.7vw, 1.3rem);
+  color: rgba(255, 255, 255, 0.88);
+  text-shadow: 0 1px 12px rgba(0, 0, 0, 0.4);
 }
 
+/* Chota sa gold rule, signature se upar */
+.hero-signature-text::before {
+  content: '';
+  display: block;
+  width: 48px;
+  height: 2px;
+  margin-bottom: 14px;
+  background: #bfa365;
+  border-radius: 2px;
+}
+
+/* ==========================================================================
+   5. Buttons
+   ========================================================================== */
 .hero-buttons-wrapper {
   display: flex;
-  gap: 20px;
-  /* justify-content: center; */
+  flex-wrap: wrap;
+  gap: 16px;
   align-items: center;
 }
 
-.hero-btn-gold, .hero-btn-outline {
+.hero-btn-gold,
+.hero-btn-outline {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 50px;
+  padding: 14px 32px;
+  border-radius: 999px;
   text-decoration: none;
+  text-align: center;
+  white-space: nowrap;
   font-family: 'Montserrat', sans-serif;
-  font-size: 0.85rem;
+  font-size: 0.82rem;
   font-weight: 700;
-  letter-spacing: 0.5px;
-  padding: 16px 34px;
-  border-radius: 4px;
-  transition: all 0.3s ease;
+  letter-spacing: 1px;
+  transition: background-color 0.3s ease, color 0.3s ease,
+              border-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .hero-btn-gold {
   background-color: #bfa365;
   color: #ffffff;
   border: 1px solid #bfa365;
+  box-shadow: 0 6px 18px rgba(191, 163, 101, 0.35);
 }
 
 .hero-btn-gold:hover {
   background-color: #aa9055;
-  transform: translateY(-2px);
+  border-color: #aa9055;
+  transform: translateY(-3px);
+  box-shadow: 0 10px 26px rgba(191, 163, 101, 0.45);
 }
 
 .hero-btn-outline {
-  background-color: rgba(255, 255, 255, 0.95);
-  color: #111111;
-  border: 1px solid #ffffff;
+  background-color: rgba(255, 255, 255, 0.08);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
 }
 
 .hero-btn-outline:hover {
   background-color: #ffffff;
-  transform: translateY(-2px);
+  border-color: #ffffff;
+  color: #111111;
+  transform: translateY(-3px);
+  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.3);
+}
+
+.hero-btn-gold:active,
+.hero-btn-outline:active {
+  transform: translateY(-1px) scale(0.98);
+}
+
+.hero-btn-gold:focus-visible,
+.hero-btn-outline:focus-visible {
+  outline: 2px solid #ffffff;
+  outline-offset: 3px;
+}
+
+/* ==========================================================================
+   6. Responsive
+   ========================================================================== */
+@media (max-width: 1024px) {
+  .hero-main-desc {
+    max-width: 460px;
+  }
 }
 
 @media (max-width: 768px) {
-  .hero-main-title { font-size: 2.2rem; }
-  .hero-main-desc { font-size: 1rem; }
-  .hero-buttons-wrapper { flex-direction: column; gap: 15px; width: 100%; max-width: 300px; }
+  .hero-section {
+    padding: 130px 0 48px;
+    background-position: center 30%;
+  }
+
+  /* Mobile par text poori width le — gradient vertical ho jaye */
+  .hero-dark-overlay {
+    background:
+      linear-gradient(180deg, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0.55) 45%, rgba(0, 0, 0, 0.72) 100%);
+  }
+
+  .hero-main-desc {
+    max-width: 100%;
+  }
+
+  .hero-buttons-wrapper {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+    width: 100%;
+    max-width: 320px;
+  }
+
+  .hero-btn-gold,
+  .hero-btn-outline {
+    width: 100%;
+    padding: 14px 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-section {
+    padding: 120px 0 40px;
+  }
+
+  .hero-main-title {
+    margin-bottom: 16px;
+  }
+
+  .hero-main-desc {
+    font-size: 0.92rem;
+    line-height: 1.6;
+  }
+
+  .hero-signature-text {
+    margin-bottom: 26px;
+  }
+
+  .hero-signature-text::before {
+    width: 36px;
+    margin-bottom: 12px;
+  }
+
+  .hero-buttons-wrapper {
+    max-width: 100%;
+  }
+
+  .hero-btn-gold,
+  .hero-btn-outline {
+    min-height: 46px;
+    font-size: 0.76rem;
+    letter-spacing: 0.6px;
+  }
+}
+
+/* Chhoti height (landscape phone) par section content ke mutabiq barhe */
+@media (max-height: 560px) and (orientation: landscape) {
+  .hero-section {
+    min-height: 620px;
+    align-items: flex-end;
+  }
+}
+
+/* ==========================================================================
+   7. Accessibility
+   ========================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  .hero-btn-gold,
+  .hero-btn-outline {
+    transition: none;
+  }
+
+  .hero-btn-gold:hover,
+  .hero-btn-outline:hover,
+  .hero-btn-gold:active,
+  .hero-btn-outline:active {
+    transform: none;
+  }
 }

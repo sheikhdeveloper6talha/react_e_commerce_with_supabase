@@ -1,7 +1,10 @@
-import React from 'react';
+
+
 import './footer.css';
 
 const Footer = () => {
+  
+  
   return (
     <footer className="main-footer">
       <div className="footer-container">
@@ -16,7 +19,12 @@ const Footer = () => {
             <a href="#facebook" aria-label="Facebook"><i className="fab fa-facebook-f"></i></a>
             <a href="#instagram" aria-label="Instagram"><i className="fab fa-instagram"></i></a>
             <a href="#pinterest" aria-label="Pinterest"><i className="fab fa-pinterest"></i></a>
-            <a href="#whatsapp" aria-label="WhatsApp"><i className="fab fa-whatsapp"></i></a>
+            <a
+              href="https://wa.me/923162573865"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="WhatsApp"
+            ><i className="fab fa-whatsapp"></i></a>
           </div>
         </div>
 
@@ -36,7 +44,15 @@ const Footer = () => {
         <div className="footer-col contact-details">
           <h3>GET IN TOUCH</h3>
           <p><i className="fas fa-map-marker-alt"></i> Karachi, Sindh, Pakistan</p>
-          <p><i className="fas fa-phone-alt"></i> +923162573865</p>
+          <p>
+            <i className="fab fa-whatsapp"></i>
+            <a
+              className="whatsapp-link"
+              href="https://wa.me/923162573865"
+              target="_blank"
+              rel="noopener noreferrer"
+            >WhatsApp +923162573865</a>
+          </p>
           <p><i className="fas fa-envelope"></i> sheikhdeveloper6@gmail.com</p>
           <p className="timings"><i className="fas fa-clock"></i> Mon - Sat: 10:00 AM - 08:00 PM</p>
         </div>

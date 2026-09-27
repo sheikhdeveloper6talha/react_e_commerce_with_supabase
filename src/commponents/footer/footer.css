@@ -2,29 +2,24 @@
 .main-footer {
   background-color: #111111; /* Luxury Premium Dark Theme */
   color: #ffffff;
-  padding: 80px 0 0 0;
+  padding: clamp(52px, 6vw, 80px) 0 0 0;
   font-family: 'Montserrat', sans-serif;
   border-top: 3px solid #bfa365; /* Top matching Gold Line */
-
 }
 
 .footer-container {
   max-width: 1300px;
   margin: 0 auto;
-  padding: 0 30px;
+  padding: 0 clamp(18px, 4vw, 50px);
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 40px;
-  padding: 50px;
-justify-content: space-around;
+  gap: clamp(32px, 4vw, 48px);
 }
 
-
-
-/* Brand/Logo Section Modification */
+/* --- BRAND / LOGO --- */
 .footer-logo {
   font-family: 'Playfair Display', serif;
-  font-size: 2.2rem;
+  font-size: clamp(1.9rem, 1.5rem + 1.2vw, 2.2rem);
   font-weight: 500;
   color: #bfa365;
   margin: 0 0 20px 0;
@@ -38,27 +33,39 @@ justify-content: space-around;
 
 .footer-about-text {
   font-size: 0.9rem;
-  line-height: 1.6;
+  line-height: 1.7;
   color: #cccccc;
   margin-bottom: 25px;
 }
 
-/* Links lists styling */
+/* --- COLUMN HEADINGS --- */
+.footer-col h3 {
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 1.6px;
+  text-transform: uppercase;
+  color: #ffffff;
+  margin: 0 0 22px 0;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #2a2a2a;
+}
+
+/* --- LINKS LISTS --- */
 .footer-links {
   list-style: none;
-  padding: 20px;
+  padding: 0;
   margin: 0;
 }
 
 .footer-links li {
-  margin-bottom: 12px;
+  margin-bottom: 10px;
 }
 
 .footer-links a {
   text-decoration: none;
   color: #cccccc;
   font-size: 0.9rem;
-  transition: all 0.3s ease;
+  transition: color 0.3s ease, transform 0.3s ease;
   display: inline-block;
 }
 
@@ -67,29 +74,44 @@ justify-content: space-around;
   transform: translateX(5px); /* Chhota sa hover micro-interaction effect */
 }
 
-/* Contact Info Column styling */
-
+/* --- CONTACT INFO COLUMN --- */
 .contact-details p {
   font-size: 0.9rem;
+  line-height: 1.5;
   color: #cccccc;
-  margin-top: 14px;
+  margin: 0 0 16px 0;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 12px;
-
 }
 
 .contact-details i {
   color: #bfa365; /* Icons will be gold colored */
-  width: 15px;
+  flex-shrink: 0;
+  width: 18px;
+  line-height: 1.5;
+  text-align: center;
 }
 
 .contact-details .timings {
   font-size: 0.85rem;
   color: #999999;
+  margin-bottom: 0;
 }
 
-/* Social Media Circles styling */
+/* --- WHATSAPP LINKS --- */
+.contact-details a {
+  color: #cccccc;
+  text-decoration: none;
+  overflow-wrap: anywhere;
+  transition: color 0.25s ease;
+}
+
+.contact-details a:hover {
+  color: #25d366;
+}
+
+/* --- SOCIAL MEDIA CIRCLES --- */
 .social-links {
   display: flex;
   gap: 12px;
@@ -106,8 +128,9 @@ justify-content: space-around;
   align-items: center;
   justify-content: center;
   text-decoration: none;
-  transition: all 0.3s ease;
-  font-size: 0.9rem;
+  transition: background-color 0.3s ease, color 0.3s ease,
+              border-color 0.3s ease, transform 0.3s ease;
+  font-size: 0.95rem;
 }
 
 .social-links a:hover {
@@ -117,17 +140,24 @@ justify-content: space-around;
   transform: translateY(-3px);
 }
 
+/* WhatsApp icon par brand green */
+.social-links a[aria-label='WhatsApp']:hover {
+  background-color: #25d366;
+  border-color: #25d366;
+}
+
 /* --- BOTTOM STRIP COPYRIGHT BAR --- */
 .footer-bottom {
   background-color: #0a0a0a;
   padding: 25px 0;
   border-top: 1px solid #222222;
+  margin-top: clamp(20px, 3vw, 30px);
 }
 
 .bottom-container {
   max-width: 1300px;
   margin: 0 auto;
-  padding: 0 30px;
+  padding: 0 clamp(18px, 4vw, 30px);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -144,16 +174,57 @@ justify-content: space-around;
 .payment-icons {
   display: flex;
   gap: 20px;
+  align-items: center;
   font-size: 0.85rem;
   color: #aaaaaa;
 }
 
+.whatsapp-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 9px 18px;
+  border: 1px solid #25d366;
+  border-radius: 999px;
+  background-color: rgba(37, 211, 102, 0.1);
+  color: #25d366;
+  text-decoration: none;
+  font-weight: 600;
+  transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
+}
+
+.whatsapp-chip:hover {
+  background-color: #25d366;
+  color: #0a0a0a;
+  transform: translateY(-2px);
+}
+
+/* --- ACCESSIBILITY --- */
+.footer-links a:focus-visible,
+.social-links a:focus-visible,
+.contact-details a:focus-visible,
+.whatsapp-chip:focus-visible {
+  outline: 2px solid #bfa365;
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .footer-links a,
+  .social-links a,
+  .whatsapp-chip {
+    transition: none;
+  }
+
+  .footer-links a:hover,
+  .social-links a:hover,
+  .whatsapp-chip:hover {
+    transform: none;
+  }
+}
+
 /* --- RESPONSIVE ADJUSTMENTS --- */
 @media (max-width: 768px) {
-  .main-footer {
-    padding-top: 60px;
-  }
-  
   .footer-container {
     grid-template-columns: 1fr; /* Mobile screens pe block layout single column ho jayega */
     gap: 35px;

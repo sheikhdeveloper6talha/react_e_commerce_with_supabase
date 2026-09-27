@@ -1,3 +1,180 @@
-.main-Container{
+/* ==========================================================================
+   ADMIN SHELL LAYOUT
+   Yeh file pooray admin panel ka frame control karti hai:
+   Sidebar (sticky) + active page. Pages apni apni CSS rakhte hain;
+   yahan sirf woh rules hain jo shell-level layout ko theek karte hain.
+   ========================================================================== */
+
+.main-Container {
   display: flex;
+  align-items: flex-start;
+  min-height: 100vh;
+  width: 100%;
+  background-color: #f4f7f6; /* Dashboard ka canvas colour — yahan se poore panel ko ek jaisa milta hai */
+  font-family: 'Montserrat', 'Segoe UI', system-ui, sans-serif;
+}
+
+/* ==========================================================================
+   SIDEBAR — flex shrink band
+   Pehle sidebar aur page dono ke basis 260px + 100% the, is liye flex
+   shrink dono ko squeeze kar raha tha aur sidebar apni 260px width se
+   chhoot jata tha. flex-shrink: 0 se width respect hoti hai.
+   ========================================================================== */
+.main-Container > .sidebar {
+  flex-shrink: 0;
+}
+
+/* Mobile browser toolbars (100vh > visible viewport) se bachne ke liye */
+@supports (height: 100dvh) {
+  .main-Container > .sidebar {
+    height: 100dvh;
+  }
+}
+
+/* ==========================================================================
+   ACTIVE PAGE WRAPPERS
+   Har page ka apna root class alag hai, yeh sab flex item ban kar
+   baaki width lete hain. min-width: 0 zaroori hai warna wide tables
+   (Orders/Dashboard) flex layout ko tod kar horizontal overflow de dete hain.
+   ========================================================================== */
+.main-Container > .admin-container,
+.main-Container > .users-section,
+.main-Container > .orders-page,
+.main-Container > .products-container,
+.main-Container > .form-container {
+  flex: 1 1 auto;
+  min-width: 0;
+  min-height: 100vh;
+  width: auto; /* in pages ka apna width:100% flex basis ko tod raha tha */
+}
+
+/* Dashboard ka padding .main-content ke andar hai, wrapper transparent */
+.main-Container > .admin-container {
+  background: transparent;
+}
+
+/* Add Product ka form ek card hai — max-width + auto margins centre karte hain */
+.main-Container > .form-container {
+  background: transparent;
+  margin-top: 30px;
+}
+
+/* Orders page ka apna internal scroll band karke page-level scroll par laata hai,
+   taake sidebar ka sticky behaviour har tab par same rahe. */
+.main-Container > .orders-page {
+  height: auto;
+  overflow-y: visible;
+  border-radius: 12px;
+}
+
+/* ==========================================================================
+   DASHBOARD ka main content wrapper
+   ========================================================================== */
+.main-Container .main-content {
+  min-width: 0;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* ==========================================================================
+   TABLE HORIZONTAL SCROLL — chhote screens par
+   ========================================================================== */
+.main-Container .table-container,
+.main-Container .orders-table-container {
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+}
+
+/* ==========================================================================
+   RESPONSIVE
+   ========================================================================== */
+
+/* Tablet: padding thoda sarkara */
+@media (max-width: 1024px) {
+  .main-Container .main-content,
+  .main-Container > .users-section,
+  .main-Container > .orders-page,
+  .main-Container > .products-container {
+    padding: 24px;
+  }
+}
+
+/* Mobile: sidebar off-canvas ho chuka hai, is liye:
+   1) content ko full viewport width do
+   2) fixed ☰ button (top:16 left:16) ke neeche space chhoda jaye,
+      warna wo page heading ke upar chadh jata hai
+   3) form card ka margin adjust */
+@media (max-width: 768px) {
+  .main-Container > .admin-container,
+  .main-Container > .users-section,
+  .main-Container > .products-container {
+    min-height: 100vh;
+  }
+
+  .main-Container .main-content,
+  .main-Container > .users-section,
+  .main-Container > .products-container {
+    padding-top: 78px; /* ☰ button + breathing room */
+  }
+
+  .main-Container > .orders-page {
+    margin-top: 80px; /* Order.css ke existing mobile rule ke saath consistent */
+    height: auto;
+    min-height: auto;
+  }
+
+  .main-Container > .form-container {
+    margin-top: 78px;
+    padding: 20px;
+    border-radius: 12px;
+  }
+}
+
+/* Choti mobile screens */
+@media (max-width: 420px) {
+  .main-Container .main-content,
+  .main-Container > .users-section,
+  .main-Container > .products-container {
+    padding-left: 14px;
+    padding-right: 14px;
+  }
+
+  .main-Container > .form-container {
+    padding: 15px;
+    margin-top: 74px;
+  }
+}
+
+/* ==========================================================================
+   ACCESSIBILITY / POLISH
+   ========================================================================== */
+.main-Container .mobile-trigger:focus-visible {
+  outline: 2px solid #4f46e5;
+  outline-offset: 2px;
+}
+
+/* Slim scrollbar for the admin area */
+.main-Container ::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+.main-Container ::-webkit-scrollbar-track {
+  background: #eceeed;
+}
+
+.main-Container ::-webkit-scrollbar-thumb {
+  background: #c3c9c7;
+  border-radius: 6px;
+  border: 2px solid #eceeed;
+}
+
+.main-Container ::-webkit-scrollbar-thumb:hover {
+  background: #a4aca9;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .main-Container > .sidebar {
+    transition: none;
+  }
 }
