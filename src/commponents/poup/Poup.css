@@ -1,158 +1,386 @@
-/* popup model */
-.container{
-  display: flex;
-  flex-direction: column;
+/* ==========================================================================
+   NOTE: .container is shared with OrderCard.js, so the overlay rules below
+   are scoped with :has(> .items) to keep popup and order list separate.
+   ========================================================================== */
+
+/* ==========================================================================
+   1. Modal Overlay
+   ========================================================================== */
+.container:has(> .items) {
+  position: fixed;
+  inset: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
   width: 100%;
+  min-height: 100vh;
+  margin: 0;
+  padding: clamp(16px, 4vw, 40px);
   box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
   justify-content: center;
-  align-items: center;
-  padding: 20px;
-gap: 10px;
+  align-items: flex-start;
+  gap: 10px;
+  background: rgba(24, 22, 18, 0.62);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  z-index: 10000;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  animation: popupFade 0.25s ease both;
 }
 
-.container .close{
+@keyframes popupFade {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* ==========================================================================
+   2. Close Button
+   ========================================================================== */
+.container .close {
+  position: fixed;
+  top: clamp(14px, 3vw, 26px);
+  right: clamp(14px, 3vw, 26px);
+  z-index: 10001;
   display: flex;
   justify-content: flex-end;
-  width: 100%;
-  padding: 10px;
-  
+  width: auto;
+  padding: 0;
 }
 
-.close{
+.close {
   cursor: pointer;
   font-size: 24px;
 }
 
-.container .items{
-  padding: 10px;
+.close p {
   display: flex;
-  flex-direction: column;
   align-items: center;
-  gap: 20px;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  margin: 0;
+  font-size: 17px;
+  line-height: 1;
+  color: #ffffff;
+  background: rgba(44, 44, 44, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background 0.25s ease, transform 0.2s ease, border-color 0.25s ease;
+}
+
+.close p:hover {
+  background: #bfa365;
+  border-color: #bfa365;
+  transform: rotate(90deg);
+}
+
+.close p:active {
+  transform: rotate(90deg) scale(0.92);
+}
+
+/* ==========================================================================
+   3. Modal Card
+   ========================================================================== */
+.container .items {
+  margin: auto; /* Short screen par top clip na ho, bari screen par center rahe */
   width: 100%;
+  max-width: 460px;
   box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0;
+  padding: 0;
+  background: #ffffff;
+  border: 1px solid #ece7dd;
+  border-radius: 20px;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.28);
+  overflow: hidden;
+  animation: popupRise 0.32s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
-.container .items img{
+@keyframes popupRise {
+  from { opacity: 0; transform: translateY(24px) scale(0.97); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* Product Image */
+.container .items img {
   width: 100%;
- object-fit: contain;
- 
+  height: auto;
+  max-width: 100%;
+  aspect-ratio: 4 / 5;
+  max-height: 52vh;
+  object-fit: contain;
+  display: block;
+  padding: 10px;
+  box-sizing: border-box;
+  background: linear-gradient(160deg, #faf8f4 0%, #f1ede4 100%);
+  border-bottom: 1px solid #ece7dd;
 }
 
-.container .items h4{
-  width: 100%;
-  text-align: center;
+/* Text Block */
+.container .items h2,
+.container .items h3,
+.container .items h4 {
+  margin: 0 22px;
+  overflow-wrap: anywhere;
 }
 
-.categorey{
+.container .items h2 {
+  margin-top: 20px;
+  font-size: 1.4rem;
+  font-weight: 700;
+  line-height: 1.3;
+  color: #2b2b2b;
+}
+
+.container .items h4 {
+  margin-top: 8px;
+  font-size: 0.92rem;
+  font-weight: 400;
+  line-height: 1.65;
+  color: #6b6b6b;
+}
+
+.container .items h3 {
+  margin-top: 12px;
+  margin-bottom: 18px;
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: #8c764b;
+  letter-spacing: 0.3px;
+}
+
+/* ==========================================================================
+   4. Category / Size / CTA Panel
+   ========================================================================== */
+.categorey {
   display: flex;
   flex-direction: column;
   width: 100%;
-  max-width: 350px;
-  padding: 10px;
-  gap: 10px;
+  max-width: none;
+  padding: 18px 22px 22px;
+  gap: 14px;
   box-sizing: border-box;
+  background: #faf8f4;
+  border-top: 1px solid #ece7dd;
 }
 
-.Size{
+.categorey > p {
+  align-self: flex-start;
+  padding: 5px 14px;
+  margin: 0;
+  background: #2b2b2b;
+  color: #f5f5f5;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.Size {
   display: flex;
   flex-wrap: wrap;
   width: 100%;
-  justify-content: center;
-  padding: 10px;
+  padding: 0;
   gap: 10px;
 }
 
-.Size p{
-  padding: 10px 15px;
-  border: 1px solid #111;
-  border-radius: 10px;
-  transition: all 0.3s ease;
-  cursor: pointer;
+.Size p {
+  flex: 1 1 auto;
+  min-width: 56px;
   margin: 0;
+  padding: 11px 14px;
   text-align: center;
-  min-width: 50px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #2b2b2b;
+  background: #ffffff;
+  border: 1px solid #ddd5c4;
+  border-radius: 10px;
+  cursor: pointer;
+  user-select: none;
+  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease, transform 0.15s ease;
 }
 
-.Size p:hover{
-  background: #666;
+.Size p:hover {
+  background: #2b2b2b;
+  border-color: #2b2b2b;
   color: #fafafa;
+  transform: translateY(-2px);
 }
-.categorey > p{
-  padding: 20px;
-  background: #111;
-  color: #fafafa;
-  border-radius: 10px;
+
+.Size p:active {
+  transform: translateY(0) scale(0.96);
 }
-.categorey button{
-  padding: 10px;
-  border: none;
-  outline: none;
-  background: transparent;
-  color: #fafafa;
-  border-radius: 10px;
+
+/* CTA Button */
+.categorey button {
   position: relative;
+  width: 100%;
+  margin: 0;
+  padding: 15px 20px;
   overflow: hidden;
-  transition: all 0.4s ease;
-  border: 1px solid rgb(184, 134, 41);
-  font-weight: 600;
-  font-size: 16px;
+  border: 1px solid #bfa365;
+  border-radius: 999px;
+  outline: none;
+  background: #bfa365;
+  color: #ffffff;
+  font-family: 'Segoe UI', sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.3px;
   cursor: pointer;
   z-index: 1;
+  transition: color 0.3s ease, transform 0.15s ease, box-shadow 0.25s ease;
 }
 
-.categorey button::after{
+.categorey button::after {
   content: '';
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgb(184, 134, 41);
   position: absolute;
+  inset: 0;
   z-index: -1;
-  transition: all 0.4s ease;
+  background: #2b2b2b;
+  transition: width 0.35s ease;
+  width: 0;
 }
 
-.categorey button:hover::after{
-  width: 0%;
+.categorey button:hover {
+  color: #ffffff;
+  box-shadow: 0 8px 20px rgba(139, 118, 75, 0.35);
 }
 
-.categorey button:hover{
-  color: rgb(184, 134, 41);
+.categorey button:hover::after {
+  width: 100%;
 }
 
-/* Tablet view */
-@media (min-width: 768px){
-  .container .items img{
-    height: 450px;
-    max-width: 450px;
+.categorey button:active {
+  transform: scale(0.98);
+}
+
+/* ==========================================================================
+   5. Accessibility
+   ========================================================================== */
+.close p:focus-visible,
+.Size p:focus-visible,
+.categorey button:focus-visible {
+  outline: 2px solid #bfa365;
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .container:has(> .items),
+  .container .items,
+  .close p,
+  .Size p,
+  .categorey button,
+  .categorey button::after {
+    animation: none;
+    transition: none;
   }
 
-  .categorey{
-    max-width: 450px;
-  }
-
-  .Size{
-    justify-content: space-around;
-  }
-
-  .Size p{
-    padding: 15px 20px;
+  .close p:hover,
+  .Size p:hover {
+    transform: none;
   }
 }
 
-/* Desktop view */
-@media (min-width: 1024px){
-  .container .items img{
-    height: 600px;
+/* ==========================================================================
+   6. Responsive — Tablet & Desktop
+   ========================================================================== */
+@media (min-width: 768px) {
+  .container .items {
     max-width: 500px;
   }
 
-  .categorey{
-    max-width: 500px;
+  .container .items img {
+    max-height: 56vh;
   }
 
-  .container .close{
-    padding: 15px 20px;
+  .categorey {
+    padding: 20px 26px 26px;
+  }
+
+  .container .items h2,
+  .container .items h3,
+  .container .items h4 {
+    margin-left: 26px;
+    margin-right: 26px;
+  }
+
+  .Size {
+    gap: 12px;
+  }
+
+  .Size p {
+    padding: 13px 18px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .container .items {
+    max-width: 540px;
+  }
+
+  .container .items img {
+    max-height: 60vh;
+  }
+}
+
+/* ==========================================================================
+   7. Responsive — Mobile
+   ========================================================================== */
+@media (max-width: 480px) {
+  .container:has(> .items) {
+    padding: 12px;
+    align-items: flex-start;
+  }
+
+  .container .items {
+    margin: 44px auto 12px; /* Close button ke liye upar jagah chhod di */
+    border-radius: 16px;
+  }
+
+  .container .items img {
+    aspect-ratio: 1 / 1;
+    max-height: 42vh;
+  }
+
+  .container .items h2 {
+    font-size: 1.15rem;
+    margin-top: 16px;
+  }
+
+  .container .items h3 {
+    font-size: 1.1rem;
+    margin-bottom: 14px;
+  }
+
+  .categorey {
+    padding: 16px;
+    gap: 12px;
+  }
+
+  .Size {
+    gap: 8px;
+  }
+
+  .Size p {
+    min-width: 0;
+    flex: 1 1 30%;
+    padding: 11px 6px;
+    font-size: 0.85rem;
+  }
+
+  .categorey button {
+    padding: 14px 16px;
   }
 }

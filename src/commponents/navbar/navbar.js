@@ -3,7 +3,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { userContext } from '../contextApi/Context';
 import { connectSupabase } from '../supabase/supabase';
 import SMlibasLogo from '../Images/logoSMlibas.webp'
-import CartDrawer from '../Addcart/AddCart';
+
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   
